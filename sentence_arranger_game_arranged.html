@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Arranger Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .game-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sentence-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 30px 0;
+            min-height: 300px; /* Provide space even when empty */
+        }
+
+        .sentence-item {
+            background-color: #fff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            cursor: grab;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            user-select: none;
+        }
+
+        .sentence-item::before {
+            content: '⋮⋮';
+            color: #a0aec0;
+            margin-right: 15px;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .sentence-item:hover {
+            border-color: #4299e1;
+            box-shadow: 0 6px 12px rgba(66, 153, 225, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .sentence-item:active {
+            cursor: grabbing;
+        }
+        
+        .sentence-item.dragging {
+            opacity: 0.5;
+            border-color: #48bb78;
+            box-shadow: 0 10px 20px rgba(72, 187, 120, 0.3);
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        /* Highlight placeholder during drag */
+        .sentence-item.drag-over {
+            border-top: 4px solid #48bb78;
+            margin-top: 16px;
+        }
+
+        button {
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #feedback {
+            min-height: 24px;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: opacity 0.3s ease;
+        }
+
+        .correct-animation {
+            animation: bounceIn 0.8s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            70% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="flex justify-between items-center w-full mb-6 pb-4 border-b border-gray-200">
+            <div class="text-lg font-semibold text-gray-700">Level: <span id="level-indicator" class="text-blue-600"></span></div>
+            <div class="text-lg font-semibold text-gray-700">Skor: <span id="score-display" class="text-green-600">0</span></div>
+        </div>
+
+        <h1 class="text-3xl font-extrabold text-gray-800 mb-2">Penyusun Paragraf Recount Text</h1>
+        <p class="text-gray-600 mb-8">Tarik dan lepaskan kalimat di bawah ini untuk membentuk paragraf Recount Text yang padu.</p>
+
+        <p id="context-hint" class="text-sm font-medium text-purple-600 mb-4 bg-purple-100 py-2 px-4 rounded-lg hidden"></p>
+
+        <ul id="sentence-list" class="sentence-list">
+            <!-- Sentences will be injected here by JS -->
+        </ul>
+
+        <div id="feedback" class="text-lg opacity-0"></div>
+
+        <div class="mt-8 flex justify-center gap-4 flex-wrap">
+            <button id="check-btn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300">
+                Periksa Urutan
+            </button>
+            <button id="hint-btn" class="bg-white border-2 border-gray-300 text-gray-700 font-bold py-3 px-8 rounded-full hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-200">
+                Petunjuk
+            </button>
+            <button id="arrange-btn" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-green-300">
+                Susun Tepat
+            </button>
+        </div>
+
+        <!-- Success Modal -->
+        <div id="success-modal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="text-6xl mb-4">🎉</div>
+                <h2 id="modal-title" class="text-3xl font-bold text-green-600 mb-2">Kerja Bagus!</h2>
+                <p id="modal-text" class="text-gray-600 mb-8 text-lg">Kamu berhasil menyusun paragraf dengan benar.</p>
+                <div class="bg-gray-50 p-4 rounded-lg mb-8 text-left italic text-gray-700 border-l-4 border-green-500">
+                    <p id="full-paragraph"></p>
+                </div>
+                <button id="next-level-btn" class="bg-green-500 text-white font-bold py-3 px-10 rounded-full shadow-lg hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 w-full text-lg">
+                    Level Selanjutnya
+                </button>
+            </div>
+        </div>
+        
+        <!-- Final Screen Modal -->
+        <div id="final-modal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="text-6xl mb-4">🏆</div>
+                <h2 class="text-4xl font-bold text-yellow-500 mb-2">Permainan Selesai!</h2>
+                <p class="text-gray-600 mb-6 text-xl">Kamu sudah ahli menyusun Recount Text!</p>
+                <p class="text-2xl font-bold mb-8">Skor Akhir: <span id="final-score" class="text-blue-500"></span></p>
+                <button id="restart-btn" class="bg-gradient-to-r from-orange-400 to-pink-500 text-white font-bold py-3 px-10 rounded-full shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-orange-300 w-full text-lg">
+                    Main Lagi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- STREAMING_CHUNK:Updating Game Data for Recount Texts... ---
+        // --- Game Data ---
+        const levels = [
+            {
+                context: "A Trip to the Zoo",
+                sentences: [
+                    { id: "s1_1", text: "Last Sunday, my family and I went to the city zoo for a weekend trip." },
+                    { id: "s1_2", text: "When we got there, we first visited the monkey cage to see the funny primates." },
+                    { id: "s1_3", text: "After that, we walked to the reptile house and saw a huge python." },
+                    { id: "s1_4", text: "Before going home, we ate some delicious ice cream near the exit gate." },
+                    { id: "s1_5", text: "We returned home in the afternoon feeling tired but very happy." }
+                ]
+            },
+            {
+                context: "My First Time Camping",
+                sentences: [
+                    { id: "s2_1", text: "A few years ago, I joined a camping trip with my classmates in the mountains." },
+                    { id: "s2_2", text: "Upon arriving at the campsite, we immediately worked together to set up our tents." },
+                    { id: "s2_3", text: "In the evening, we gathered around a large campfire and sang songs together." },
+                    { id: "s2_4", text: "The next morning, we hiked up a small hill to catch the beautiful sunrise." },
+                    { id: "s2_5", text: "It was an unforgettable experience that taught me a lot about nature." }
+                ]
+            },
+            {
+                context: "A Bad Day at School",
+                sentences: [
+                    { id: "s3_1", text: "Yesterday was a terrible day for me because everything seemed to go wrong." },
+                    { id: "s3_2", text: "It started when I woke up late and missed the school bus by just a few minutes." },
+                    { id: "s3_3", text: "Then, when I finally arrived at school, I realized I had left my math homework on my desk at home." },
+                    { id: "s3_4", text: "During lunch break, I accidentally spilled my juice all over my new white uniform." },
+                    { id: "s3_5", text: "I was so relieved when the final bell rang and I could finally go home." }
+                ]
+            },
+            {
+                context: "Winning a Competition",
+                sentences: [
+                    { id: "s4_1", text: "Last month, I participated in an English speech contest held at the district level." },
+                    { id: "s4_2", text: "I was very nervous before my turn, but I tried my best to deliver my speech confidently." },
+                    { id: "s4_3", text: "After all participants had finished, the judges took a long time to deliberate." },
+                    { id: "s4_4", text: "To my surprise, the announcer called my name as the first-place winner." },
+                    { id: "s4_5", text: "I felt incredibly proud of myself and grateful for my teacher's support." }
+                ]
+            },
+            {
+                context: "Visiting a Museum",
+                sentences: [
+                    { id: "s5_1", text: "During the last school holiday, my friends and I decided to visit the national museum." },
+                    { id: "s5_2", text: "First, we explored the ground floor which exhibited ancient traditional weapons." },
+                    { id: "s5_3", text: "Next, we went upstairs to see the historical documents from the independence era." },
+                    { id: "s5_4", text: "We spent hours reading the descriptions and taking pictures of the fascinating artifacts." },
+                    { id: "s5_5", text: "The trip was not only fun but also very educational for all of us." }
+                ]
+            }
+        ];
+
+        // --- State Variables ---
+        let currentLevelIndex = 0;
+        let score = 0;
+        let draggedItem = null;
+        let currentSentences = []; // Holds the shuffled sentences for the current level
+        let attemptsThisLevel = 0;
+
+        // --- DOM Elements ---
+        const sentenceListEl = document.getElementById('sentence-list');
+        const checkBtn = document.getElementById('check-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const arrangeBtn = document.getElementById('arrange-btn');
+        const feedbackEl = document.getElementById('feedback');
+        const levelIndicatorEl = document.getElementById('level-indicator');
+        const scoreDisplayEl = document.getElementById('score-display');
+        const contextHintEl = document.getElementById('context-hint');
+        
+        const successModal = document.getElementById('success-modal');
+        const nextLevelBtn = document.getElementById('next-level-btn');
+        const fullParagraphEl = document.getElementById('full-paragraph');
+        
+        const finalModal = document.getElementById('final-modal');
+        const restartBtn = document.getElementById('restart-btn');
+        const finalScoreEl = document.getElementById('final-score');
+
+        // --- STREAMING_CHUNK:Implementing core game functions (shuffle, load level)... ---
+        
+        // Helper function to shuffle an array (Fisher-Yates)
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        // Initialize a level
+        function loadLevel(index) {
+            currentLevelIndex = index;
+            attemptsThisLevel = 0;
+            const levelData = levels[index];
+            
+            // Update UI
+            levelIndicatorEl.textContent = `${index + 1}/${levels.length}`;
+            feedbackEl.style.opacity = '0';
+            contextHintEl.classList.add('hidden');
+            contextHintEl.textContent = `Topik: ${levelData.context}`;
+            
+            // Get original sentences and shuffle them
+            const originalSentences = levelData.sentences;
+            
+            // Ensure the shuffled array isn't identical to the correct order
+            let shuffled;
+            let isIdentical = true;
+            while(isIdentical) {
+                shuffled = shuffleArray(originalSentences);
+                isIdentical = true;
+                for(let i=0; i<shuffled.length; i++){
+                    if(shuffled[i].id !== originalSentences[i].id){
+                        isIdentical = false;
+                        break;
+                    }
+                }
+            }
+            
+            currentSentences = shuffled;
+            
+            renderSentences();
+        }
+
+        // Render sentences to the DOM
+        function renderSentences() {
+            sentenceListEl.innerHTML = '';
+            
+            currentSentences.forEach((sentence, index) => {
+                const li = document.createElement('li');
+                li.classList.add('sentence-item');
+                li.textContent = sentence.text;
+                li.setAttribute('draggable', 'true');
+                li.dataset.id = sentence.id;
+                li.dataset.index = index;
+                
+                // Add event listeners for drag and drop
+                addDragEvents(li);
+                
+                sentenceListEl.appendChild(li);
+            });
+        }
+
+        // --- STREAMING_CHUNK:Implementing Drag and Drop functionality... ---
+        
+        function addDragEvents(item) {
+            item.addEventListener('dragstart', handleDragStart);
+            item.addEventListener('dragenter', handleDragEnter);
+            item.addEventListener('dragover', handleDragOver);
+            item.addEventListener('dragleave', handleDragLeave);
+            item.addEventListener('drop', handleDrop);
+            item.addEventListener('dragend', handleDragEnd);
+            
+            // Touch support for mobile (basic implementation)
+            item.addEventListener('touchstart', handleTouchStart, {passive: false});
+            item.addEventListener('touchmove', handleTouchMove, {passive: false});
+            item.addEventListener('touchend', handleTouchEnd);
+        }
+
+        function handleDragStart(e) {
+            draggedItem = this;
+            setTimeout(() => this.classList.add('dragging'), 0);
+            e.dataTransfer.effectAllowed = 'move';
+            // Firefox requires data to be set
+            e.dataTransfer.setData('text/plain', this.dataset.id);
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault(); // Necessary to allow dropping
+            e.dataTransfer.dropEffect = 'move';
+            
+            // Visual feedback
+            const target = e.target.closest('.sentence-item');
+            if(target && target !== draggedItem) {
+                target.classList.add('drag-over');
+            }
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            e.preventDefault();
+        }
+
+        function handleDragLeave(e) {
+            const target = e.target.closest('.sentence-item');
+            if(target) {
+                target.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            e.stopPropagation();
+            const target = e.target.closest('.sentence-item');
+            
+            if (target) {
+                target.classList.remove('drag-over');
+            }
+            
+            if (draggedItem !== this && target) {
+                // Determine insertion point
+                const list = Array.from(sentenceListEl.children);
+                const draggedIndex = list.indexOf(draggedItem);
+                const targetIndex = list.indexOf(target);
+
+                if (draggedIndex < targetIndex) {
+                    target.parentNode.insertBefore(draggedItem, target.nextSibling);
+                } else {
+                    target.parentNode.insertBefore(draggedItem, target);
+                }
+                
+                // Update internal array based on new DOM order
+                updateCurrentSentencesArray();
+            }
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            // Clean up any lingering drag-over classes
+            document.querySelectorAll('.sentence-item').forEach(item => {
+                item.classList.remove('drag-over');
+            });
+        }
+        
+        // --- STREAMING_CHUNK:Implementing Mobile Touch Support... ---
+        
+        let touchStartY = 0;
+        let placeholder = null;
+
+        function handleTouchStart(e) {
+            // Only handle single touch
+            if (e.touches.length > 1) return;
+            
+            draggedItem = this;
+            touchStartY = e.touches[0].clientY;
+            
+            // Create a placeholder
+            placeholder = document.createElement('li');
+            placeholder.className = 'sentence-item drag-over';
+            placeholder.style.height = `${draggedItem.offsetHeight}px`;
+            placeholder.style.visibility = 'hidden';
+            
+            setTimeout(() => {
+                this.classList.add('dragging');
+                this.style.position = 'absolute';
+                this.style.zIndex = '1000';
+                this.style.width = `${sentenceListEl.offsetWidth}px`;
+                sentenceListEl.insertBefore(placeholder, this);
+            }, 50);
+        }
+
+        function handleTouchMove(e) {
+            if (!draggedItem) return;
+            e.preventDefault(); // Prevent scrolling while dragging
+            
+            const touch = e.touches[0];
+            const currentY = touch.clientY;
+            const deltaY = currentY - touchStartY;
+            
+            draggedItem.style.transform = `translateY(${deltaY}px)`;
+            
+            // Find element under touch
+            const elements = document.elementsFromPoint(touch.clientX, touch.clientY);
+            const target = elements.find(el => el.classList.contains('sentence-item') && el !== draggedItem && el !== placeholder);
+            
+            if (target) {
+                const rect = target.getBoundingClientRect();
+                const midPoint = rect.top + rect.height / 2;
+                
+                if (currentY < midPoint) {
+                    sentenceListEl.insertBefore(placeholder, target);
+                } else {
+                    sentenceListEl.insertBefore(placeholder, target.nextSibling);
+                }
+            }
+        }
+
+        function handleTouchEnd(e) {
+            if (!draggedItem) return;
+            
+            draggedItem.style.position = '';
+            draggedItem.style.zIndex = '';
+            draggedItem.style.width = '';
+            draggedItem.style.transform = '';
+            draggedItem.classList.remove('dragging');
+            
+            if (placeholder && placeholder.parentNode) {
+                sentenceListEl.insertBefore(draggedItem, placeholder);
+                placeholder.parentNode.removeChild(placeholder);
+            }
+            
+            placeholder = null;
+            draggedItem = null;
+            updateCurrentSentencesArray();
+        }
+
+        // Keep internal array synced with DOM
+        function updateCurrentSentencesArray() {
+            const listItems = document.querySelectorAll('.sentence-item');
+            const newOrder = [];
+            listItems.forEach(item => {
+                const id = item.dataset.id;
+                // Find original sentence object
+                const originalSentence = levels[currentLevelIndex].sentences.find(s => s.id === id);
+                newOrder.push(originalSentence);
+            });
+            currentSentences = newOrder;
+        }
+
+        // Arrange the current level directly into the correct order
+        function arrangeCorrectly() {
+            currentSentences = [...levels[currentLevelIndex].sentences];
+            renderSentences();
+
+            // Visual feedback without consuming an attempt or changing the score
+            feedbackEl.style.opacity = '1';
+            feedbackEl.classList.remove('text-green-500', 'text-red-500', 'text-orange-500', 'correct-animation');
+            feedbackEl.textContent = 'Urutan sudah disusun dengan tepat.';
+            feedbackEl.classList.add('text-green-500', 'correct-animation');
+
+            // Mark every sentence as correctly positioned
+            document.querySelectorAll('.sentence-item').forEach(item => {
+                item.style.borderColor = '#e2e8f0';
+                item.style.borderLeft = '6px solid #48bb78';
+            });
+        }
+
+
+        // --- STREAMING_CHUNK:Implementing checking logic and event listeners... ---
+
+        function checkOrder() {
+            attemptsThisLevel++;
+            const correctSentences = levels[currentLevelIndex].sentences;
+            let isCorrect = true;
+            let correctCount = 0;
+
+            const listItems = document.querySelectorAll('.sentence-item');
+            
+            // Reset borders
+            listItems.forEach(item => {
+                item.style.borderColor = '#e2e8f0';
+                item.style.borderLeftWidth = '2px';
+            });
+
+            // Check each item
+            listItems.forEach((item, index) => {
+                if (item.dataset.id === correctSentences[index].id) {
+                    // Correct position
+                    item.style.borderLeft = '6px solid #48bb78'; // Green border
+                    correctCount++;
+                } else {
+                    // Incorrect position
+                    isCorrect = false;
+                    if(attemptsThisLevel > 1) {
+                         item.style.borderLeft = '6px solid #f56565'; // Red border
+                    }
+                }
+            });
+
+            showFeedback(isCorrect, correctCount, correctSentences.length);
+
+            if (isCorrect) {
+                handleLevelComplete();
+            }
+        }
+
+        function showFeedback(isCorrect, correctCount, total) {
+            feedbackEl.style.opacity = '1';
+            feedbackEl.classList.remove('text-green-500', 'text-red-500', 'text-orange-500', 'correct-animation');
+            
+            // Trigger reflow for animation
+            void feedbackEl.offsetWidth; 
+
+            if (isCorrect) {
+                feedbackEl.textContent = "Sempurna! Paragrafnya sudah benar.";
+                feedbackEl.classList.add('text-green-500', 'correct-animation');
+                
+                // Calculate score based on attempts
+                let pointsEarned = 100;
+                if (attemptsThisLevel === 2) pointsEarned = 75;
+                if (attemptsThisLevel === 3) pointsEarned = 50;
+                if (attemptsThisLevel > 3) pointsEarned = 25;
+                
+                score += pointsEarned;
+                updateScoreDisplay();
+                
+            } else {
+                if (correctCount === 0) {
+                    feedbackEl.textContent = "Terus mencoba! Belum ada yang di posisi benar.";
+                    feedbackEl.classList.add('text-red-500');
+                } else if (correctCount === 1) {
+                    feedbackEl.textContent = `Hampir! ${correctCount} kalimat ada di posisi yang benar.`;
+                    feedbackEl.classList.add('text-orange-500');
+                } else {
+                    feedbackEl.textContent = `Sedikit lagi! ${correctCount} kalimat ada di posisi yang benar.`;
+                    feedbackEl.classList.add('text-orange-500');
+                }
+            }
+        }
+
+        function updateScoreDisplay() {
+            scoreDisplayEl.textContent = score;
+            // Simple pop animation for score
+            scoreDisplayEl.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                scoreDisplayEl.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function showHint() {
+            contextHintEl.classList.remove('hidden');
+            // Penalty for using hint
+            if(attemptsThisLevel === 0 && score > 0) {
+                // only deduct if they haven't tried yet to prevent spamming
+                 score = Math.max(0, score - 10);
+                 updateScoreDisplay();
+            }
+        }
+
+        // --- STREAMING_CHUNK:Handling level completion and game flow... ---
+
+        function handleLevelComplete() {
+            const correctSentences = levels[currentLevelIndex].sentences;
+            
+            // Build the full paragraph string
+            const fullText = correctSentences.map(s => s.text).join(' ');
+            fullParagraphEl.textContent = fullText;
+            
+            // Show modal after a short delay
+            setTimeout(() => {
+                successModal.classList.add('active');
+            }, 800);
+        }
+
+        function nextLevel() {
+            successModal.classList.remove('active');
+            
+            currentLevelIndex++;
+            
+            if (currentLevelIndex < levels.length) {
+                // Small delay to allow modal to close smoothly
+                setTimeout(() => {
+                    loadLevel(currentLevelIndex);
+                }, 300);
+            } else {
+                // Game Over
+                setTimeout(() => {
+                    finalScoreEl.textContent = score;
+                    finalModal.classList.add('active');
+                }, 300);
+            }
+        }
+
+        function restartGame() {
+            finalModal.classList.remove('active');
+            score = 0;
+            updateScoreDisplay();
+            setTimeout(() => {
+                loadLevel(0);
+            }, 300);
+        }
+
+        // Event Listeners
+        checkBtn.addEventListener('click', checkOrder);
+        hintBtn.addEventListener('click', showHint);
+        arrangeBtn.addEventListener('click', arrangeCorrectly);
+        nextLevelBtn.addEventListener('click', nextLevel);
+        restartBtn.addEventListener('click', restartGame);
+
+        // Initialize Game
+        window.addEventListener('DOMContentLoaded', () => {
+            loadLevel(0);
+        });
+
+    </script>
+</body>
+</html>
