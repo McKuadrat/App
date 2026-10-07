@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recount SpeakMaster - Game Speaking Recount Text</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .pulse-recording {
+            animation: pulse-red 1.5s infinite;
+        }
+        @keyframes pulse-red {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .slot-animation {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    </style>
+
+<style id="cheat-style">
+#cheat-panel{position:fixed;right:16px;bottom:16px;z-index:99999;width:min(380px,calc(100vw - 32px));
+background:rgba(15,23,42,.97);border:1px solid #6366f1;border-radius:16px;padding:14px;
+box-shadow:0 20px 60px rgba(0,0,0,.45);font-family:Inter,system-ui,sans-serif;color:#e2e8f0}
+#cheat-panel.hidden{display:none}#cheat-panel h3{font-weight:900;margin:0 0 8px;color:#a5b4fc}
+#cheat-panel .cg{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+#cheat-panel button{border:1px solid #334155;background:#1e293b;color:#e2e8f0;padding:8px 9px;border-radius:9px;font-size:11px;font-weight:800;cursor:pointer}
+#cheat-panel button:hover{background:#3730a3;border-color:#818cf8}
+#cheat-answers{margin-top:9px;max-height:240px;overflow:auto;font-size:11px;line-height:1.45;background:#020617;padding:9px;border-radius:10px;white-space:pre-wrap}
+</style>
+
+<style id="mobile-cheat-style">
+#mobile-cheat-fab{position:fixed;right:16px;bottom:18px;z-index:99998;width:58px;height:58px;border:0;border-radius:50%;background:linear-gradient(135deg,#6366f1,#a855f7);color:#fff;font-size:24px;font-weight:900;box-shadow:0 8px 30px rgba(0,0,0,.35);touch-action:manipulation}
+#cheat-panel{position:fixed!important;left:50%!important;top:auto!important;right:auto!important;bottom:0!important;transform:translateX(-50%);width:min(94vw,560px);max-height:82vh;overflow:auto;z-index:99999;background:#0f172a;color:#fff;border:1px solid #475569;border-radius:22px 22px 0 0;padding:18px;box-shadow:0 -15px 50px rgba(0,0,0,.5)}
+#cheat-panel h3{font-size:18px;font-weight:900;margin:0 0 14px}
+#cheat-panel .cg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#cheat-panel button{min-height:52px;padding:12px 10px;border:0;border-radius:14px;background:#1e293b;color:#fff;font-weight:800;font-size:14px;touch-action:manipulation}
+#cheat-panel button:active{transform:scale(.97)}
+#cheat-answers{margin-top:12px;padding:12px;border-radius:14px;background:#020617;border:1px solid #334155;white-space:pre-wrap;font:12px/1.55 monospace;max-height:45vh;overflow:auto;user-select:text}
+#cheat-panel.hidden{display:none!important}
+@media(max-width:480px){#cheat-panel .cg{grid-template-columns:1fr 1fr}#cheat-panel button{font-size:13px}#mobile-cheat-fab{width:54px;height:54px;right:12px;bottom:12px}}
+</style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-indigo-900 text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-amber-200 flex items-center justify-center text-indigo-950 font-black text-xl shadow-md">
+                    <i class="fa-solid fa-microphone-lines"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight leading-none text-amber-300">Recount SpeakMaster</h1>
+                    <p class="text-xs text-indigo-200 mt-0.5">Interactive Speaking Game for ESL Recount Text</p>
+                </div>
+            </div>
+
+            <!-- Stats & Profile Controls -->
+            <div class="flex items-center space-x-4">
+                <div class="bg-indigo-800/80 px-3 py-1.5 rounded-lg border border-indigo-700/50 flex items-center space-x-3 text-sm">
+                    <div class="flex items-center text-amber-300 font-semibold" title="Total Skor">
+                        <i class="fa-solid fa-trophy mr-1.5"></i>
+                        <span id="score-display">0</span> XP
+                    </div>
+                    <div class="h-4 w-px bg-indigo-700"></div>
+                    <div class="flex items-center text-emerald-400 font-semibold" title="Tingkat Kelancaran">
+                        <i class="fa-solid fa-star mr-1.5"></i>
+                        <span id="badge-display">Novice Speaker</span>
+                    </div>
+                </div>
+
+                <button onclick="toggleModal('cheat-sheet-modal')" class="bg-indigo-700 hover:bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center shadow">
+                    <i class="fa-solid fa-book-open mr-1.5"></i> Recount Sheet
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+        
+        <!-- Game Mode Selection Navigation -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <button onclick="switchMode('spinner')" id="btn-mode-spinner" class="mode-btn active bg-white p-4 rounded-xl shadow-sm border-2 border-indigo-500 hover:shadow-md transition flex items-center space-x-4 text-left">
+                <div class="w-12 h-12 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center text-2xl font-bold">
+                    <i class="fa-solid fa-dice"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base">Story Wheel Challenge</h3>
+                    <p class="text-xs text-slate-500">Acak elemen cerita (Who, Where, Twist) & bicarakan!</p>
+                </div>
+            </button>
+
+            <button onclick="switchMode('blitz')" id="btn-mode-blitz" class="mode-btn bg-white p-4 rounded-xl shadow-sm border-2 border-transparent hover:border-slate-300 hover:shadow-md transition flex items-center space-x-4 text-left">
+                <div class="w-12 h-12 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center text-2xl font-bold">
+                    <i class="fa-solid fa-stopwatch"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base">60-Second Blitz Recount</h3>
+                    <p class="text-xs text-slate-500">Latihan kelancaran berbicara tanpa henti dalam 1 menit!</p>
+                </div>
+            </button>
+
+            <button onclick="switchMode('photo')" id="btn-mode-photo" class="mode-btn bg-white p-4 rounded-xl shadow-sm border-2 border-transparent hover:border-slate-300 hover:shadow-md transition flex items-center space-x-4 text-left">
+                <div class="w-12 h-12 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl font-bold">
+                    <i class="fa-solid fa-image"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base">Memory Picture Prompt</h3>
+                    <p class="text-xs text-slate-500">Deskripsikan gambar kenangan dengan kalimat lampau.</p>
+                </div>
+            </button>
+        </div>
+
+        <!-- Main Game Interactive Workspace -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- Left Panel: Prompt Generator & Challenge Box (7 cols) -->
+            <div class="lg:col-span-7 flex flex-col gap-6">
+
+                <!-- Mode 1: Story Wheel Generator -->
+                <div id="section-spinner" class="game-section bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Mode 1</span>
+                            <h2 class="text-xl font-bold text-slate-800 mt-1">Random Recount Prompt Generator</h2>
+                        </div>
+                        <button onclick="generateRandomPrompt()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-xl transition shadow flex items-center gap-2">
+                            <i class="fa-solid fa-rotate-right"></i> Spin Prompts!
+                        </button>
+                    </div>
+
+                    <!-- Prompt Cards Slots -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                        <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-xl">
+                            <div class="text-xs font-bold text-indigo-600 uppercase flex items-center gap-1.5 mb-1">
+                                <i class="fa-solid fa-user"></i> Who (Character)
+                            </div>
+                            <p id="prompt-who" class="font-bold text-slate-800 text-sm min-h-[1.25rem]">My best friends and I</p>
+                        </div>
+
+                        <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-xl">
+                            <div class="text-xs font-bold text-indigo-600 uppercase flex items-center gap-1.5 mb-1">
+                                <i class="fa-solid fa-calendar"></i> When (Time)
+                            </div>
+                            <p id="prompt-when" class="font-bold text-slate-800 text-sm min-h-[1.25rem]">Last school holiday</p>
+                        </div>
+
+                        <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-xl">
+                            <div class="text-xs font-bold text-indigo-600 uppercase flex items-center gap-1.5 mb-1">
+                                <i class="fa-solid fa-location-dot"></i> Where (Place)
+                            </div>
+                            <p id="prompt-where" class="font-bold text-slate-800 text-sm min-h-[1.25rem]">At a camping ground in the forest</p>
+                        </div>
+
+                        <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-xl">
+                            <div class="text-xs font-bold text-amber-700 uppercase flex items-center gap-1.5 mb-1">
+                                <i class="fa-solid fa-bolt"></i> Unexpected Event (Twist)
+                            </div>
+                            <p id="prompt-twist" class="font-bold text-amber-900 text-sm min-h-[1.25rem]">A heavy rain started and flooded our tent</p>
+                        </div>
+                    </div>
+
+                    <!-- Guidance checklist for student -->
+                    <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-3.5 text-xs text-indigo-900">
+                        <span class="font-bold block mb-1 text-indigo-950"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Tips Speaking Recount Text:</span>
+                        <ul class="list-disc list-inside space-y-0.5 text-slate-700">
+                            <li><strong class="text-indigo-800">Orientation:</strong> Siapa, Kapan, Dimana. (e.g., <em>"Last holiday, my friends and I went camping..."</em>)</li>
+                            <li><strong class="text-indigo-800">Events:</strong> Gunakan kata hubung: <em>First, Next, Then, Suddenly, After that</em>.</li>
+                            <li><strong class="text-indigo-800">Re-orientation:</strong> Bagaimana perasaanmu di akhir cerita? (e.g., <em>"Although tired, it was unforgettable!"</em>)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Mode 2: 60-Second Blitz -->
+                <div id="section-blitz" class="game-section hidden bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="bg-rose-100 text-rose-700 text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Mode 2</span>
+                            <h2 class="text-xl font-bold text-slate-800 mt-1">60-Second Continuous Speaking</h2>
+                        </div>
+                        <div class="bg-rose-50 text-rose-700 font-extrabold text-lg px-4 py-1.5 rounded-xl border border-rose-200 flex items-center gap-2">
+                            <i class="fa-solid fa-clock"></i> <span id="blitz-timer-display">60s</span>
+                        </div>
+                    </div>
+
+                    <div id="blitz-prompt-box" class="bg-gradient-to-r from-rose-500 to-pink-600 text-white p-5 rounded-2xl shadow-md mb-4">
+                        <p class="text-xs uppercase tracking-wider text-rose-100 font-semibold">Tantangan Bicara Kamu:</p>
+                        <h3 id="blitz-topic-title" class="text-lg font-bold mt-1">"Tell a story about the worst day you ever had at school!"</h3>
+                    </div>
+
+                    <p class="text-xs text-slate-600 mb-3">Tantangan ini menguji ketahanan dan kelancaran berbicara (*fluency*). Jangan berhenti berbicara sampai waktu habis!</p>
+                </div>
+
+                <!-- Mode 3: Photo Prompt Challenge -->
+                <div id="section-photo" class="game-section hidden bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Mode 3</span>
+                            <h2 class="text-xl font-bold text-slate-800 mt-1">Memory Photo Prompt</h2>
+                        </div>
+                        <button onclick="nextPhotoPrompt()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2 rounded-xl transition shadow flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-images"></i> Ganti Foto
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center mb-4">
+                        <div class="relative group rounded-2xl overflow-hidden shadow-md aspect-video bg-slate-900">
+                            <img id="photo-prompt-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Recount Prompt" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-3">
+                                <span id="photo-caption" class="text-white text-xs font-medium"><i class="fa-solid fa-camera mr-1"></i> "A memorable trip to the beach"</span>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-xs">
+                            <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+                                <span class="font-bold text-emerald-900 block mb-1"><i class="fa-solid fa-key text-emerald-600 mr-1"></i> Target Keyword Wajib:</span>
+                                <div id="photo-keywords" class="flex flex-wrap gap-1.5 mt-1">
+                                    <span class="bg-white border border-emerald-300 text-emerald-800 px-2 py-0.5 rounded-md font-semibold">visited</span>
+                                    <span class="bg-white border border-emerald-300 text-emerald-800 px-2 py-0.5 rounded-md font-semibold">waves</span>
+                                    <span class="bg-white border border-emerald-300 text-emerald-800 px-2 py-0.5 rounded-md font-semibold">sunset</span>
+                                    <span class="bg-white border border-emerald-300 text-emerald-800 px-2 py-0.5 rounded-md font-semibold">unforgettable</span>
+                                </div>
+                            </div>
+                            <p class="text-slate-500 italic">Gunakan foto di samping sebagai dasar cerita pengalaman masa lalumu. Masukkan target kata kunci di atas!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Recorder Control Panel -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-microphone text-rose-500"></i> Voice Recording Studio
+                        </h3>
+                        <span id="speech-status" class="text-xs font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">Status: Ready</span>
+                    </div>
+
+                    <!-- Recording Visualizer & Controls -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div class="flex items-center gap-3">
+                            <button id="btn-record" onclick="toggleRecording()" class="w-14 h-14 rounded-full bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center text-xl shadow-lg transition transform active:scale-95 focus:outline-none">
+                                <i class="fa-solid fa-microphone" id="mic-icon"></i>
+                            </button>
+                            <div>
+                                <div class="text-sm font-bold text-slate-800" id="rec-timer">00:00</div>
+                                <div class="text-xs text-slate-500">Klik tombol merah untuk mulai merekam</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <button onclick="clearTranscript()" class="text-slate-500 hover:text-slate-700 text-xs px-3 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 transition w-full sm:w-auto">
+                                <i class="fa-solid fa-trash-can mr-1"></i> Clear Text
+                            </button>
+                            <button id="btn-analyze" onclick="analyzeSpeechWithAI()" class="bg-gradient-to-r from-indigo-600 to-indigo-800 hover:from-indigo-700 hover:to-indigo-900 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow transition w-full sm:w-auto flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> Evaluate Speech with AI
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Live Audio / Speech-to-Text Box -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-xs font-bold text-slate-600 uppercase">Live Speech Transcript / Script:</label>
+                            <span class="text-[11px] text-slate-400">Kamu juga bisa mengetik/mengedit jika mikrofon tidak aktif</span>
+                        </div>
+                        <textarea id="transcript-input" rows="4" placeholder="Speak into your microphone or type your Recount story here... (e.g. Last weekend, I went to the zoo with my family. First, we bought tickets...)" class="w-full p-3.5 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition leading-relaxed"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Panel: Real-time Assessment & Model Output (5 cols) -->
+            <div class="lg:col-span-5 flex flex-col gap-6">
+
+                <!-- Real-time Past Tense & Connective Counter -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center justify-between">
+                        <span><i class="fa-solid fa-magnifying-glass text-indigo-500 mr-1.5"></i> Live Grammar Detector</span>
+                        <span class="text-xs font-normal text-slate-400">Auto-detected</span>
+                    </h3>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-indigo-50/70 p-3 rounded-xl border border-indigo-100">
+                            <span class="text-xs text-indigo-600 font-bold block">Past Verbs Used</span>
+                            <span id="stat-verbs-count" class="text-2xl font-black text-indigo-900">0</span>
+                            <div id="stat-verbs-list" class="text-[11px] text-slate-600 mt-1 truncate">None detected yet</div>
+                        </div>
+
+                        <div class="bg-amber-50/70 p-3 rounded-xl border border-amber-100">
+                            <span class="text-xs text-amber-700 font-bold block">Time Connectives</span>
+                            <span id="stat-connectives-count" class="text-2xl font-black text-amber-900">0</span>
+                            <div id="stat-connectives-list" class="text-[11px] text-slate-600 mt-1 truncate">None detected yet</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Evaluation Card (Results) -->
+                <div id="ai-evaluation-box" class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col gap-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-award text-amber-500"></i> Evaluation Scorecard
+                        </h3>
+                        <span id="score-badge" class="bg-slate-100 text-slate-600 text-xs font-bold px-2.5 py-1 rounded-full">Waiting speech</span>
+                    </div>
+
+                    <!-- Placeholder state before evaluation -->
+                    <div id="ai-placeholder" class="py-8 text-center text-slate-400">
+                        <i class="fa-solid fa-comment-dots text-4xl text-slate-300 mb-2"></i>
+                        <p class="text-xs">Ucapkan ceritamu dan klik **"Evaluate Speech with AI"** untuk melihat skor kelancaran, tata bahasa, dan struktur cerita!</p>
+                    </div>
+
+                    <!-- AI Loader State -->
+                    <div id="ai-loading" class="hidden py-8 text-center text-indigo-600">
+                        <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-2"></i>
+                        <p class="text-xs font-semibold text-slate-600">Menganalisis penggunaan Past Tense & Struktur Recount dengan AI Gemini...</p>
+                    </div>
+
+                    <!-- AI Evaluation Results Content -->
+                    <div id="ai-results" class="hidden flex flex-col gap-4">
+                        
+                        <!-- Scores Breakdown -->
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                <span class="text-[10px] text-slate-500 font-bold uppercase block">Past Tense</span>
+                                <span id="score-past-tense" class="text-lg font-black text-indigo-600">0/100</span>
+                            </div>
+                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                <span class="text-[10px] text-slate-500 font-bold uppercase block">Structure</span>
+                                <span id="score-structure" class="text-lg font-black text-indigo-600">0/100</span>
+                            </div>
+                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                <span class="text-[10px] text-slate-500 font-bold uppercase block">Fluency</span>
+                                <span id="score-fluency" class="text-lg font-black text-indigo-600">0/100</span>
+                            </div>
+                        </div>
+
+                        <!-- Feedback details -->
+                        <div class="space-y-2 text-xs">
+                            <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-emerald-900">
+                                <span class="font-bold text-emerald-800 block mb-0.5"><i class="fa-solid fa-thumbs-up mr-1"></i> Kelebihan Cerita:</span>
+                                <p id="feedback-strengths">Bagus sekali! Kamu sudah menyebutkan lokasi dan waktu secara jelas.</p>
+                            </div>
+
+                            <div class="bg-amber-50 p-3 rounded-xl border border-amber-100 text-amber-900">
+                                <span class="font-bold text-amber-800 block mb-0.5"><i class="fa-solid fa-wrench mr-1"></i> Saran Perbaikan (Grammar / Verb):</span>
+                                <p id="feedback-improvements">Ganti kata verb present 'go' menjadi 'went', dan 'is' menjadi 'was'.</p>
+                            </div>
+                        </div>
+
+                        <!-- Revised Recount Model Speech -->
+                        <div class="bg-slate-900 text-slate-100 p-4 rounded-xl text-xs space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-amber-400 font-bold flex items-center gap-1.5">
+                                    <i class="fa-solid fa-volume-high"></i> Model Speech Ideal (Audio)
+                                </span>
+                                <button onclick="playModelTTS()" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold px-2.5 py-1 rounded text-[11px] transition flex items-center gap-1">
+                                    <i class="fa-solid fa-play"></i> Dengarkan Pronunciation
+                                </button>
+                            </div>
+                            <p id="model-text" class="text-slate-300 italic leading-relaxed">"Last school holiday, my friends and I went camping in the forest..."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal 1: Recount Text Cheat Sheet / Teacher Reference -->
+    <div id="cheat-sheet-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-slate-200">
+            <div class="p-5 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10">
+                <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-book-bookmark text-indigo-600"></i> Recount Text Speaking Guide
+                </h3>
+                <button onclick="toggleModal('cheat-sheet-modal')" class="text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-6 text-sm">
+                <!-- Generic Structure -->
+                <div>
+                    <h4 class="font-bold text-indigo-900 mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-layer-group text-indigo-500"></i> 1. Generic Structure (Struktur Teks)
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <strong class="text-indigo-600 block mb-1">1. Orientation</strong>
+                            <p class="text-slate-600">Memperkenalkan tokoh, tempat, dan waktu kejadian (*Who, Where, When*).</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <strong class="text-indigo-600 block mb-1">2. Events</strong>
+                            <p class="text-slate-600">Urutan peristiwa kronologis (*First, Next, Suddenly, After that*).</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <strong class="text-indigo-600 block mb-1">3. Re-orientation</strong>
+                            <p class="text-slate-600">Penutup cerita & kesan/perasaan pembicara (*I felt happy...*).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Useful Past Verbs -->
+                <div>
+                    <h4 class="font-bold text-indigo-900 mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-list-check text-indigo-500"></i> 2. Top Irregular Past Verbs (Kata Kerja Lampau)
+                    </h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+                        <div class="bg-slate-100 p-2 rounded text-slate-800">go ➔ <strong>went</strong></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-800">see ➔ <strong>saw</strong></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-800">eat ➔ <strong>ate</strong></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-800">buy ➔ <strong>bought</strong></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-800">take ➔ <strong>took</strong></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-800">meet ➔ <strong>met</strong></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-800">make ➔ <strong>made</strong></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-800">feel ➔ <strong>felt</strong></div>
+                    </div>
+                </div>
+
+                <!-- Connectives -->
+                <div>
+                    <h4 class="font-bold text-indigo-900 mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-link text-indigo-500"></i> 3. Time Connectives (Kata Hubung Urutan)
+                    </h4>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span class="bg-indigo-50 border border-indigo-200 text-indigo-800 px-2.5 py-1 rounded-lg">First / Firstly</span>
+                        <span class="bg-indigo-50 border border-indigo-200 text-indigo-800 px-2.5 py-1 rounded-lg">After that</span>
+                        <span class="bg-indigo-50 border border-indigo-200 text-indigo-800 px-2.5 py-1 rounded-lg">Then</span>
+                        <span class="bg-indigo-50 border border-indigo-200 text-indigo-800 px-2.5 py-1 rounded-lg">Suddenly</span>
+                        <span class="bg-indigo-50 border border-indigo-200 text-indigo-800 px-2.5 py-1 rounded-lg">A few moments later</span>
+                        <span class="bg-indigo-50 border border-indigo-200 text-indigo-800 px-2.5 py-1 rounded-lg">Finally</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-slate-50 border-t border-slate-100 text-right">
+                <button onclick="toggleModal('cheat-sheet-modal')" class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-xl text-xs hover:bg-indigo-700 transition">Mengerti!</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global Game State
+        let currentMode = 'spinner';
+        let totalScore = 0;
+        let isRecording = false;
+        let recognition = null;
+        let timerInterval = null;
+        let recordingSeconds = 0;
+        let blitzSeconds = 60;
+        let blitzInterval = null;
+        let modelSpeechText = '';
+
+        // Preset Data Prompts
+        const PROMPT_DATABASE = {
+            who: [
+                "My best friends and I",
+                "My family and my cousins",
+                "My classmates and my English teacher",
+                "My brother and I",
+                "My junior high school football team"
+            ],
+            when: [
+                "Last school holiday",
+                "Two weeks ago on Saturday",
+                "During last year's New Year celebration",
+                "On a rainy Sunday morning",
+                "Last semester during our study tour"
+            ],
+            where: [
+                "At a beach in Yogyakarta",
+                "In a crowded traditional market",
+                "At a mountain campsite",
+                "At an amusement park in Jakarta",
+                "At my grandparents' village house"
+            ],
+            twist: [
+                "A sudden heavy rain destroyed our tent",
+                "I lost my wallet and my phone",
+                "We accidentally boarded the wrong public bus",
+                "Our car got a flat tire in the middle of nowhere",
+                "I slipped and dropped my ice cream onto my shirt"
+            ]
+        };
+
+        const PHOTO_PROMPTS = [
+            {
+                url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+                caption: '"A memorable trip to the beach"',
+                keywords: ["visited", "waves", "sunset", "unforgettable"]
+            },
+            {
+                url: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80",
+                caption: '"Camping night with friends under the stars"',
+                keywords: ["built a campfire", "sang songs", "cold night", "enjoyed"]
+            },
+            {
+                url: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+                caption: '"A birthday party celebration"',
+                keywords: ["celebrated", "blew candles", "received gifts", "delicious cake"]
+            }
+        ];
+        let currentPhotoIndex = 0;
+
+        const BLITZ_TOPICS = [
+            '"Tell a story about the worst or best day you ever had at school!"',
+            '"Describe a funny moment that happened to you last week!"',
+            '"Recount an unforgettable holiday trip with your family!"',
+            '"Tell a story about a time when you got lost or had an accident!"'
+        ];
+
+        // Past verbs dictionary for real-time highlighting
+        const PAST_VERBS_LIST = ["went", "visited", "saw", "ate", "bought", "took", "met", "made", "felt", "was", "were", "had", "played", "walked", "stayed", "arrived", "started", "enjoyed", "helped", "lofted", "dropped", "slipped"];
+        const CONNECTIVES_LIST = ["first", "firstly", "then", "next", "after that", "suddenly", "finally", "in the end", "afterwards"];
+
+        // Initialization on Load
+        window.onload = function() {
+            setupSpeechRecognition();
+            generateRandomPrompt();
+            setupTextareaListener();
+        };
+
+        // UI Mode Switching
+        function switchMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.game-section').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.mode-btn').forEach(el => {
+                el.classList.remove('border-indigo-500');
+                el.classList.add('border-transparent');
+            });
+
+            document.getElementById(`section-${mode}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-mode-${mode}`);
+            activeBtn.classList.remove('border-transparent');
+            activeBtn.classList.add('border-indigo-500');
+
+            if (mode === 'blitz') {
+                resetBlitzTimer();
+            }
+        }
+
+        // Random Prompt Generator
+        function generateRandomPrompt() {
+            const who = getRandomItem(PROMPT_DATABASE.who);
+            const when = getRandomItem(PROMPT_DATABASE.when);
+            const where = getRandomItem(PROMPT_DATABASE.where);
+            const twist = getRandomItem(PROMPT_DATABASE.twist);
+
+            animateTextChange('prompt-who', who);
+            animateTextChange('prompt-when', when);
+            animateTextChange('prompt-where', where);
+            animateTextChange('prompt-twist', twist);
+        }
+
+        function animateTextChange(id, newText) {
+            const el = document.getElementById(id);
+            el.classList.add('opacity-0');
+            setTimeout(() => {
+                el.innerText = newText;
+                el.classList.remove('opacity-0');
+            }, 150);
+        }
+
+        function nextPhotoPrompt() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % PHOTO_PROMPTS.length;
+            const data = PHOTO_PROMPTS[currentPhotoIndex];
+            document.getElementById('photo-prompt-img').src = data.url;
+            document.getElementById('photo-caption').innerHTML = `<i class="fa-solid fa-camera mr-1"></i> ${data.caption}`;
+            
+            const kwContainer = document.getElementById('photo-keywords');
+            kwContainer.innerHTML = data.keywords.map(kw => 
+                `<span class="bg-white border border-emerald-300 text-emerald-800 px-2 py-0.5 rounded-md font-semibold">${kw}</span>`
+            ).join('');
+        }
+
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        // Speech Recognition Setup (Web Speech API)
+        function setupSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                recognition = new SpeechRecognition();
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.lang = 'en-US'; // English target language for Recount Text
+
+                recognition.onstart = function() {
+                    document.getElementById('speech-status').innerText = 'Status: Listening...';
+                    document.getElementById('speech-status').className = 'text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-1 rounded-full animate-pulse';
+                };
+
+                recognition.onresult = function(event) {
+                    let transcript = '';
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        transcript += event.results[i][0].transcript;
+                    }
+                    document.getElementById('transcript-input').value = transcript;
+                    triggerGrammarScan(transcript);
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                    document.getElementById('speech-status').innerText = 'Status: Error/Mic blocked';
+                    stopRecording();
+                };
+
+                recognition.onend = function() {
+                    if (isRecording) {
+                        recognition.start(); // keep listening if user hasn't explicitly stopped
+                    }
+                };
+            } else {
+                document.getElementById('speech-status').innerText = 'Status: Web Speech API not supported in this browser (Use text input)';
+            }
+        }
+
+        function toggleRecording() {
+            if (!isRecording) {
+                startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        function startRecording() {
+            isRecording = true;
+            document.getElementById('mic-icon').className = 'fa-solid fa-stop';
+            document.getElementById('btn-record').classList.add('pulse-recording');
+            
+            if (recognition) {
+                try { recognition.start(); } catch(e){}
+            }
+
+            // Start timer
+            recordingSeconds = 0;
+            timerInterval = setInterval(() => {
+                recordingSeconds++;
+                const mins = String(Math.floor(recordingSeconds / 60)).padStart(2, '0');
+                const secs = String(recordingSeconds % 60).padStart(2, '0');
+                document.getElementById('rec-timer').innerText = `${mins}:${secs}`;
+            }, 1000);
+
+            // Handle 60s Blitz mode timer
+            if (currentMode === 'blitz') {
+                blitzSeconds = 60;
+                blitzInterval = setInterval(() => {
+                    blitzSeconds--;
+                    document.getElementById('blitz-timer-display').innerText = `${blitzSeconds}s`;
+                    if (blitzSeconds <= 0) {
+                        clearInterval(blitzInterval);
+                        stopRecording();
+                        triggerConfetti();
+                    }
+                }, 1000);
+            }
+        }
+
+        function stopRecording() {
+            isRecording = false;
+            document.getElementById('mic-icon').className = 'fa-solid fa-microphone';
+            document.getElementById('btn-record').classList.remove('pulse-recording');
+            document.getElementById('speech-status').innerText = 'Status: Stopped';
+            document.getElementById('speech-status').className = 'text-xs font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full';
+
+            if (recognition) {
+                try { recognition.stop(); } catch(e){}
+            }
+            clearInterval(timerInterval);
+            clearInterval(blitzInterval);
+        }
+
+        function resetBlitzTimer() {
+            clearInterval(blitzInterval);
+            blitzSeconds = 60;
+            document.getElementById('blitz-timer-display').innerText = '60s';
+            document.getElementById('blitz-topic-title').innerText = getRandomItem(BLITZ_TOPICS);
+        }
+
+        function clearTranscript() {
+            document.getElementById('transcript-input').value = '';
+            triggerGrammarScan('');
+        }
+
+        // Real-time keyword scanner
+        function setupTextareaListener() {
+            const input = document.getElementById('transcript-input');
+            input.addEventListener('input', (e) => {
+                triggerGrammarScan(e.target.value);
+            });
+        }
+
+        function triggerGrammarScan(text) {
+            const words = text.toLowerCase().match(/\b\w+\b/g) || [];
+            
+            // Match past verbs
+            const detectedVerbs = words.filter(w => PAST_VERBS_LIST.includes(w));
+            const uniqueVerbs = [...new Set(detectedVerbs)];
+            document.getElementById('stat-verbs-count').innerText = uniqueVerbs.length;
+            document.getElementById('stat-verbs-list').innerText = uniqueVerbs.length > 0 ? uniqueVerbs.join(', ') : 'None detected yet';
+
+            // Match connectives
+            const detectedConnectives = words.filter(w => CONNECTIVES_LIST.includes(w));
+            const uniqueConnectives = [...new Set(detectedConnectives)];
+            document.getElementById('stat-connectives-count').innerText = uniqueConnectives.length;
+            document.getElementById('stat-connectives-list').innerText = uniqueConnectives.length > 0 ? uniqueConnectives.join(', ') : 'None detected yet';
+        }
+
+        async function analyzeSpeechWithAI() {
+            const transcript = document.getElementById('transcript-input').value.trim();
+            if (!transcript || transcript.length < 10) {
+                alertModal("Kalimat terlalu pendek!", "Harap rekam atau ketik minimal 1-2 kalimat cerita Recount Text kamu sebelum dievaluasi.");
+                return;
+            }
+
+            // Show Loading State
+            document.getElementById('ai-placeholder').classList.add('hidden');
+            document.getElementById('ai-results').classList.add('hidden');
+            document.getElementById('ai-loading').classList.remove('hidden');
+
+            const systemPrompt = `You are an expert English ESL Teacher evaluating an Indonesian student's spoken Recount Text.
+Analyze the provided speech transcript based on 3 criteria:
+1. Past Tense Usage (Are verbs correctly in Simple Past Tense?)
+2. Generic Structure (Does it contain Orientation, Events, Re-orientation?)
+3. Fluency & Connectives (Are sequence connectives like first, then, after that used?)
+
+You must return a JSON structure with EXACTLY these keys:
+{
+  "scorePastTense": <number 0-100>,
+  "scoreStructure": <number 0-100>,
+  "scoreFluency": <number 0-100>,
+  "strengths": "<short praise in Indonesian, 1 sentence>",
+  "improvements": "<short grammar/verb fix advice in Indonesian, 1-2 sentences>",
+  "improvedRecountText": "<revised grammatically correct English recount story text, suitable for speech model, 2-4 sentences>"
+}`;
+
+            const userPrompt = `Student Spoken Transcript: "${transcript}"`;
+
+            try {
+                // Calling Gemini 3 Flash Preview
+                const apiKey = ""; // Runtime automatically provided in Canvas environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: userPrompt }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: {
+                        responseMimeType: "application/json"
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                const jsonText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (jsonText) {
+                    const result = JSON.parse(jsonText);
+                    displayAIResults(result);
+                } else {
+                    throw new Error("Invalid response format");
+                }
+            } catch (error) {
+                console.error("AI Evaluation Error:", error);
+                // Fallback offline evaluation mechanism if API key is unthrottled or offline
+                fallbackOfflineAssessment(transcript);
+            }
+        }
+
+        function displayAIResults(result) {
+            document.getElementById('ai-loading').classList.add('hidden');
+            document.getElementById('ai-results').classList.remove('hidden');
+
+            document.getElementById('score-past-tense').innerText = `${result.scorePastTense}/100`;
+            document.getElementById('score-structure').innerText = `${result.scoreStructure}/100`;
+            document.getElementById('score-fluency').innerText = `${result.scoreFluency}/100`;
+
+            document.getElementById('feedback-strengths').innerText = result.strengths;
+            document.getElementById('feedback-improvements').innerText = result.improvements;
+            
+            modelSpeechText = result.improvedRecountText;
+            document.getElementById('model-text').innerText = `"${modelSpeechText}"`;
+
+            // Calculate XP Gain
+            const avgScore = Math.round((result.scorePastTense + result.scoreStructure + result.scoreFluency) / 3);
+            totalScore += avgScore * 2;
+            document.getElementById('score-display').innerText = totalScore;
+            
+            if (avgScore >= 80) {
+                document.getElementById('score-badge').innerText = '🌟 Excellent Speaker';
+                document.getElementById('score-badge').className = 'bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full';
+                triggerConfetti();
+            } else {
+                document.getElementById('score-badge').innerText = '👍 Good Effort';
+                document.getElementById('score-badge').className = 'bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-full';
+            }
+
+            updateLevelTitle();
+        }
+
+        function fallbackOfflineAssessment(transcript) {
+            const words = transcript.toLowerCase().match(/\b\w+\b/g) || [];
+            const pastCount = words.filter(w => PAST_VERBS_LIST.includes(w)).length;
+            const connCount = words.filter(w => CONNECTIVES_LIST.includes(w)).length;
+
+            const mockResult = {
+                scorePastTense: Math.min(100, Math.max(50, pastCount * 25)),
+                scoreStructure: transcript.length > 50 ? 80 : 60,
+                scoreFluency: Math.min(100, Math.max(50, connCount * 30 + 40)),
+                strengths: "Usaha yang bagus! Ceritamu memiliki gagasan utama yang cukup jelas.",
+                improvements: "Pastikan untuk selalu menggunakan kata kerja bentuk lampau (Simple Past Tense) seperti 'went', 'saw', dan 'enjoyed'.",
+                improvedRecountText: transcript + " Overall, it was a very memorable experience for me."
+            };
+            displayAIResults(mockResult);
+        }
+
+        function playModelTTS() {
+            if (!modelSpeechText) return;
+
+            // Use Web Speech Synthesis API
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // stop existing
+                const utterance = new SpeechSynthesisUtterance(modelSpeechText);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9; // Slightly slower for language learners
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alertModal("TTS Tidak Didukung", "Browser Anda tidak mendukung fitur Text-to-Speech.");
+            }
+        }
+
+        function updateLevelTitle() {
+            const badge = document.getElementById('badge-display');
+            if (totalScore > 500) {
+                badge.innerText = 'Master Storyteller';
+            } else if (totalScore > 200) {
+                badge.innerText = 'Fluent Speaker';
+            } else {
+                badge.innerText = 'Novice Speaker';
+            }
+        }
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        // Modal Utilities
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.toggle('hidden');
+        }
+
+        function alertModal(title, message) {
+            // Simple non-blocking alert overlay replacement
+            const alertBox = document.createElement('div');
+            alertBox.className = 'fixed bottom-5 right-5 bg-slate-900 text-white p-4 rounded-xl shadow-2xl z-50 flex items-center gap-3 border border-slate-700 max-w-md animate-bounce';
+            alertBox.innerHTML = `
+                <i class="fa-solid fa-circle-info text-amber-400 text-xl"></i>
+                <div class="text-xs">
+                    <strong class="block text-sm font-bold text-amber-300">${title}</strong>
+                    <span>${message}</span>
+                </div>
+            `;
+            document.body.appendChild(alertBox);
+            setTimeout(() => alertBox.remove(), 4000);
+        }
+    </script>
+
+
+<button id="mobile-cheat-fab" type="button" aria-label="Open Cheat Panel" onclick="CHEAT.show()">🛠️</button>
+
+<div id="cheat-panel" class="hidden">
+  <h3>🛠️ Cheat Panel</h3>
+  <div class="cg">
+    <button onclick="CHEAT.showAnswers()">👁️ Show Answers</button>
+    <button onclick="CHEAT.autoSolve()">⚡ Auto Solve</button>
+    <button onclick="CHEAT.maxXP()">💰 Max XP</button>
+    <button onclick="CHEAT.hide()">✖ Close</button>
+  </div>
+  <div id="cheat-answers">Tekan Show Answers.</div>
+</div>
+
+<script id="cheat-script">
+(function(){
+ const $=id=>document.getElementById(id);
+ window.CHEAT={
+  show(){ $('cheat-panel')?.classList.remove('hidden'); },
+  hide(){ $('cheat-panel')?.classList.add('hidden'); },
+  showAnswers(){
+    const t=$('transcript-input');
+    $('cheat-answers').textContent=
+      "CHEAT SPEAKING\n\nTarget: 100/100 semua kategori\n"+
+      "Tips: Orientation → Events → Re-orientation\n"+
+      "Connectives: First, Then, After that, Finally\n"+
+      "Contoh aman: Last weekend, I went to the beach with my friends. "+
+      "First, we walked around and took photos. Then, we watched the sunset. "+
+      "Finally, we went home happily.";
+  },
+  autoSolve(){
+    const t=$('transcript-input');
+    if(t && (!t.value.trim() || t.value.trim().length<10))
+      t.value="Last weekend, I went to the beach with my friends. First, we walked around and took photos. Then, we watched the sunset. Finally, we went home happily.";
+    if(typeof displayAIResults==="function"){
+      displayAIResults({
+        scorePastTense:100,scoreStructure:100,scoreFluency:100,
+        strengths:"Excellent! Semua kriteria terpenuhi.",
+        improvements:"Tidak ada perbaikan utama yang diperlukan.",
+        improvedRecountText:t?t.value:"Perfect recount text."
+      });
+    }
+    this.showAnswers();
+    alert("⚡ Speaking cheat: hasil evaluasi 100/100.");
+  },
+  maxXP(){
+    if(typeof totalScore!=="undefined"){ totalScore=99999; if($("score-display")) $("score-display").innerText=99999; }
+    alert("💰 XP/score di-set ke 99,999.");
+  }
+ };
+ document.addEventListener("keydown",e=>{
+   if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==="c"){e.preventDefault();CHEAT.show();CHEAT.showAnswers();}
+ });
+})();
+</script>
+</body>
+</html>
