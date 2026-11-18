@@ -20,9 +20,26 @@ button.b{background:var(--a);color:#fff;border:0;border-radius:8px;padding:10px 
 #grid button{padding:8px 0;border:1px solid var(--b);border-radius:6px;background:var(--s);color:var(--t);cursor:pointer;font:inherit}
 #grid .d{background:var(--a);color:#fff;border-color:var(--a)}#grid .c{outline:2px solid var(--t)}#grid .f{background:#e6a700;color:#000}
 .key{background:color-mix(in srgb,var(--ok) 12%,var(--s));border-radius:8px;padding:10px;margin-top:10px;font-size:14px}.m{color:var(--m);font-size:14px}
+
+#teacherLogin{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}
+#teacherLogin .loginBox{width:min(100%,380px);background:var(--s);color:var(--t);border:1px solid var(--b);border-radius:14px;padding:20px;box-shadow:0 15px 50px #0005}
+#teacherLogin input{display:block;width:100%;margin:8px 0 14px;padding:11px;border:1px solid var(--b);border-radius:8px;background:var(--bg);color:var(--t);font:inherit}
+.teacherTools{border:1px dashed var(--a);background:color-mix(in srgb,var(--a) 8%,var(--s))}
+.teacherTools button{margin:4px 4px 4px 0}
+.teacherHint{font-size:13px;color:var(--m)}
 </style></head><body>
-<header><b>🏅 CBT English – Sports &amp; Healthy Life</b><span id="tm">90:00</span></header>
+<header><b id="teacherLogo">🏅 CBT English – Sports &amp; Healthy Life</b><span id="tm">90:00</span></header>
 <main id="app"></main>
+<div id="teacherLogin" role="dialog" aria-modal="true" aria-label="Login guru">
+  <div class="loginBox">
+    <h2 style="margin-top:0">Login Guru</h2>
+    <p class="m">Masuk untuk membuka alat pengelolaan kunci jawaban.</p>
+    <label>Username</label><input id="teacherUser" autocomplete="username" placeholder="Nama admin">
+    <label>Password</label><input id="teacherPass" type="password" autocomplete="current-password" placeholder="Password">
+    <p id="teacherError" class="m" style="color:var(--no)"></p>
+    <div class="row"><button class="b g" onclick="closeTeacherLogin()">Batal</button><button class="b" onclick="teacherLogin()">Masuk</button></div>
+  </div>
+</div>
 <script>
 const P={
 A:"<b>Rina Pratama</b><br>Rina Pratama is a badminton player from Semarang. She is tall and slim, with strong arms and quick legs. Rina was not born into a rich family, and her parents could hardly afford a racket. Every morning she ran five kilometers before school, and every evening she practiced smashes for three hours. When she lost her first national final, she did not blame anyone. Instead, she watched the match video and fixed her mistakes. Two years later, she won the national title and a gold medal at the Southeast Asian Games. Her coach says she never skips training, even when she is tired. Rina often tells young players, “Talent opens the door, but discipline keeps it open.”",
@@ -94,15 +111,42 @@ const E=[
 ["Complete the procedure text with imperative sentences and sequential connectors.<br><b>How to Warm Up</b><br>___, stand straight. ___, (swing) your arms. ___, (bend) your knees. ___, (take) a deep breath.","Model: First, stand straight. Next, swing your arms. Then, bend your knees. Finally, take a deep breath.<br><i>Rubric (10): imperatives 5 · connectors 5.</i>"],
 ["Make one <b>negative</b> and one <b>interrogative</b> sentence in simple past tense from: “Dimas played tennis yesterday.”","Key: Dimas did not play tennis yesterday. / Did Dimas play tennis yesterday?<br><i>Rubric (10): 5 each (did not/didn't + V1; Did + subject + V1?).</i>"],
 ["Your friend plays football every day but drinks no water and eats a lot of fast food. Write two pieces of advice using <b>had better</b> and <b>had better not</b>.","Model: You had better drink water when you play football. You had better not eat fast food too often.<br><i>Rubric (10): had better 5 · had better not 5 (structure + context).</i>"]];
-const N=Q.length+E.length,ans=Array(N).fill(null),fl=Array(N).fill(false);let cur=0,done=false,sec=5400;
+const N=Q.length+E.length,ans=Array(N).fill(null),fl=Array(N).fill(false);const originalKeys=Q.map(q=>q[3]);let cur=0,done=false,sec=5400;
+let teacherMode=false,logoHoldTimer=null,logoHoldTriggered=false;
 const $=id=>document.getElementById(id);
-const tick=setInterval(()=>{if(done)return;sec--;$('tm').textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');if(sec<=0)finish(true)},1000);
-function start(){$('app').innerHTML=`<div class="card"><h2 style="margin-top:0">Computer-Based Test – English</h2><p>Topics: Great Athlete, Recount, and Procedure Texts.<br>Soal 1–45: pilihan ganda · Soal 46–50: uraian · Waktu 90 menit.</p><p class="m">Jawaban uraian tidak dinilai otomatis; kunci dan rubrik tampil setelah tes selesai.</p><button class="b" onclick="show(0)">Mulai</button></div>`}
+// Akses login guru melalui tekan lama pada logo selama 1,2 detik.
+const teacherLogo=$('teacherLogo');
+teacherLogo.style.cursor='pointer';
+teacherLogo.addEventListener('pointerdown',()=>{logoHoldTriggered=false;logoHoldTimer=setTimeout(()=>{logoHoldTriggered=true;openTeacherLogin()},1200)});
+['pointerup','pointerleave','pointercancel'].forEach(ev=>teacherLogo.addEventListener(ev,()=>clearTimeout(logoHoldTimer)));
+function openTeacherLogin(){if(!teacherMode){$('teacherLogin').style.display='flex';$('teacherUser').focus()}}
+function closeTeacherLogin(){$('teacherLogin').style.display='none';$('teacherError').textContent=''}
+function teacherLogin(){
+  if($('teacherUser').value==='admin123' && $('teacherPass').value==='wowoimut'){
+    teacherMode=true;closeTeacherLogin();$('teacherPass').value='';start();
+  }else{$('teacherError').textContent='Nama admin atau password salah.'}
+}
+function teacherPanel(){return teacherMode?`<div class="card teacherTools"><b>🛠 Panel Guru</b><p class="teacherHint">Pilih opsi jawaban yang benar pada soal pilihan ganda untuk mengatur kunci. Perubahan langsung tersimpan di halaman ini.</p><button class="b" onclick="autoAnswerAll()">Auto answer all</button><button class="b g" onclick="exitTeacherMode()">Keluar mode guru &amp; mulai tes</button></div>`:''}
+function autoAnswerAll(){
+  if(!teacherMode)return;
+  Q.forEach((q,i)=>ans[i]=q[3]);
+  E.forEach((q,i)=>ans[Q.length+i]=q[1].replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim());
+  show(cur);alert('Semua soal telah diisi menggunakan kunci dan contoh jawaban.');
+}
+let tick;
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(done)return;sec--;$('tm').textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');if(sec<=0)finish(true)},1000)}
+function exitTeacherMode(){
+  // Keluar dari mode guru tanpa menghapus jawaban, penanda, atau kunci yang sudah diatur.
+  teacherMode=false;
+  show(cur);
+}
+runTimer();
+function start(){$('app').innerHTML=teacherPanel()+`<div class="card"><h2 style="margin-top:0">Computer-Based Test – English</h2><p>Topics: Great Athlete, Recount, and Procedure Texts.<br>Soal 1–45: pilihan ganda · Soal 46–50: uraian · Waktu 90 menit.</p><p class="m">Jawaban uraian tidak dinilai otomatis; kunci dan rubrik tampil setelah tes selesai.</p><button class="b" onclick="show(0)">Mulai</button></div>`}
 function show(i){cur=i;const mc=i<Q.length,q=mc?Q[i]:E[i-Q.length];
-let h=`<div class="card"><div class="row m"><span>Soal ${i+1} / ${N} · ${mc?'Pilihan Ganda':'Uraian'}</span>${done?'':`<button class="b g" onclick="fl[${i}]=!fl[${i}];show(${i})">${fl[i]?'★ Ditandai':'☆ Tandai ragu-ragu'}</button>`}</div>`;
+let h=teacherPanel()+`<div class="card"><div class="row m"><span>Soal ${i+1} / ${N} · ${mc?'Pilihan Ganda':'Uraian'}</span>${done?'':`<button class="b g" onclick="fl[${i}]=!fl[${i}];show(${i})">${fl[i]?'★ Ditandai':'☆ Tandai ragu-ragu'}</button>`}</div>`;
 if(mc){if(q[0])h+=`<div class="pas">${P[q[0]]}</div>`;h+=`<p><b>${q[1]}</b></p>`;
-q[2].forEach((o,k)=>{let c='opt';if(done){if(k==q[3])c+=' ok';else if(ans[i]===k)c+=' no'}else if(ans[i]===k)c+=' sel';h+=`<button class="${c}" ${done?'disabled':`onclick="ans[${i}]=${k};show(${i})"`}>${'ABCD'[k]}. ${o}</button>`});
-if(done)h+=`<div class="key">Kunci: ${'ABCD'[q[3]]}</div>`}
+q[2].forEach((o,k)=>{let c='opt';if(done||teacherMode){if(k==q[3])c+=' ok';else if(ans[i]===k)c+=' no'}else if(ans[i]===k)c+=' sel';h+=`<button class="${c}" ${done?'disabled':teacherMode?`onclick="Q[${i}][3]=${k};show(${i})"`:`onclick="ans[${i}]=${k};show(${i})"`}>${'ABCD'[k]}. ${o}</button>`});
+if(done||teacherMode)h+=`<div class="key">${teacherMode?'Kunci benar (mode guru)':'Kunci'}: ${'ABCD'[q[3]]}</div>`}
 else{h+=`<p>${q[0]}</p><textarea ${done?'readonly':''} oninput="ans[${i}]=this.value">${ans[i]||''}</textarea>`;if(done)h+=`<div class="key">${q[1]}</div>`}
 h+=`<div class="row" style="margin-top:12px"><button class="b g" ${i?'':'disabled'} onclick="show(${i-1})">← Sebelumnya</button>${i<N-1?`<button class="b" onclick="show(${i+1})">Berikutnya →</button>`:(done?'':`<button class="b" onclick="finish()">Selesai</button>`)}</div></div>`;
 h+=`<div class="card"><div id="grid">`+ans.map((a,k)=>`<button class="${k==cur?'c ':''}${fl[k]&&!done?'f':a!==null&&a!==''?'d':''}" onclick="show(${k})">${k+1}</button>`).join('')+`</div>${done?'':'<p class="m" style="margin-bottom:0">Biru = terjawab · Kuning = ragu-ragu</p>'}</div>`;
@@ -110,6 +154,6 @@ $('app').innerHTML=h;scrollTo(0,0)}
 function finish(auto){const un=ans.slice(0,Q.length).filter(a=>a===null).length;
 if(!auto&&!confirm(un?`Masih ada ${un} soal pilihan ganda belum dijawab. Akhiri tes?`:'Akhiri tes dan lihat hasil?'))return;
 done=true;clearInterval(tick);let c=0;Q.forEach((q,i)=>{if(ans[i]===q[3])c++});const sc=Math.round(c/Q.length*100);
-$('app').innerHTML=`<div class="card"><h2 style="margin-top:0">Hasil Tes</h2><p>Pilihan ganda benar: <b>${c} / ${Q.length}</b> · Nilai PG: <b>${sc}</b></p><p class="m">Soal uraian (46–50, skor maks 10 per soal) dinilai guru memakai rubrik pada pembahasan.</p><button class="b" onclick="show(0)">Lihat Pembahasan</button></div>`}
+$('app').innerHTML=teacherPanel()+`<div class="card"><h2 style="margin-top:0">Hasil Tes</h2><p>Pilihan ganda benar: <b>${c} / ${Q.length}</b> · Nilai PG: <b>${sc}</b></p><p class="m">Soal uraian (46–50, skor maks 10 per soal) dinilai guru memakai rubrik pada pembahasan.</p><button class="b" onclick="show(0)">Lihat Pembahasan</button></div>`}
 start();
 </script></body></html>
