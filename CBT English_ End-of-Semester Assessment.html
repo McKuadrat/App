@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CBT English: End-of-Semester Assessment</title>
+<style>
+:root{--bg:#f2f6f5;--card:#fff;--ink:#14231f;--mut:#5a6e68;--pri:#0f766e;--on:#fff;--line:#cfdcd8;--sel:#d7f3ee;--warn:#b42318;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1715;--card:#18231f;--ink:#e8f1ee;--mut:#9bb0a9;--pri:#2cb5a8;--on:#06201c;--line:#2c3d38;--sel:#15403a;--warn:#ff8a80}}
+:root[data-theme="dark"]{--bg:#0f1715;--card:#18231f;--ink:#e8f1ee;--mut:#9bb0a9;--pri:#2cb5a8;--on:#06201c;--line:#2c3d38;--sel:#15403a;--warn:#ff8a80}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--pri);color:var(--on);padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:calc(-1*env(safe-area-inset-top,0px))}
+header b{font-size:16px}
+#tm{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px}
+#tm.low{background:var(--warn);color:#fff;padding:0 8px;border-radius:6px}
+main{max-width:720px;margin:0 auto;padding:14px 14px 90px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px}
+h2{margin:0 0 8px;font-size:20px}
+.sec{color:var(--mut);font-size:14px;margin-bottom:6px}
+.pass{background:var(--bg);border-left:4px solid var(--pri);padding:10px 12px;margin:8px 0 12px;border-radius:0 8px 8px 0;font-size:15px}
+.pass p{margin:4px 0}.pass h4{margin:0 0 4px}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;cursor:pointer}
+.opt.on{background:var(--sel);border-color:var(--pri)}
+.opt i{font-style:normal;font-weight:700;min-width:22px;height:22px;border-radius:50%;border:1.5px solid var(--pri);display:grid;place-items:center;font-size:12px;flex:none}
+.opt.on i{background:var(--pri);color:var(--on)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1.5px solid var(--pri);background:var(--card);color:var(--ink);padding:9px 16px}
+button.p{background:var(--pri);color:var(--on);font-weight:700}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+input,textarea{width:100%;font:inherit;padding:10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);margin:4px 0 10px}
+textarea{min-height:150px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;justify-content:space-between}
+.bar button{flex:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px;margin:8px 0 14px}
+.grid button{padding:8px 0}
+.grid .d{background:var(--pri);color:var(--on)}.grid .c{outline:3px solid var(--ink)}
+.ov{position:fixed;inset:0;background:var(--bg);z-index:9;overflow:auto;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px))}
+.ov>div{max-width:720px;margin:0 auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.sc{overflow-x:auto}
+small{color:var(--mut)}
+details{margin-top:6px}
+.sc input{width:64px;margin:0;padding:4px}
+</style>
+</head>
+<body>
+<header><b>📝 CBT English · Grade X</b><span id="hr"></span></header>
+<main id="m"></main>
+<script>
+const S=[
+[["Good morning, Mrs. Sari.","Good morning, Andi. You look happy today.","Yes, I am. Today is a sunny morning."],1],
+[["Congratulations, Sinta! I heard you won the English speech contest.","Thank you, Budi. I studied very hard."],1],
+[["I’m sorry, Mom. I broke the glass.","It’s okay. Please be careful next time."],1],
+[["My friend Lina is tall and slim. She has long black hair and brown eyes. She is kind and helpful."],0],
+[["Orangutans live in the forests of Sumatra and Borneo. They eat fruits and leaves. Orangutans are very intelligent animals."],0],
+[["Yesterday, Rani woke up at six o’clock. Then she took a bath and had breakfast. After that, she went to school by bike."],0],
+[["Last Sunday, I went to the beach with my cousins. We swam in the sea and played volleyball. We went home at five o’clock."],0],
+[["To make an omelet, first crack two eggs into a bowl. Next, add a little salt and mix them well. Then fry the mixture in hot oil. Finally, serve it on a plate."],0]];
+const L=[
+[0,"What time of day is it?",["Morning","Afternoon","Night"],0],
+[0,"How does Mrs. Sari think Andi looks?",["Sad","Happy","Tired"],1],
+[1,"Why does Budi congratulate Sinta?",["She won a contest","She is sick","She is late"],0],
+[2,"What did the boy do?",["He lost a pen","He broke a glass","He missed the bus"],1],
+[2,"What does his mother say?",["Be careful next time","See you later","Happy birthday"],0],
+[3,"What color is Lina’s hair?",["Brown","Black","Blond"],1],
+[3,"What is Lina like?",["Lazy","Shy","Kind"],2],
+[4,"Where do orangutans live?",["In Java","In Sumatra and Borneo","In Bali"],1],
+[4,"What do orangutans eat?",["Fruits and leaves","Fish","Meat"],0],
+[5,"What did Rani do right after she woke up?",["Had breakfast","Took a bath","Went to school"],1],
+[5,"How did Rani go to school?",["By bike","By bus","On foot"],0],
+[6,"Who did the speaker go to the beach with?",["Friends","Parents","Cousins"],2],
+[7,"How many eggs are needed?",["One","Two","Three"],1],
+[7,"What is done after the salt is added?",["Mix them","Serve it","Fry it"],0],
+[7,"What is the last step?",["Crack the eggs","Fry the mixture","Serve it on a plate"],2]];
+const P={
+D:"<h4>Tanah Lot Temple</h4><p>Tanah Lot is a famous temple in Tabanan, Bali. It stands on a big rock beside the sea. Every day, many tourists visit it.</p><p>The temple is very beautiful at sunset. The sky is orange and the waves are strong. Near the rock, there is a small cave. Visitors can see holy sea snakes there. They are believed to guard the temple.</p><p>In the morning, the place is quiet and peaceful. Its stone gate is old, and its roof is tall. Local people pray there with offerings.</p>",
+R:"<h4>The Komodo Dragon</h4><p>The Komodo dragon is the largest living lizard in the world. It is an endemic animal of Indonesia, so it lives only in a few places.</p><p>A Komodo dragon can grow up to three meters long. It has a long tail, strong legs, and sharp claws. Its skin is rough and gray. It also has a forked tongue to smell its prey.</p><p>Komodo dragons live on Komodo, Rinca, and Flores islands. They eat deer, pigs, and birds. They hunt alone and can swim well, although they spend most of their time on land.</p>",
+C:"<h4>My Trip to Yogyakarta</h4><p>Last holiday, my family and I visited Yogyakarta. We left home at five o’clock in the morning.</p><p>First, we arrived at Prambanan Temple at nine o’clock. We took many photos there. Then, we ate gudeg for lunch in a small restaurant near Malioboro Street. After that, we bought batik as souvenirs. Finally, we went home at night. I was tired but happy.</p>",
+P:"<h4>How to Make Fried Rice</h4><p><b>Materials:</b> 2 plates of rice, 2 eggs, 3 cloves of garlic, 2 tablespoons of soy sauce, oil, and salt.</p><p><b>Steps:</b><br>1. Heat two tablespoons of oil in a pan.<br>2. Fry the garlic until brown.<br>3. Add the eggs and stir.<br>4. ____ the rice and soy sauce, then mix well.<br>5. Serve it hot.</p>"};
+const Q=[
+["D","What is the communicative purpose of the text?",["To describe Tanah Lot Temple","To tell a visit to Bali","To explain how to go to Tanah Lot","To report on temples in Indonesia"],0],
+["D","What is the main idea of paragraph 2?",["The location of Tanah Lot","The beauty of Tanah Lot at sunset and the sea snakes nearby","Local people’s prayers","Tourists’ daily activities"],1],
+["D","“They are believed to guard the temple.” What does “They” refer to?",["Tourists","Waves","Holy sea snakes","Local people"],2],
+["D","“The place is quiet and peaceful.” The word “peaceful” is closest in meaning to ...",["calm","crowded","noisy","dangerous"],0],
+["D","Paragraph 1 is the ... of the text.",["Description","Identification","Orientation","General classification"],1],
+["R","Which sentence is the general classification of the text?",["It has a long tail and sharp claws.","The Komodo dragon is the largest living lizard in the world.","They hunt alone.","Komodo dragons live on Rinca island."],1],
+["R","From the text, we can conclude that Komodo dragons are ...",["herbivores","carnivores","plant eaters","insects"],1],
+["R","Which sentence has a report-text feature (general terms, present tense) rather than a descriptive-text feature?",["Komodo dragons are carnivorous reptiles.","Momo is my fluffy white cat.","Her eyes are bright green.","I love that beach very much."],0],
+["R","What is the main idea of paragraph 2?",["Where Komodo dragons live","The physical features of a Komodo dragon","What Komodo dragons eat","How Komodo dragons swim"],1],
+["","Komodo dragons ____ strong legs and sharp claws.",["is","has","have","belong"],2],
+["C","The text aims to ...",["describe Yogyakarta","tell how to visit Yogyakarta","retell a personal experience","explain facts about Yogyakarta"],2],
+["C","What is the correct order of events?",["Ate gudeg, took photos, bought batik, went home","Took photos, ate gudeg, bought batik, went home","Bought batik, took photos, ate gudeg, went home","Took photos, bought batik, ate gudeg, went home"],1],
+["C","They arrived at Prambanan Temple at ...",["five o’clock","six o’clock","nine o’clock","night"],2],
+["C","“souvenirs” (paragraph 2) means ...",["things bought to remember a trip","food for lunch","clothes for sleeping","tickets to a temple"],0],
+["C","Which word is a past verb used in paragraph 2?",["take","bought","eat","go"],1],
+["P","The text aims to ...",["tell a personal story","describe fried rice","report on rice","explain how to make fried rice"],3],
+["P","Complete step 4: “____ the rice and soy sauce, then mix well.”",["Added","Add","Adding","Adds"],1],
+["P","How many eggs are needed?",["One","Two","Three","Four"],1],
+["","Arrange into a good order: (1) Serve it hot. (2) Fry the garlic. (3) Heat the oil. (4) Add the rice.",["3-2-4-1","2-3-4-1","3-4-2-1","1-3-2-4"],0],
+["","Boil the water. ____, put the noodles in. Finally, serve them.",["However","Then","Because","Although"],1],
+["","A: Good night, Rina. See you tomorrow!\nB: ____",["Good morning.","Congratulations!","Good night. See you!","Excuse me."],2],
+["","A: I won first prize in the drawing contest.\nB: ____",["I’m sorry to hear that.","Congratulations! You deserve it.","See you later.","Excuse me."],1],
+["","My school ____ a big library.",["have","has","are","having"],1],
+["","Yesterday, we ____ to the zoo.",["go","goes","went","going"],2],
+["","The beach is ____. It has white sand and clear water.",["beauty","beautiful","beautifully","beautify"],1],
+["","____ the milk slowly into the glass.",["Pours","Pouring","To pour","Pour"],3],
+["","A: I’m sorry I’m late.\nB: ____",["You’re welcome.","That’s okay. Don’t worry.","Congratulations!","Good luck."],1],
+["","I wanted to swim, ____ it rained all day.",["and","but","so","because"],1],
+["","Tia and Rudi are friends. ____ study together every day.",["She","He","They","It"],2],
+["","“The English test was a piece of cake.” This means the test was ...",["very easy","very difficult","very long","very sweet"],0]];
+const E=[
+["D","Based on the text, write at least 3 sentences about Tanah Lot Temple in your own words."],
+["","Explain the difference between the generic structure of a report text and a descriptive text."],
+["C","Summarize the main events of the text in 3–4 short sentences."],
+["","Write a simple procedure text on how to make a glass of sweet tea or orange juice. Include the Goal, Materials, and Steps."],
+["","Correct this sentence and explain your reason: “Yesterday, I go to the market with my mother and I buyed some fruits.”"]];
+const I=[...L.map(x=>({t:"L",s:x[0],q:x[1],o:x[2],a:x[3]})),...Q.map(x=>({t:"M",p:x[0],q:x[1],o:x[2],a:x[3]})),...E.map(x=>({t:"E",p:x[0],q:x[1]}))];
+const N=I.length,SEC={L:"Part A · Listening",M:"Part B · Multiple choice",E:"Part C · Essay"};
+const $m=document.getElementById("m"),$h=document.getElementById("hr");
+const LS=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem("cbt_"+k));localStorage.setItem("cbt_"+k,JSON.stringify(v))}catch(e){return null}};
+const el=(t,a,...c)=>{const e=document.createElement(t);for(const k in a||{}){if(k==="class")e.className=a[k];else if(k.startsWith("on"))e[k]=a[k];else e.setAttribute(k,a[k])}c.flat().forEach(x=>x!=null&&e.append(x));return e};
+const sc=(A)=>I.reduce((n,x,i)=>n+(x.a!==undefined&&A[i]===x.a?1:0),0);
+let db=null,user=null,uid=null,isT=false,cfg={minutes:90,open:true},st={A:{},i:0,sw:0,start:0,name:"",cls:"",pl:{}},tick=null,sent=false;
+
+(async()=>{
+ try{if(typeof claude!=="undefined"){user=await claude.use("user");db=await claude.use("db")}}catch(e){}
+ try{uid=user?await user.id():null}catch(e){}
+ uid=uid||LS("uid")||(LS("uid","u"+Math.random().toString(36).slice(2,10)),LS("uid"));
+ try{isT=user?await user.canEdit():false}catch(e){}
+ if(isT)$h.append(el("button",{onclick:teacher,"aria-label":"Teacher panel"},"🔒 Teacher"));
+ login();
+})();
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&st.start&&!sent){st.sw++;draft()}});
+function draft(){LS("draft",{A:st.A,sw:st.sw,pl:st.pl,name:st.name,cls:st.cls})}
+
+function login(){
+ const d=LS("draft")||{};
+ const n=el("input",{placeholder:"Full name",autocomplete:"name",value:d.name||""}),c=el("input",{placeholder:"Class (e.g. X-3)",value:d.cls||""});
+ $m.replaceChildren(el("div",{class:"card"},el("h2",null,"End-of-Semester Assessment: English"),
+  el("p",null,"15 listening questions, 30 multiple-choice questions, and 5 essays. Material: Descriptive, Report, Recount, and Procedure texts."),
+  el("p",null,"Each listening audio can be played ",el("b",null,"2 times"),". The timer starts when you press Start and the test is submitted automatically when time runs out. Do not leave this page during the test."),
+  el("label",null,"Name",n),el("label",null,"Class",c),
+  el("button",{class:"p",onclick:()=>begin(n.value.trim(),c.value.trim())},"Start test")));
+}
+async function begin(name,cls){
+ if(!name||!cls)return alert("Please fill in your name and class.");
+ st.name=name;st.cls=cls;
+ if(db){
+  try{const c=await db.doc("config/exam").get();if(c.exists)cfg={...cfg,...c.data()}}catch(e){}
+  try{const r=await db.doc("results/"+uid).get();if(r.exists){const d=r.data();if(d.status==="submitted")return done();st.start=d.startedAt||0}}catch(e){}
+ }
+ if(cfg.open===false&&!isT)return alert("The test is not open yet. Please wait for your teacher.");
+ const d=LS("draft")||{};
+ if(d.A){st.A=d.A;st.pl=d.pl||{};st.sw=d.sw||0}
+ st.start=st.start||LS("start")||Date.now();LS("start",st.start);draft();
+ if(db){try{const r=await db.doc("results/"+uid).get();if(!r.exists)await db.doc("results/"+uid).set({name,cls,startedAt:st.start,status:"started"})}catch(e){}}
+ st.i=0;exam();
+ tick=setInterval(clock,1000);clock();
+}
+function clock(){
+ const left=st.start+cfg.minutes*60000-Date.now();
+ if(left<=0){clearInterval(tick);$h.textContent="00:00";return finish(true)}
+ const m=Math.floor(left/60000),s=Math.floor(left%60000/1000);
+ $h.replaceChildren(el("span",{id:"tm",class:left<300000?"low":""},"⏱ "+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")));
+}
+function exam(){
+ const i=st.i,x=I[i],A=st.A;
+ const sameT=I.filter(y=>y.t===x.t),pos=I.slice(0,i).filter(y=>y.t===x.t).length+1;
+ const card=el("div",{class:"card"},el("div",{class:"sec"},SEC[x.t]+" · Question "+pos+" of "+sameT.length),el("h2",null,"Question "+(i+1)));
+ if(x.t==="L"){
+  const used=st.pl[x.s]||0,b=el("button",{class:"p",onclick:()=>play(x.s,b,info)},"▶ Play audio"),info=el("small",null," Plays left: "+(2-used));
+  if(used>=2)b.disabled=true;
+  card.append(el("div",null,b,info),el("p",null,x.q));
+ }else{
+  if(x.p)card.append(el("div",{class:"pass",innerHTML:P[x.p]}));
+  card.append(...x.q.split("\n").map(l=>el("p",null,l)));
+ }
+ if(x.t==="E"){
+  const ta=el("textarea",{placeholder:"Type your answer here…"});ta.value=A[i]||"";
+  ta.oninput=()=>{A[i]=ta.value;draft()};card.append(ta);
+ }else{
+  x.o.forEach((o,k)=>{const d=el("div",{class:"opt"+(A[i]===k?" on":""),role:"radio",tabindex:"0","aria-checked":A[i]===k},el("i",null,"ABCD"[k]),el("span",null,o));
+   const pick=()=>{A[i]=k;draft();exam()};d.onclick=pick;d.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}};card.append(d)});
+ }
+ const bar=el("div",{class:"bar"},el("button",{onclick:()=>{st.i--;exam()},disabled:i==0},"‹ Back"),el("button",{onclick:nav},"☰ "+Object.keys(A).filter(k=>A[k]!==""&&A[k]!=null).length+"/"+N),
+  i<N-1?el("button",{class:"p",onclick:()=>{st.i++;exam()}},"Next ›"):el("button",{class:"p",onclick:nav},"Finish"));
+ $m.replaceChildren(card,bar);window.scrollTo(0,0);
+}
+function nav(){
+ const g=el("div",{class:"grid"});
+ I.forEach((x,i)=>{const a=st.A[i];g.append(el("button",{class:(a!==undefined&&a!=="")?"d":(i===st.i?"c":""),onclick:()=>{ov.remove();st.i=i;exam()}},i+1))});
+ const ov=el("div",{class:"ov"},el("div",null,el("h2",null,"Question navigator"),el("small",null,"Filled = answered · 1–15 listening, 16–45 multiple choice, 46–50 essay"),g,
+  el("button",{onclick:()=>ov.remove()},"Back to questions")," ",el("button",{class:"p",onclick:()=>{const u=N-Object.values(st.A).filter(v=>v!==""&&v!=null).length;if(confirm(u?u+" question(s) are unanswered. Submit anyway?":"Submit your answers now?")){ov.remove();finish(false)}}},"Submit test")));
+ document.body.append(ov);
+}
+function play(si,b,info){
+ const ss=window.speechSynthesis;
+ if(!ss)return alert("This browser cannot play audio. Please use another browser or ask your teacher.");
+ if((st.pl[si]||0)>=2)return;
+ st.pl[si]=(st.pl[si]||0)+1;draft();ss.cancel();b.disabled=true;info.textContent=" Playing… plays left: "+(2-st.pl[si]);
+ const [lines,dia]=S[si];
+ lines.forEach((t,k)=>{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.9;if(dia)u.pitch=k%2?1.4:.8;
+  if(k===lines.length-1)u.onend=()=>{info.textContent=" Plays left: "+(2-st.pl[si]);b.disabled=st.pl[si]>=2};ss.speak(u)});
+}
+async function finish(auto){
+ if(sent)return;sent=true;clearInterval(tick);
+ const rec={name:st.name,cls:st.cls,startedAt:st.start,submittedAt:Date.now(),status:"submitted",ans:JSON.stringify(st.A),sw:st.sw,auto:!!auto};
+ $m.replaceChildren(el("div",{class:"card"},el("h2",null,"Submitting…")));
+ try{if(!db)throw 0;await db.doc("results/"+uid).set(rec);LS("draft",null);done()}
+ catch(e){sent=false;$m.replaceChildren(el("div",{class:"card"},el("h2",null,"Failed to submit"),el("p",null,"Check your connection. Your answers are safe on this device."),el("button",{class:"p",onclick:()=>finish(auto)},"Try again")))}
+}
+function done(){$h.textContent="";$m.replaceChildren(el("div",{class:"card"},el("h2",null,"✅ Your answers have been submitted"),el("p",null,"Thank you. Your teacher will announce the results. You can close this page.")))}
+
+async function teacher(){
+ clearInterval(tick);
+ const mi=el("input",{type:"number",min:"5",value:cfg.minutes}),op=el("input",{type:"checkbox"});op.checked=cfg.open!==false;op.style.width="auto";
+ const box=el("div",{class:"sc"}),msg=el("small");
+ const ov=el("div",{class:"ov"},el("div",null,el("h2",null,"Teacher / proctor panel"),
+  el("div",{class:"card"},el("label",null,"Duration (minutes)",mi),el("label",null,op," Test is open for students"),
+   el("button",{class:"p",onclick:async()=>{cfg={minutes:+mi.value||90,open:op.checked};try{await db.doc("config/exam").set(cfg);msg.textContent=" Saved."}catch(e){msg.textContent=" Failed to save."}}},"Save settings"),msg),
+  el("button",{onclick:()=>load()},"↻ Refresh"),el("span",null," "),el("button",{id:"csv"},"⬇ Export CSV"),el("span",null," "),el("button",{onclick:()=>{ov.remove();login()}},"Close"),box));
+ document.body.append(ov);
+ const rows=[];
+ async function load(){
+  box.textContent="Loading…";rows.length=0;
+  try{(await db.collection("results").get()).docs.forEach(d=>rows.push({id:d.id,...d.data()}))}catch(e){box.textContent="Failed to load data (the database is not available).";return}
+  const t=el("table"),th=el("tr");["Name","Class","Status","Correct (of 45)","Essay (0–4 each)","Final","Tab exits"].forEach(h=>th.append(el("th",null,h)));t.append(th);
+  rows.sort((a,b)=>(a.cls+a.name).localeCompare(b.cls+b.name)).forEach(r=>{
+   const A=r.ans?JSON.parse(r.ans):{},c=sc(A),es=r.es||[0,0,0,0,0];
+   const fin=()=>Math.round(c/45*80+es.reduce((a,b)=>a+(+b||0),0)/20*20);
+   r.c=c;r.fin=fin;r.esT=()=>es.reduce((a,b)=>a+(+b||0),0);
+   const ins=es.map((v,k)=>{const n=el("input",{type:"number",min:"0",max:"4",value:v,"aria-label":"Essay "+(k+1)});n.onchange=async()=>{es[k]=Math.min(4,Math.max(0,+n.value||0));n.value=es[k];fc.textContent=fin();try{await db.doc("results/"+r.id).update({es})}catch(e){alert("Failed to save score")}};return n});
+   const fc=el("td",null,r.status==="submitted"?fin():"–");
+   const det=el("details",null,el("summary",null,"View essays"),...E.map((e,k)=>el("p",null,el("b",null,(46+k)+". "),A[45+k]||"(empty)")));
+   t.append(el("tr",null,el("td",null,r.name,det),el("td",null,r.cls),el("td",null,r.status==="submitted"?(r.auto?"Submitted (time up)":"Submitted"):"Working"),el("td",null,c),el("td",null,ins.map(n=>[n," "])),fc,el("td",null,r.sw||0)));
+  });
+  box.replaceChildren(rows.length?t:"No students yet.");
+ }
+ ov.querySelector("#csv").onclick=async()=>{
+  try{const dl=await claude.use("downloads");if(!dl)return alert("Download is not available.");
+   const q=s=>'"'+String(s).replace(/"/g,'""')+'"';
+   const out=["Name,Class,Status,Correct,Essay,Final,TabExits",...rows.map(r=>[q(r.name),q(r.cls),r.status,r.c??"",r.esT?r.esT():"",r.fin&&r.status==="submitted"?r.fin():"",r.sw||0].join(","))].join("\n");
+   await dl.save({filename:"cbt-english-results.csv",data:out})}catch(e){}
+ };
+ load();
+}
+</script>
+</body>
+</html>
