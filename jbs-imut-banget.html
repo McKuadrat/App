@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>CBT Bahasa Inggris – Sports & Healthy Life</title>
+<style>
+:root{--bg:#f5f6f8;--s:#fff;--t:#1d2433;--m:#5b6475;--b:#d9dde5;--a:#1f6feb;--ok:#1a7f4b;--no:#c62828;--w:#fff4d6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151b;--s:#1b2029;--t:#e8ebf0;--m:#98a2b3;--b:#323a48;--a:#5b9bff;--ok:#4cc38a;--no:#ff7b7b;--w:#3a3320}}
+:root[data-theme="dark"]{--bg:#12151b;--s:#1b2029;--t:#e8ebf0;--m:#98a2b3;--b:#323a48;--a:#5b9bff;--ok:#4cc38a;--no:#ff7b7b;--w:#3a3320}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--s);border-bottom:1px solid var(--b);display:flex;justify-content:space-between;align-items:center;padding:10px 16px;z-index:5}
+header b{font-size:15px}#tm{font-variant-numeric:tabular-nums;font-weight:700;color:var(--a)}
+main{max-width:920px;margin:0 auto;padding:16px;display:grid;gap:14px}
+.card{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:16px}
+.pas{background:var(--w);border-radius:8px;padding:12px;margin-bottom:12px;font-size:15px}
+.opt{display:block;width:100%;text-align:left;background:var(--s);color:var(--t);border:1px solid var(--b);border-radius:10px;padding:10px 12px;margin:8px 0;font:inherit;cursor:pointer}
+.opt.sel{border-color:var(--a);background:color-mix(in srgb,var(--a) 14%,var(--s))}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 18%,var(--s))}.opt.no{border-color:var(--no);background:color-mix(in srgb,var(--no) 18%,var(--s))}
+textarea{width:100%;min-height:140px;border:1px solid var(--b);border-radius:8px;padding:10px;background:var(--s);color:var(--t);font:inherit}
+.row{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between}
+button.b{background:var(--a);color:#fff;border:0;border-radius:8px;padding:10px 16px;font:inherit;cursor:pointer}button.g{background:transparent;color:var(--t);border:1px solid var(--b)}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px}
+#grid button{padding:8px 0;border:1px solid var(--b);border-radius:6px;background:var(--s);color:var(--t);cursor:pointer;font:inherit}
+#grid .d{background:var(--a);color:#fff;border-color:var(--a)}#grid .c{outline:2px solid var(--t)}#grid .f{background:#e6a700;color:#000}
+.key{background:color-mix(in srgb,var(--ok) 12%,var(--s));border-radius:8px;padding:10px;margin-top:10px;font-size:14px}.m{color:var(--m);font-size:14px}
+</style></head><body>
+<header><b>🏅 CBT English – Sports &amp; Healthy Life</b><span id="tm">90:00</span></header>
+<main id="app"></main>
+<script>
+const P={
+A:"<b>Rina Pratama</b><br>Rina Pratama is a badminton player from Semarang. She is tall and slim, with strong arms and quick legs. Rina was not born into a rich family, and her parents could hardly afford a racket. Every morning she ran five kilometers before school, and every evening she practiced smashes for three hours. When she lost her first national final, she did not blame anyone. Instead, she watched the match video and fixed her mistakes. Two years later, she won the national title and a gold medal at the Southeast Asian Games. Her coach says she never skips training, even when she is tired. Rina often tells young players, “Talent opens the door, but discipline keeps it open.”",
+R1:"<b>A Badminton Final</b><br>Last Sunday, I watched a badminton final at the city sports hall with my cousin. We arrived at 9 a.m. and the hall was already full. First, the players warmed up while the crowd cheered loudly. The match started at ten. The first set was tight, but the home player won it. In the second set she played even better and smashed the shuttlecock hard. Finally, she won the match, and everybody stood up and clapped. I felt so excited that I could not sleep that night.",
+R2:"<b>Sports Day</b><br>On Friday, my school held Sports Day. My class, 8B, joined the relay race. At first, I was nervous because our team had not won for years. When the whistle blew, Dina ran fast, and I took the baton last. I ran as fast as I could and crossed the line first. My friends lifted me up and shouted happily. It was unforgettable because we won together after weeks of practice and cheered for each other.",
+R3:"<b>Football Tournament</b><br>Our class joined an inter-school football tournament in June. In the morning, we practiced passing in the yard. At noon, we took a bus to the stadium. Then we played against SMP 2 for ninety minutes. We lost 1–2 after a late goal. At first, we felt sad, but our coach told us that every loss showed what to improve. After that, we went home and planned extra training.",
+R4:"<b>My 100-Metre Race</b><br>In the 100-metre race, I fell at the start. My knee was bleeding, but I stood up and finished the race last. My teacher said she was proud of me.",
+W:"<b>How to Warm Up</b><br>1. Jog slowly for five minutes.<br>2. Swing your arms in circles.<br>3. Bend your knees ten times.<br>4. Take deep breaths.",
+S:"<b>Stretching Before Running</b><br>1. Stand straight.<br>2. Pull your right foot toward your back.<br>3. Hold for 15 seconds.<br>4. Switch to the left foot.<br>5. Repeat twice.",
+C:"<b>Keeping Sports Equipment Clean</b><br>First, wipe the ball with a damp cloth. Then dry it. Finally, keep it in a clean bag.",
+K:"<b>Packing Your Sports Bag</b><br>First, pack your water bottle. ___, put the towel in the bag. Finally, zip the bag.",
+H:"<b>Staying Hydrated</b><br>Drink a glass of water 30 minutes before exercise. Sip water slowly every 15 minutes during exercise. Do not drink too fast. Drink again after exercise.",
+D:"<b>Cooling Down</b><br>Walk slowly for five minutes. Lower your arms and breathe deeply. Stretch your legs gently.",
+B:"<b>Before a Match</b><br>1. Eat a light meal two hours before the match.<br>2. Do a warm-up.<br>3. Wear proper shoes.<br>4. Arrive on time.",
+F:"<b>Exercise Safety</b><br>If you feel dizzy, stop immediately. Sit down and drink water. Tell your teacher.",
+V:"<b>A Healthy Routine (for beginners)</b><br>1. Warm up for five minutes.<br>2. Jog gently for 20 minutes.<br>3. Cool down.<br>4. Go to sleep at midnight.",
+FS:"<b>Fruit Salad</b><br><i>Ingredients:</i> apple, banana, melon, yogurt.<br><i>Steps:</i> 1. Wash and cut the fruit. 2. Put the fruit in a bowl. 3. Add yogurt. 4. Mix well and serve cold.",
+VS:"<b>Vegetable Soup</b><br>(a) Ingredients: carrots, potatoes, onions, water, salt.<br>(b) Steps: Boil the water. Add the vegetables. Cook for 15 minutes. Add salt and serve.",
+SL:"<b>Healthy Vegetable Salad</b><br>You need lettuce, a tomato, a cucumber, and olive oil. Use a knife to cut the vegetables and a bowl to mix them. Pour the oil on top and serve."};
+const Q=[
+["A","What is the main idea of the text?",["Rina's family is poor.","Rina became a great athlete through hard work and discipline.","Rina loves running every morning.","Rina won the Southeast Asian Games."],1],
+["A","Which character trait best describes Rina?",["Lazy and careless","Arrogant and angry","Persistent and responsible","Shy and unfriendly"],2],
+["A","Which factor supported Rina's success?",["Wealth and luxury equipment","Luck in every match","Discipline and learning from mistakes","Help from famous coaches"],2],
+["A","What is the relationship between Rina's training and her achievements?",["Training had no effect on her results.","Regular training improved her skills and led to the national title.","She trained only after winning titles.","She won because she skipped practice."],1],
+["A","The word “discipline” in the last sentence means …",["self-control to practice regularly","punishment from a teacher","a kind of sport","natural talent"],0],
+["A","Which detail best supports the statement “Rina is hardworking”?",["She is tall and slim.","She comes from Semarang.","She runs five kilometers every morning and practices every evening.","She won a gold medal."],2],
+["A","What can we infer about Rina's attitude toward challenges?",["She gives up easily.","She sees failure as a chance to improve.","She avoids difficult matches.","She blames other people."],1],
+["A","Which positive value can we learn from the text?",["Talent alone is enough.","Consistent effort leads to success.","Losing means the end.","Money is the key to victory."],1],
+["A","Which sentence best supports “Rina learns from her failures”?",["She watched the match video and fixed her mistakes.","She ran five kilometers every morning.","Her parents could hardly afford a racket.","She is from Semarang."],0],
+["A","A student fails a Math test. Which action applies Rina's attitude?",["Stop studying Math","Review the mistakes and study regularly","Copy a friend's answers next time","Blame the teacher"],1],
+[0,"A famous swimmer ___ at 5 a.m. every day.",["train","trains","training","trained"],1],
+[0,"My idol is a ___ athlete. She never gives up, even when she loses.",["lazy","determined","careless","rude"],1],
+[0,"She hits the shuttlecock ___.",["powerful","powerfully","power","powerless"],1],
+["R1","What is the main idea of the text?",["The author's exciting experience watching a badminton final","How to play badminton","A famous player's biography","The rules of badminton"],0],
+["R2","Why was Sports Day unforgettable for the author?",["The coach was very strict.","The team won together after weeks of practice and supported each other.","The weather was nice.","It was a holiday."],1],
+["R3","Which is the correct sequence of events?",["Played SMP 2 → practiced → took a bus → coach's advice","Practiced → took a bus → played → lost → coach's advice","Took a bus → practiced → lost → played","Coach's advice → practiced → played"],1],
+["R4","What can we conclude about the author?",["The author is persistent.","The author is lazy.","The author is arrogant.","The author is afraid of races."],0],
+["R2","How did the author feel at the end of the story?",["Angry and disappointed","Proud and happy","Bored and tired","Afraid and shy"],1],
+["R1","“The first set was tight, but the home player ___ it.”",["win","wins","won","winning"],2],
+["R1","“In the second set she ___ the shuttlecock hard.” Choose the best action verb.",["smashed","poured","sewed","folded"],0],
+[0,"(1) ___, we bought tickets. (2) ___, we found our seats. (3) ___, the match began.",["Finally, Then, First","First, Then, Finally","Then, First, Finally","Finally, First, Then"],1],
+["R2","What is the author's purpose in writing the text?",["To explain how to run a relay race","To describe the school building","To retell the author's experience at Sports Day","To persuade people to join a race"],2],
+["R3","What lesson did the author learn?",["Winning is everything.","Losing can teach us what to improve.","We should never play football.","Practice is useless."],1],
+[0,"My cousin and I watched the final ___ afternoon, and we went home at five.",["yesterday","tomorrow","next","every"],0],
+[0,"Last year, our team ___ the football competition semifinal.",["reaches","reached","reaching","will reach"],1],
+[0,"The striker ___ toward the goal when he slipped on the wet field.",["was running","is running","runs","has run"],0],
+["W","What is the purpose of the text?",["To explain how to warm up before exercise","To describe a sport","To tell a past event","To advertise sport shoes"],0],
+["S","What should you do right after holding the right foot for 15 seconds?",["Repeat twice","Switch to the left foot","Stand straight","Pull the right foot"],1],
+["C","Which sentence is an instruction for keeping equipment clean?",["You wipe the racket.","Wiping the racket.","Wipe the racket with a dry cloth.","The racket is wiped."],2],
+["K","Choose the best connective for the blank.",["Finally","Next","Before","Because"],1],
+["H","Your friend feels thirsty during a run. What is the best step based on the text?",["Drink a lot of cold water at once","Sip water slowly","Wait until after the run","Do not drink at all"],1],
+["D","The word “lower” in the text means …",["raise","bring down","throw","hold up"],1],
+["B","Why should you eat a light meal two hours before the match?",["To get energy and avoid stomach cramps","To feel sleepy","To save money","To arrive late"],0],
+["F","Your friend feels dizzy while running. What is the best action?",["Stop, sit down, drink water, and tell the teacher","Run faster","Ignore it","Keep playing"],0],
+[0,"To stay fit, ___ for 30 minutes every day. Doctors ___ that exercise is important.",["walk – say","walks – say","walk – says","walking – said"],0],
+["V","Which step is not appropriate, and how should it be improved?",["Step 1; skip it","Step 4; sleep early and get at least eight hours","Step 2; run faster","Step 3; stop immediately"],1],
+["FS","What is the social function of the text?",["To tell how to make fruit salad","To describe fruits","To tell a past event","To persuade people to eat fruit"],0],
+["VS","Which part of the text shows the steps of making the soup?",["The title","(a) Ingredients","(b) Steps","The title and (a)"],2],
+[0,"You have 10 minutes before school. Which procedure makes a suitable healthy breakfast?",["Fry noodles, add lots of sugar, drink soda","Boil an egg, slice bread and tomato, then eat them with a banana","Skip breakfast","Eat candy on the way"],1],
+["SL","Which tools are needed to make the salad?",["A knife and a bowl","A frying pan and an oven","A blender and a spoon","A pot and a stove"],0],
+[0,"Cut the carrots ___ so you don't hurt your fingers.",["careful","carefully","care","careless"],1],
+[0,"(1) ___, boil the eggs. (2) ___, peel them. (3) ___, slice the vegetables. (4) ___, put them on a plate.",["First, Next, Then, Finally","Finally, Then, Next, First","Next, First, Finally, Then","Then, Finally, First, Next"],0],
+[0,"You ___ eat less sugar if you want to stay healthy.",["had better","have better","had better to","better had to"],0],
+[0,"You ___ wash your hands before you prepare food. It is very important.",["must","must not","can","might"],0],
+[0,"Put the steps of making oatmeal in order.<br>A. Pour hot water over the oats.<br>B. Prepare the oats in a bowl.<br>C. Wait for three minutes.<br>D. Add fresh fruits.<br>E. Enjoy it while warm.",["A-B-C-D-E","B-A-C-D-E","B-C-A-D-E","C-B-A-E-D"],1]];
+const E=[
+["<b>Information:</b> Name: Rina Pratama · Sport: badminton · Appearance: tall, slim, strong arms · Personality: hardworking, humble, never gives up · Achievements: national champion, SEA Games gold medal.<br>Write a descriptive paragraph (60–80 words) about her.","Model: Rina Pratama is a famous badminton player. She is tall and slim with strong arms. She is hardworking, humble, and never gives up. She trains every day and learns from her mistakes. She won the national title and a gold medal at the SEA Games. Many young players admire her.<br><i>Rubric (10): physical appearance 3 · personality 3 · achievements 2 · grammar/vocabulary 2.</i>"],
+["Arrange these sentences into a good recount text:<br>(a) Finally, our class won the trophy.<br>(b) Last month, my school held a futsal competition.<br>(c) Then we played three matches.<br>(d) First, we registered our team.<br>(e) I was very proud of my friends.","Key: b – d – c – a – e<br><i>Rubric (10): correct order 8 (orientation → events → re-orientation) · written neatly as one paragraph 2.</i>"],
+["Complete the procedure text with imperative sentences and sequential connectors.<br><b>How to Warm Up</b><br>___, stand straight. ___, (swing) your arms. ___, (bend) your knees. ___, (take) a deep breath.","Model: First, stand straight. Next, swing your arms. Then, bend your knees. Finally, take a deep breath.<br><i>Rubric (10): imperatives 5 · connectors 5.</i>"],
+["Make one <b>negative</b> and one <b>interrogative</b> sentence in simple past tense from: “Dimas played tennis yesterday.”","Key: Dimas did not play tennis yesterday. / Did Dimas play tennis yesterday?<br><i>Rubric (10): 5 each (did not/didn't + V1; Did + subject + V1?).</i>"],
+["Your friend plays football every day but drinks no water and eats a lot of fast food. Write two pieces of advice using <b>had better</b> and <b>had better not</b>.","Model: You had better drink water when you play football. You had better not eat fast food too often.<br><i>Rubric (10): had better 5 · had better not 5 (structure + context).</i>"]];
+const N=Q.length+E.length,ans=Array(N).fill(null),fl=Array(N).fill(false);let cur=0,done=false,sec=5400;
+const $=id=>document.getElementById(id);
+const tick=setInterval(()=>{if(done)return;sec--;$('tm').textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');if(sec<=0)finish(true)},1000);
+function start(){$('app').innerHTML=`<div class="card"><h2 style="margin-top:0">Computer-Based Test – English</h2><p>Topics: Great Athlete, Recount, and Procedure Texts.<br>Soal 1–45: pilihan ganda · Soal 46–50: uraian · Waktu 90 menit.</p><p class="m">Jawaban uraian tidak dinilai otomatis; kunci dan rubrik tampil setelah tes selesai.</p><button class="b" onclick="show(0)">Mulai</button></div>`}
+function show(i){cur=i;const mc=i<Q.length,q=mc?Q[i]:E[i-Q.length];
+let h=`<div class="card"><div class="row m"><span>Soal ${i+1} / ${N} · ${mc?'Pilihan Ganda':'Uraian'}</span>${done?'':`<button class="b g" onclick="fl[${i}]=!fl[${i}];show(${i})">${fl[i]?'★ Ditandai':'☆ Tandai ragu-ragu'}</button>`}</div>`;
+if(mc){if(q[0])h+=`<div class="pas">${P[q[0]]}</div>`;h+=`<p><b>${q[1]}</b></p>`;
+q[2].forEach((o,k)=>{let c='opt';if(done){if(k==q[3])c+=' ok';else if(ans[i]===k)c+=' no'}else if(ans[i]===k)c+=' sel';h+=`<button class="${c}" ${done?'disabled':`onclick="ans[${i}]=${k};show(${i})"`}>${'ABCD'[k]}. ${o}</button>`});
+if(done)h+=`<div class="key">Kunci: ${'ABCD'[q[3]]}</div>`}
+else{h+=`<p>${q[0]}</p><textarea ${done?'readonly':''} oninput="ans[${i}]=this.value">${ans[i]||''}</textarea>`;if(done)h+=`<div class="key">${q[1]}</div>`}
+h+=`<div class="row" style="margin-top:12px"><button class="b g" ${i?'':'disabled'} onclick="show(${i-1})">← Sebelumnya</button>${i<N-1?`<button class="b" onclick="show(${i+1})">Berikutnya →</button>`:(done?'':`<button class="b" onclick="finish()">Selesai</button>`)}</div></div>`;
+h+=`<div class="card"><div id="grid">`+ans.map((a,k)=>`<button class="${k==cur?'c ':''}${fl[k]&&!done?'f':a!==null&&a!==''?'d':''}" onclick="show(${k})">${k+1}</button>`).join('')+`</div>${done?'':'<p class="m" style="margin-bottom:0">Biru = terjawab · Kuning = ragu-ragu</p>'}</div>`;
+$('app').innerHTML=h;scrollTo(0,0)}
+function finish(auto){const un=ans.slice(0,Q.length).filter(a=>a===null).length;
+if(!auto&&!confirm(un?`Masih ada ${un} soal pilihan ganda belum dijawab. Akhiri tes?`:'Akhiri tes dan lihat hasil?'))return;
+done=true;clearInterval(tick);let c=0;Q.forEach((q,i)=>{if(ans[i]===q[3])c++});const sc=Math.round(c/Q.length*100);
+$('app').innerHTML=`<div class="card"><h2 style="margin-top:0">Hasil Tes</h2><p>Pilihan ganda benar: <b>${c} / ${Q.length}</b> · Nilai PG: <b>${sc}</b></p><p class="m">Soal uraian (46–50, skor maks 10 per soal) dinilai guru memakai rubrik pada pembahasan.</p><button class="b" onclick="show(0)">Lihat Pembahasan</button></div>`}
+start();
+</script></body></html>
