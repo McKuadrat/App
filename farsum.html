@@ -3,1205 +3,397 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBT Ujian Bahasa Inggris - 50 Soal Lengkap</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Latihan Listening UN/US - 15 Soal Lengkap</title>
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        body { background-color: #f4f7f6; color: #333; padding: 15px; max-width: 650px; margin: 0 auto; }
+        header { text-align: center; background: #2c3e50; color: #fff; padding: 20px 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        header h1 { font-size: 1.4rem; margin-bottom: 5px; }
+        header p { font-size: 0.85rem; opacity: 0.8; }
+        .card { background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .text-type-badge { display: inline-block; background: #3498db; color: #fff; padding: 4px 10px; font-size: 0.75rem; border-radius: 20px; font-weight: bold; margin-bottom: 12px; text-transform: uppercase; }
+        .audio-player-box { background: #eef2f5; border-left: 4px solid #3498db; padding: 12px; border-radius: 6px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
+        .play-btn { background: #27ae60; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; }
+        .play-btn:active { background: #219150; }
+        .script-toggle { background: none; border: none; color: #7f8c8d; font-size: 0.8rem; text-decoration: underline; cursor: pointer; margin-top: 5px; display: block; }
+        .audio-script { display: none; background: #fffde7; padding: 10px; border-radius: 6px; font-size: 0.85rem; margin-top: 10px; color: #555; font-style: italic; border: 1px solid #ffe082; }
+        .question-title { font-size: 1rem; font-weight: 600; margin-bottom: 12px; line-height: 1.4; }
+        .options { display: flex; flex-direction: column; gap: 8px; }
+        .option-btn { background: #f8f9fa; border: 1px solid #ced4da; padding: 10px 12px; border-radius: 8px; text-align: left; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
+        .option-btn:hover { background: #e9ecef; }
+        .option-btn.correct { background: #d4edda !important; border-color: #c3e6cb !important; color: #155724; font-weight: bold; }
+        .option-btn.wrong { background: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24; }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
+<body>
 
-    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 shadow-md sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="bg-indigo-600 p-2 rounded-lg text-white font-bold text-xl">CBT</div>
-                <div>
-                    <h1 class="font-bold text-lg sm:text-xl text-indigo-400">Ujian Kompetensi Bahasa Inggris</h1>
-                    <p class="text-xs text-slate-400">50 Soal Komprehensif (Teks Panjang & Grammar)</p>
-                </div>
-            </div>
-            <div id="timer-container" class="hidden items-center bg-slate-900 px-4 py-2 rounded-lg border border-slate-700">
-                <span class="text-xs text-slate-400 mr-2">Sisa Waktu:</span>
-                <span id="timer-display" class="font-mono font-bold text-amber-400 text-lg">90:00</span>
-            </div>
+<header>
+    <h1>Listening Test - 15 Soal UN/US Model</h1>
+    <p>Short Conversations & Monolog (Descriptive, Report, Recount, Procedure, Narrative)</p>
+</header>
+
+<div id="quiz-container">
+    <!-- PART I: SHORT CONVERSATIONS -->
+    <!-- Soal 1 -->
+    <div class="card" id="q1">
+        <span class="text-type-badge">Short Conversation</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(1, 'Man: What do you think of our new English teacher, Ms. Amanda? Woman: I think she is very creative and friendly. She always uses interesting games to teach us vocabulary. Narrator: What is the woman\'s opinion about Ms. Amanda?')">▶ Putar</button>
         </div>
-    </header>
-
-    <main class="flex-grow max-w-6xl w-full mx-auto p-4 sm:p-6">
-        
-        <!-- Welcome Screen -->
-        <div id="welcome-screen" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-10 shadow-xl max-w-2xl mx-auto mt-10">
-            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">Selamat Datang di Ujian CBT Bahasa Inggris</h2>
-            <p class="text-slate-300 mb-6 leading-relaxed">
-                Ujian ini terdiri dari <span class="font-semibold text-indigo-400">50 soal pilihan ganda</span> yang mencakup pemahaman teks panjang (Recount, Descriptive, Exposition, Narrative, Procedure) serta kaidah kebahasaan (Simple Past, Simple Present, Conjunction, Reported Speech, Passive Voice, Conditional Sentences).
-            </p>
-            <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 mb-6 space-y-2 text-sm text-slate-300">
-                <div class="flex justify-between"><span>Total Soal:</span> <span class="font-semibold text-white">50 Soal</span></div>
-                <div class="flex justify-between"><span>Waktu Pengerjaan:</span> <span class="font-semibold text-white">90 Menit</span></div>
-                <div class="flex justify-between"><span>Fitur:</span> <span class="font-semibold text-white">Timer Otomatis & Pembahasan Lengkap</span></div>
-            </div>
-            <div class="mb-6">
-                <label class="block text-sm font-medium text-slate-300 mb-2">Masukkan Nama Lengkap Anda:</label>
-                <input type="text" id="student-name" placeholder="Contoh: Budi Santoso" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-indigo-500">
-            </div>
-            <button onclick="startExam()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow-lg transition duration-200">
-                Mulai Ujian Sekarang
-            </button>
+        <button class="script-toggle" onclick="toggleScript(1)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-1">
+            <strong>Man:</strong> What do you think of our new English teacher, Ms. Amanda?<br>
+            <strong>Woman:</strong> I think she is very creative and friendly. She always uses interesting games to teach us vocabulary.<br>
+            <strong>Narrator:</strong> What is the woman's opinion about Ms. Amanda?
         </div>
-
-        <!-- Quiz Screen -->
-        <div id="quiz-screen" class="hidden grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <!-- Left/Main: Question & Reading Passage -->
-            <div class="lg:col-span-3 space-y-6">
-                <!-- Reading Passage Box (Conditional) -->
-                <div id="passage-box" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-lg max-h-80 overflow-y-auto">
-                    <span class="text-xs uppercase tracking-wider text-indigo-400 font-bold mb-2 block">Teks Bacaan (Reading Passage)</span>
-                    <h3 id="passage-title" class="font-bold text-lg text-white mb-2"></h3>
-                    <div id="passage-content" class="text-slate-300 text-sm leading-relaxed space-y-3 whitespace-pre-line"></div>
-                </div>
-
-                <!-- Question Card -->
-                <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-xl">
-                    <div class="flex justify-between items-center mb-6">
-                        <span id="question-badge" class="px-3 py-1 bg-indigo-900/60 text-indigo-300 border border-indigo-700 text-xs font-semibold rounded-full">Soal 1 dari 50</span>
-                        <span id="question-topic" class="text-xs text-slate-400">Recount Text</span>
-                    </div>
-                    <h3 id="question-text" class="text-lg sm:text-xl font-medium text-white mb-6 leading-relaxed"></h3>
-                    
-                    <div id="options-container" class="space-y-3">
-                        <!-- Options injected by JS -->
-                    </div>
-
-                    <div class="flex justify-between items-center mt-8 pt-6 border-t border-slate-700">
-                        <button onclick="prevQuestion()" id="prev-btn" class="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Sebelumnya
-                        </button>
-                        <button onclick="nextQuestion()" id="next-btn" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl transition duration-200">
-                            Selanjutnya
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Sidebar: Question Palette -->
-            <div class="lg:col-span-1 bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-xl flex flex-col justify-between h-fit">
-                <div>
-                    <h4 class="font-bold text-white text-sm mb-3 flex items-center justify-between">
-                        <span>Navigasi Soal</span>
-                        <span id="answered-count" class="text-xs font-normal text-indigo-400">0/50 terjawab</span>
-                    </h4>
-                    <div id="question-palette" class="grid grid-cols-5 gap-2 max-h-96 overflow-y-auto p-1">
-                        <!-- Palette buttons injected by JS -->
-                    </div>
-                </div>
-                <div class="mt-6 pt-4 border-t border-slate-700">
-                    <button onclick="confirmSubmit()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl transition duration-200 shadow-lg">
-                        Selesai & Kumpulkan
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Result Screen -->
-        <div id="result-screen" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-10 shadow-xl max-w-3xl mx-auto mt-6">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-white mb-2">Hasil Ujian CBT</h2>
-                <p id="result-student-name" class="text-indigo-400 font-medium"></p>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                <div class="bg-slate-900 border border-slate-700 p-5 rounded-xl text-center">
-                    <span class="text-xs text-slate-400 block mb-1">Nilai Akhir</span>
-                    <span id="final-score" class="text-4xl font-extrabold text-indigo-400">0</span>
-                </div>
-                <div class="bg-slate-900 border border-slate-700 p-5 rounded-xl text-center">
-                    <span class="text-xs text-slate-400 block mb-1">Jawaban Benar</span>
-                    <span id="final-correct" class="text-4xl font-extrabold text-emerald-400">0</span>
-                </div>
-                <div class="bg-slate-900 border border-slate-700 p-5 rounded-xl text-center">
-                    <span class="text-xs text-slate-400 block mb-1">Jawaban Salah</span>
-                    <span id="final-wrong" class="text-4xl font-extrabold text-rose-400">0</span>
-                </div>
-            </div>
-
-            <div class="mb-8">
-                <h3 class="font-bold text-white text-lg mb-4">Review Jawaban & Pembahasan</h3>
-                <div id="review-container" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
-                    <!-- Review items injected here -->
-                </div>
-            </div>
-
-            <div class="text-center">
-                <button onclick="location.reload()" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow-lg transition duration-200">
-                    Ulangi Ujian
-                </button>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Modal Konfirmasi Submit -->
-    <div id="submit-modal" class="fixed inset-0 bg-black/70 flex items-center justify-center hidden z-50 p-4">
-        <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-md w-full shadow-2xl">
-            <h3 class="text-xl font-bold text-white mb-2">Konfirmasi Pengumpulan</h3>
-            <p id="modal-warning-text" class="text-slate-300 text-sm mb-6">Apakah Anda yakin ingin menyelesaikan ujian ini? Pastikan semua soal telah terjawab.</p>
-            <div class="flex space-x-3">
-                <button onclick="closeSubmitModal()" class="flex-1 py-2.5 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-xl transition">Lanjutkan Ujian</button>
-                <button onclick="submitExam()" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl transition">Ya, Kumpulkan</button>
-            </div>
+        <br>
+        <div class="question-title">1. What is the woman's opinion about Ms. Amanda?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 1, false)">A. She thinks Ms. Amanda is too strict.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 1, true)">B. She thinks Ms. Amanda is creative and friendly.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 1, false)">C. She believes Ms. Amanda gives too much homework.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 1, false)">D. She wants Ms. Amanda to change her teaching style.</button>
         </div>
     </div>
 
-    <!-- Modal Peringatan Nama Kosong -->
-    <div id="alert-modal" class="fixed inset-0 bg-black/70 flex items-center justify-center hidden z-50 p-4">
-        <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 max-w-sm w-full shadow-2xl text-center">
-            <h3 class="text-lg font-bold text-amber-400 mb-2">Perhatian</h3>
-            <p id="alert-msg" class="text-slate-300 text-sm mb-6">Silakan masukkan nama Anda terlebih dahulu.</p>
-            <button onclick="closeAlertModal()" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl transition">
-                Mengerti
-            </button>
+    <!-- Soal 2 -->
+    <div class="card" id="q2">
+        <span class="text-type-badge">Short Conversation</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(2, 'Woman: Are you going anywhere this weekend, Brian? Man: Well, my family and I are planning to visit the library on Saturday afternoon to borrow some science books. Narrator: Where will Brian and his family go this weekend?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(2)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-2">
+            <strong>Woman:</strong> Are you going anywhere this weekend, Brian?<br>
+            <strong>Man:</strong> Well, my family and I are planning to visit the library on Saturday afternoon to borrow some science books.<br>
+            <strong>Narrator:</strong> Where will Brian and his family go this weekend?
+        </div>
+        <br>
+        <div class="question-title">2. Where will Brian and his family go this weekend?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 2, true)">A. To the library</button>
+            <button class="option-btn" onclick="checkAnswer(this, 2, false)">B. To a science museum</button>
+            <button class="option-btn" onclick="checkAnswer(this, 2, false)">C. To a bookstore</button>
+            <button class="option-btn" onclick="checkAnswer(this, 2, false)">D. To a public park</button>
         </div>
     </div>
 
-    <footer class="bg-slate-800 border-t border-slate-700 py-4 text-center text-xs text-slate-400">
-        &copy; 2026 CBT English Assessment System. All rights reserved.
-    </footer>
+    <!-- Soal 3 -->
+    <div class="card" id="q3">
+        <span class="text-type-badge">Short Conversation</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(3, 'Man: I am so sorry for breaking your favorite ceramic vase, Diana. I didn\'t do it on purpose. Woman: Don\'t worry about it, Leo. It was an accident. I\'m just glad you didn\'t get hurt by the broken pieces. Narrator: What does the woman do?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(3)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-3">
+            <strong>Man:</strong> I am so sorry for breaking your favorite ceramic vase, Diana. I didn't do it on purpose.<br>
+            <strong>Woman:</strong> Don't worry about it, Leo. It was an accident. I'm just glad you didn't get hurt by the broken pieces.<br>
+            <strong>Narrator:</strong> What does the woman do?
+        </div>
+        <br>
+        <div class="question-title">3. What does the woman do?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 3, false)">A. She gets angry at Leo.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 3, false)">B. She asks Leo to buy a new vase.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 3, true)">C. She forgives Leo for the accident.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 3, false)">D. She breaks another vase.</button>
+        </div>
+    </div>
 
-    <script>
-        // Database 50 Soal Komprehensif (Teks Panjang + Grammar)
-        const questions = [
-            // Kategori 1: Recount Text (Soal 1-8)
-            {
-                id: 1,
-                topic: "Recount Text",
-                passageTitle: "A Memorable Trip to Mount Bromo",
-                passage: "Last month, my family and I went on a vacation to Mount Bromo in East Java. We departed from Malang at midnight using a rented jeep. The journey was bumpy and cold, but the scenery along the winding road kept us awake. Upon arrival at Penanjakan view point, hundreds of travelers had already gathered, waiting patiently for the sunrise.\n\nAs the clock struck five, the sky slowly shifted from deep indigo to vibrant shades of orange and gold. The golden light illuminated Mount Bromo, Mount Batok, and Mount Semeru standing majestically amidst the sea of sand. It was truly a breathtaking panorama that rewarded us for waking up so early. Afterward, we descended toward the crater and walked across the volcanic caldera before returning home with unforgettable memories.",
-                question: "What is the main purpose of the text above?",
-                options: [
-                    "To persuade readers to climb Mount Bromo",
-                    "To describe the physical characteristics of Mount Bromo",
-                    "To retell the author's personal experience of visiting Mount Bromo",
-                    "To explain how to get to Mount Bromo safely",
-                    "To report scientific facts about volcanic activities in East Java"
-                ],
-                answer: 2,
-                explanation: "Teks di atas menggunakan past tense ('went', 'departed', 'shifted') dan menceritakan pengalaman pribadi penulis beserta keluarganya berlibur ke Gunung Bromo. Ini adalah karakteristik utama dari Recount Text."
-            },
-            {
-                id: 2,
-                topic: "Recount Text",
-                passageTitle: "A Memorable Trip to Mount Bromo",
-                passage: "Last month, my family and I went on a vacation to Mount Bromo in East Java. We departed from Malang at midnight using a rented jeep. The journey was bumpy and cold, but the scenery along the winding road kept us awake. Upon arrival at Penanjakan view point, hundreds of travelers had already gathered, waiting patiently for the sunrise.\n\nAs the clock struck five, the sky slowly shifted from deep indigo to vibrant shades of orange and gold. The golden light illuminated Mount Bromo, Mount Batok, and Mount Semeru standing majestically amidst the sea of sand. It was truly a breathtaking panorama that rewarded us for waking up so early. Afterward, we descended toward the crater and walked across the volcanic caldera before returning home with unforgettable memories.",
-                question: "When did the author and family arrive at the Penanjakan view point?",
-                options: [
-                    "At midnight from Malang",
-                    "Just before sunrise when hundreds of travelers had gathered",
-                    "In the afternoon after visiting the crater",
-                    "When the sky was deep indigo at midnight",
-                    "Long after the sun had fully risen"
-                ],
-                answer: 1,
-                explanation: "Berdasarkan teks, mereka tiba di Penanjakan view point saat ratusan pelancong sudah berkumpul menunggu matahari terbit (menjelang fajar/jam 5)."
-            },
-            {
-                id: 3,
-                topic: "Recount Text",
-                passageTitle: "A Memorable Trip to Mount Bromo",
-                passage: "Last month, my family and I went on a vacation to Mount Bromo in East Java. We departed from Malang at midnight using a rented jeep. The journey was bumpy and cold, but the scenery along the winding road kept us awake. Upon arrival at Penanjakan view point, hundreds of travelers had already gathered, waiting patiently for the sunrise.\n\nAs the clock struck five, the sky slowly shifted from deep indigo to vibrant shades of orange and gold. The golden light illuminated Mount Bromo, Mount Batok, and Mount Semeru standing majestically amidst the sea of sand. It was truly a breathtaking panorama that rewarded us for waking up so early. Afterward, we descended toward the crater and walked across the volcanic caldera before returning home with unforgettable memories.",
-                question: "Which mountains are mentioned as standing majestically amidst the sea of sand?",
-                options: [
-                    "Mount Merapi, Mount Bromo, and Mount Semeru",
-                    "Mount Bromo, Mount Batok, and Mount Semeru",
-                    "Mount Malang, Mount Bromo, and Mount Batok",
-                    "Mount Penanjakan, Mount Bromo, and Mount Semeru",
-                    "Mount Semeru, Mount Merbabu, and Mount Bromo"
-                ],
-                answer: 1,
-                explanation: "Teks menyebutkan secara eksplisit: '...illuminated Mount Bromo, Mount Batok, and Mount Semeru standing majestically...'"
-            },
-            {
-                id: 4,
-                topic: "Recount Text",
-                passageTitle: "A Memorable Trip to Mount Bromo",
-                passage: "Last month, my family and I went on a vacation to Mount Bromo in East Java. We departed from Malang at midnight using a rented jeep. The journey was bumpy and cold, but the scenery along the winding road kept us awake. Upon arrival at Penanjakan view point, hundreds of travelers had already gathered, waiting patiently for the sunrise.\n\nAs the clock struck five, the sky slowly shifted from deep indigo to vibrant shades of orange and gold. The golden light illuminated Mount Bromo, Mount Batok, and Mount Semeru standing majestically amidst the sea of sand. It was truly a breathtaking panorama that rewarded us for waking up so early. Afterward, we descended toward the crater and walked across the volcanic caldera before returning home with unforgettable memories.",
-                question: "What vehicle did the author use to depart from Malang?",
-                options: [
-                    "A private bus",
-                    "A public train",
-                    "A rented jeep",
-                    "A motorcycle",
-                    "A commercial taxi"
-                ],
-                answer: 2,
-                explanation: "Di paragraf pertama disebutkan: 'We departed from Malang at midnight using a rented jeep.'"
-            },
-            {
-                id: 5,
-                topic: "Recount Text",
-                passageTitle: "An Unfortunate Camping Experience",
-                passage: "Last weekend, my friends and I decided to go camping at Pine Forest hills. We arrived on Saturday afternoon and immediately set up our tents before dusk. Initially, everything went smoothly. We cooked warm soup and shared stories around the campfire under a starry sky.\n\nHowever, midnight brought a sudden change in weather. Heavy rain accompanied by strong gusts of wind started pounding our campsite. Water began leaking through the seams of my old tent, soaking my sleeping bag and clothes. We spent hours shivering and holding up the tent poles to prevent them from collapsing. As soon as the rain subsided at dawn, we packed our soaked gear and decided to head back home immediately, learning a valuable lesson about checking weather forecasts.",
-                question: "What caused the camping trip to become unfortunate?",
-                options: [
-                    "They ran out of food and warm soup",
-                    "Their friends cancelled the trip at the last minute",
-                    "Sudden heavy rain and strong winds ruined their night",
-                    "Wild animals destroyed their tents",
-                    "They lost their way in the Pine Forest hills"
-                ],
-                answer: 2,
-                explanation: "Perubahan cuaca mendadak berupa hujan lebat dan angin kencang membuat tenda bocor dan merusak suasana perkemahan."
-            },
-            {
-                id: 6,
-                topic: "Recount Text",
-                passageTitle: "An Unfortunate Camping Experience",
-                passage: "Last weekend, my friends and I decided to go camping at Pine Forest hills. We arrived on Saturday afternoon and immediately set up our tents before dusk. Initially, everything went smoothly. We cooked warm soup and shared stories around the campfire under a starry sky.\n\nHowever, midnight brought a sudden change in weather. Heavy rain accompanied by strong gusts of wind started pounding our campsite. Water began leaking through the seams of my old tent, soaking my sleeping bag and clothes. We spent hours shivering and holding up the tent poles to prevent them from collapsing. As soon as the rain subsided at dawn, we packed our soaked gear and decided to head back home immediately, learning a valuable lesson about checking weather forecasts.",
-                question: "When did the author and friends decide to return home?",
-                options: [
-                    "On Saturday afternoon before dusk",
-                    "At midnight when the rain started",
-                    "At dawn as soon as the rain subsided",
-                    "On Sunday afternoon after drying their clothes",
-                    "Two days after the camping trip ended"
-                ],
-                answer: 2,
-                explanation: "Di teks dinyatakan: 'As soon as the rain subsided at dawn, we packed our soaked gear and decided to head back home immediately...'"
-            },
-            {
-                id: 7,
-                topic: "Recount Text",
-                passageTitle: "An Unfortunate Camping Experience",
-                passage: "Last weekend, my friends and I decided to go camping at Pine Forest hills. We arrived on Saturday afternoon and immediately set up our tents before dusk. Initially, everything went smoothly. We cooked warm soup and shared stories around the campfire under a starry sky.\n\nHowever, midnight brought a sudden change in weather. Heavy rain accompanied by strong gusts of wind started pounding our campsite. Water began leaking through the seams of my old tent, soaking my sleeping bag and clothes. We spent hours shivering and holding up the tent poles to prevent them from collapsing. As soon as the rain subsided at dawn, we packed our soaked gear and decided to head back home immediately, learning a valuable lesson about checking weather forecasts.",
-                question: "What valuable lesson did the author learn from the experience?",
-                options: [
-                    "Never go camping in Pine Forest hills",
-                    "Always check weather forecasts before camping",
-                    "Never cook soup around a campfire",
-                    "Always bring extra sleeping bags",
-                    "Camping must be done during weekdays"
-                ],
-                answer: 1,
-                explanation: "Kalimat terakhir teks menyebutkan: '...learning a valuable lesson about checking weather forecasts.'"
-            },
-            {
-                id: 8,
-                topic: "Recount Text",
-                passageTitle: "An Unfortunate Camping Experience",
-                passage: "Last weekend, my friends and I decided to go camping at Pine Forest hills. We arrived on Saturday afternoon and immediately set up our tents before dusk. Initially, everything went smoothly. We cooked warm soup and shared stories around the campfire under a starry sky.\n\nHowever, midnight brought a sudden change in weather. Heavy rain accompanied by strong gusts of wind started pounding our campsite. Water began leaking through the seams of my old tent, soaking my sleeping bag and clothes. We spent hours shivering and holding up the tent poles to prevent them from collapsing. As soon as the rain subsided at dawn, we packed our soaked gear and decided to head back home immediately, learning a valuable lesson about checking weather forecasts.",
-                question: "What food did the campers cook on Saturday evening?",
-                options: [
-                    "Fried rice",
-                    "Warm soup",
-                    "Grilled fish",
-                    "Instant noodles",
-                    "Roasted corn"
-                ],
-                answer: 1,
-                explanation: "Disebutkan di paragraf pertama: 'We cooked warm soup and shared stories around the campfire...'"
-            },
+    <!-- Soal 4 -->
+    <div class="card" id="q4">
+        <span class="text-type-badge">Short Conversation</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(4, 'Woman: You look so pale, David. Is everything okay? Man: I have a terrible headache, and I couldn\'t sleep well last night because of the noise next door. Narrator: What is wrong with David?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(4)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-4">
+            <strong>Woman:</strong> You look so pale, David. Is everything okay?<br>
+            <strong>Man:</strong> I have a terrible headache, and I couldn't sleep well last night because of the noise next door.<br>
+            <strong>Narrator:</strong> What is wrong with David?
+        </div>
+        <br>
+        <div class="question-title">4. What is wrong with David?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 4, false)">A. He has a stomachache.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 4, true)">B. He has a terrible headache.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 4, false)">C. He lost his keys.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 4, false)">D. He is late for school.</button>
+        </div>
+    </div>
 
-            // Kategori 2: Descriptive Text (Soal 9-16)
-            {
-                id: 9,
-                topic: "Descriptive Text",
-                passageTitle: "Orangutan: The Gentle Red Ape of Borneo",
-                passage: "The orangutan, scientifically known as Pongo pygmaeus, is one of the world's most intelligent primates, native to the rainforests of Borneo and Sumatra. Recognized by their distinctive reddish-brown fur, orangutans possess exceptionally long arms and flexible hands and feet that allow them to navigate effortlessly through the dense forest canopy. An adult male can reach significant size, featuring prominent cheek pads called flanges that make them look imposing.\n\nPrimarily arboreal, orangutans spend the vast majority of their lives high up in trees where they construct complex sleeping nests out of branches and leaves. Their diet consists chiefly of wild fruits such as figs and durians, supplemented by leaves, bark, and occasional bird eggs or insects. Unfortunately, rapid deforestation and illegal wildlife poaching have pushed these remarkable creatures to the brink of critical endangerment, making conservation efforts more urgent than ever.",
-                question: "What are the prominent cheek pads found on adult male orangutans called?",
-                options: [
-                    "Canopy",
-                    "Primate",
-                    "Flanges",
-                    "Arboreal",
-                    "Colony"
-                ],
-                answer: 2,
-                explanation: "Paragraf pertama menyatakan: '...featuring prominent cheek pads called flanges that make them look imposing.'"
-            },
-            {
-                id: 10,
-                topic: "Descriptive Text",
-                passageTitle: "Orangutan: The Gentle Red Ape of Borneo",
-                passage: "The orangutan, scientifically known as Pongo pygmaeus, is one of the world's most intelligent primates, native to the rainforests of Borneo and Sumatra. Recognized by their distinctive reddish-brown fur, orangutans possess exceptionally long arms and flexible hands and feet that allow them to navigate effortlessly through the dense forest canopy. An adult male can reach significant size, featuring prominent cheek pads called flanges that make them look imposing.\n\nPrimarily arboreal, orangutans spend the vast majority of their lives high up in trees where they construct complex sleeping nests out of branches and leaves. Their diet consists chiefly of wild fruits such as figs and durians, supplemented by leaves, bark, and occasional bird eggs or insects. Unfortunately, rapid deforestation and illegal wildlife poaching have pushed these remarkable creatures to the brink of critical endangerment, making conservation efforts more urgent than ever.",
-                question: "Where are orangutans naturally native to?",
-                options: [
-                    "Rainforests of Africa and Madagascar",
-                    "Rainforests of Borneo and Sumatra",
-                    "Tropical savannas of Australia",
-                    "Dense jungles of Central America",
-                    "Mountain forests of the Himalayas"
-                ],
-                answer: 1,
-                explanation: "Disebutkan di awal teks: '...native to the rainforests of Borneo and Sumatra.'"
-            },
-            {
-                id: 11,
-                topic: "Descriptive Text",
-                passageTitle: "Orangutan: The Gentle Red Ape of Borneo",
-                passage: "The orangutan, scientifically known as Pongo pygmaeus, is one of the world's most intelligent primates, native to the rainforests of Borneo and Sumatra. Recognized by their distinctive reddish-brown fur, orangutans possess exceptionally long arms and flexible hands and feet that allow them to navigate effortlessly through the dense forest canopy. An adult male can reach significant size, featuring prominent cheek pads called flanges that make them look imposing.\n\nPrimarily arboreal, orangutans spend the vast majority of their lives high up in trees where they construct complex sleeping nests out of branches and leaves. Their diet consists chiefly of wild fruits such as figs and durians, supplemented by leaves, bark, and occasional bird eggs or insects. Unfortunately, rapid deforestation and illegal wildlife poaching have pushed these remarkable creatures to the brink of critical endangerment, making conservation efforts more urgent than ever.",
-                question: "What does 'arboreal' mean in the context of orangutans?",
-                options: [
-                    "Living primarily on the ground and caves",
-                    "Living mainly in water and rivers",
-                    "Living high up in trees",
-                    "Migrating across continents annually",
-                    "Burrowing underground during winter"
-                ],
-                answer: 2,
-                explanation: "Kata 'arboreal' dijelaskan melalui kalimat selanjutnya: '...spend the vast majority of their lives high up in trees...'"
-            },
-            {
-                id: 12,
-                topic: "Descriptive Text",
-                passageTitle: "Orangutan: The Gentle Red Ape of Borneo",
-                passage: "The orangutan, scientifically known as Pongo pygmaeus, is one of the world's most intelligent primates, native to the rainforests of Borneo and Sumatra. Recognized by their distinctive reddish-brown fur, orangutans possess exceptionally long arms and flexible hands and feet that allow them to navigate effortlessly through the dense forest canopy. An adult male can reach significant size, featuring prominent cheek pads called flanges that make them look imposing.\n\nPrimarily arboreal, orangutans spend the vast majority of their lives high up in trees where they construct complex sleeping nests out of branches and leaves. Their diet consists chiefly of wild fruits such as figs and durians, supplemented by leaves, bark, and occasional bird eggs or insects. Unfortunately, rapid deforestation and illegal wildlife poaching have pushed these remarkable creatures to the brink of critical endangerment, making conservation efforts more urgent than ever.",
-                question: "What is the primary threat to the survival of orangutans?",
-                options: [
-                    "Climate change causing natural floods",
-                    "Rapid deforestation and illegal wildlife poaching",
-                    "Lack of wild fruits like figs and durians",
-                    "Competition with other primates for food",
-                    "Natural aging and diseases"
-                ],
-                answer: 1,
-                explanation: "Di paragraf kedua disebutkan: 'Unfortunately, rapid deforestation and illegal wildlife poaching have pushed these remarkable creatures to the brink...'"
-            },
-            {
-                id: 13,
-                topic: "Descriptive Text",
-                passageTitle: "Wakatobi National Marine Park",
-                passage: "Wakatobi National Marine Park, located in Southeast Sulawesi, Indonesia, is a global sanctuary for marine biodiversity. Encompassing over 1.4 million hectares, the park boasts one of the highest coral reef biodiversity indexes on the planet, featuring hundreds of species of vibrant corals and thousands of species of colorful reef fish, sea turtles, and majestic marine mammals.\n\nThe crystal-clear turquoise waters provide exceptional visibility, often exceeding twenty meters, making it a world-renowned destination for scuba divers and snorkelers. Besides its underwater wonders, Wakatobi is home to the Bajo people, traditional sea nomads who live in stilt houses above the shallow coral waters, preserving a unique maritime culture that has endured for centuries in harmony with nature.",
-                question: "Where is Wakatobi National Marine Park located?",
-                options: [
-                    "West Papua, Indonesia",
-                    "Southeast Sulawesi, Indonesia",
-                    "North Sumatra, Indonesia",
-                    "South Kalimantan, Indonesia",
-                    "Bali, Indonesia"
-                ],
-                answer: 1,
-                explanation: "Teks menyatakan: 'Wakatobi National Marine Park, located in Southeast Sulawesi, Indonesia...'"
-            },
-            {
-                id: 14,
-                topic: "Descriptive Text",
-                passageTitle: "Wakatobi National Marine Park",
-                passage: "Wakatobi National Marine Park, located in Southeast Sulawesi, Indonesia, is a global sanctuary for marine biodiversity. Encompassing over 1.4 million hectares, the park boasts one of the highest coral reef biodiversity indexes on the planet, featuring hundreds of species of vibrant corals and thousands of species of colorful reef fish, sea turtles, and majestic marine mammals.\n\nThe crystal-clear turquoise waters provide exceptional visibility, often exceeding twenty meters, making it a world-renowned destination for scuba divers and snorkelers. Besides its underwater wonders, Wakatobi is home to the Bajo people, traditional sea nomads who live in stilt houses above the shallow coral waters, preserving a unique maritime culture that has endured for centuries in harmony with nature.",
-                question: "What makes Wakatobi a world-renowned destination for divers?",
-                options: [
-                    "Deep dark trenches and strong underwater currents",
-                    "Crystal-clear turquoise waters with visibility exceeding twenty meters",
-                    "Underwater museums and historical shipwrecks",
-                    "Giant waves suitable for extreme surfing",
-                    "Abundant shark feeding attractions"
-                ],
-                answer: 1,
-                explanation: "Paragraf kedua menyebutkan: 'The crystal-clear turquoise waters provide exceptional visibility, often exceeding twenty meters...'"
-            },
-            {
-                id: 15,
-                topic: "Descriptive Text",
-                passageTitle: "Wakatobi National Marine Park",
-                passage: "Wakatobi National Marine Park, located in Southeast Sulawesi, Indonesia, is a global sanctuary for marine biodiversity. Encompassing over 1.4 million hectares, the park boasts one of the highest coral reef biodiversity indexes on the planet, featuring hundreds of species of vibrant corals and thousands of species of colorful reef fish, sea turtles, and majestic marine mammals.\n\nThe crystal-clear turquoise waters provide exceptional visibility, often exceeding twenty meters, making it a world-renowned destination for scuba divers and snorkelers. Besides its underwater wonders, Wakatobi is home to the Bajo people, traditional sea nomads who live in stilt houses above the shallow coral waters, preserving a unique maritime culture that has endured for centuries in harmony with nature.",
-                question: "Who are the Bajo people mentioned in the text?",
-                options: [
-                    "Modern marine biologists studying coral bleaching",
-                    "Traditional sea nomads living in stilt houses above shallow coral waters",
-                    "Tour operators managing scuba diving equipment",
-                    "Fishermen who practice commercial trawling",
-                    "Ancient kings who ruled Southeast Sulawesi"
-                ],
-                answer: 1,
-                explanation: "Teks menyatakan: '...home to the Bajo people, traditional sea nomads who live in stilt houses above the shallow coral waters...'"
-            },
-            {
-                id: 16,
-                topic: "Descriptive Text",
-                passageTitle: "Wakatobi National Marine Park",
-                passage: "Wakatobi National Marine Park, located in Southeast Sulawesi, Indonesia, is a global sanctuary for marine biodiversity. Encompassing over 1.4 million hectares, the park boasts one of the highest coral reef biodiversity indexes on the planet, featuring hundreds of species of vibrant corals and thousands of species of colorful reef fish, sea turtles, and majestic marine mammals.\n\nThe crystal-clear turquoise waters provide exceptional visibility, often exceeding twenty meters, making it a world-renowned destination for scuba divers and snorkelers. Besides its underwater wonders, Wakatobi is home to the Bajo people, traditional sea nomads who live in stilt houses above the shallow coral waters, preserving a unique maritime culture that has endured for centuries in harmony with nature.",
-                question: "How large is the area encompassed by Wakatobi National Marine Park?",
-                options: [
-                    "Under 100,000 hectares",
-                    "Around 500,000 hectares",
-                    "Over 1.4 million hectares",
-                    "Exactly 10 million hectares",
-                    "5,000 hectares"
-                ],
-                answer: 2,
-                explanation: "Disebutkan di paragraf pertama: 'Encompassing over 1.4 million hectares...'"
-            },
+    <!-- Soal 5 -->
+    <div class="card" id="q5">
+        <span class="text-type-badge">Short Conversation</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(5, 'Man: Would you like me to help you carry those heavy boxes to the car, ma\'am? Woman: Oh, that\'s very kind of you, young man. Thank you so much, I really appreciate it. Narrator: What is the man doing?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(5)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-5">
+            <strong>Man:</strong> Would you like me to help you carry those heavy boxes to the car, ma'am?<br>
+            <strong>Woman:</strong> Oh, that's very kind of you, young man. Thank you so much, I really appreciate it.<br>
+            <strong>Narrator:</strong> What is the man doing?
+        </div>
+        <br>
+        <div class="question-title">5. What is the man doing?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 5, true)">A. Offering help to the woman.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 5, false)">B. Buying some boxes.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 5, false)">C. Driving a car.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 5, false)">D. Asking for directions.</button>
+        </div>
+    </div>
 
-            // Kategori 3: Exposition Text (Soal 17-24)
-            {
-                id: 17,
-                topic: "Exposition Text",
-                passageTitle: "The Urgent Need to Reduce Plastic Waste",
-                passage: "Plastic pollution has become one of the most pressing environmental crises of our time. Every single day, millions of tons of single-use plastics—ranging from grocery bags to beverage bottles—are discarded carelessly into landfills and oceans. Unlike organic materials, plastics take hundreds or even thousands of years to decompose, gradually breaking down into microplastics that infiltrate marine ecosystems and contaminate the global food chain.\n\nTo combat this escalating catastrophe, governments, corporations, and individuals must take immediate collective action. Governments should enforce strict regulations and bans on single-use plastics, while businesses must invest in sustainable, biodegradable packaging alternatives. On an individual level, we can significantly reduce our carbon footprint by adopting reusable shopping bags, stainless steel water bottles, and avoiding unnecessary plastic packaging. Protecting our planet is not an option; it is an absolute necessity for future generations.",
-                question: "What is the main argument presented in the analytical exposition text above?",
-                options: [
-                    "Plastic waste is harmless if disposed of in landfills",
-                    "Plastics decompose rapidly into organic fertilizer",
-                    "Plastic pollution is a critical crisis requiring immediate collective reduction and action",
-                    "Governments should ban all industrial manufacturing completely",
-                    "Microplastics improve the quality of the global food chain"
-                ],
-                answer: 2,
-                explanation: "Teks ini adalah analytical exposition yang berargumen bahwa polusi plastik adalah krisis besar yang menuntut tindakan nyata pengurangan dari berbagai pihak."
-            },
-            {
-                id: 18,
-                topic: "Exposition Text",
-                passageTitle: "The Urgent Need to Reduce Plastic Waste",
-                passage: "Plastic pollution has become one of the most pressing environmental crises of our time. Every single day, millions of tons of single-use plastics—ranging from grocery bags to beverage bottles—are discarded carelessly into landfills and oceans. Unlike organic materials, plastics take hundreds or even thousands of years to decompose, gradually breaking down into microplastics that infiltrate marine ecosystems and contaminate the global food chain.\n\nTo combat this escalating catastrophe, governments, corporations, and individuals must take immediate collective action. Governments should enforce strict regulations and bans on single-use plastics, while businesses must invest in sustainable, biodegradable packaging alternatives. On an individual level, we can significantly reduce our carbon footprint by adopting reusable shopping bags, stainless steel water bottles, and avoiding unnecessary plastic packaging. Protecting our planet is not an option; it is an absolute necessity for future generations.",
-                question: "What happens to plastics over hundreds of years instead of decomposing organically?",
-                options: [
-                    "They turn into clean drinking water",
-                    "They dissolve instantly into harmless gas",
-                    "They break down into microplastics that contaminate the food chain",
-                    "They transform into natural minerals for plants",
-                    "They evaporate into the atmosphere"
-                ],
-                answer: 2,
-                explanation: "Paragraf pertama menyatakan: '...take hundreds or even thousands of years to decompose, gradually breaking down into microplastics that infiltrate marine ecosystems...'"
-            },
-            {
-                id: 19,
-                topic: "Exposition Text",
-                passageTitle: "The Urgent Need to Reduce Plastic Waste",
-                passage: "Plastic pollution has become one of the most pressing environmental crises of our time. Every single day, millions of tons of single-use plastics—ranging from grocery bags to beverage bottles—are discarded carelessly into landfills and oceans. Unlike organic materials, plastics take hundreds or even thousands of years to decompose, gradually breaking down into microplastics that infiltrate marine ecosystems and contaminate the global food chain.\n\nTo combat this escalating catastrophe, governments, corporations, and individuals must take immediate collective action. Governments should enforce strict regulations and bans on single-use plastics, while businesses must invest in sustainable, biodegradable packaging alternatives. On an individual level, we can significantly reduce our carbon footprint by adopting reusable shopping bags, stainless steel water bottles, and avoiding unnecessary plastic packaging. Protecting our planet is not an option; it is an absolute necessity for future generations.",
-                question: "What role should businesses play according to the text?",
-                options: [
-                    "Produce more single-use plastic bags",
-                    "Invest in sustainable, biodegradable packaging alternatives",
-                    "Dump plastic waste directly into deep oceans",
-                    "Stop manufacturing any consumer products",
-                    "Export plastic waste to other countries"
-                ],
-                answer: 1,
-                explanation: "Di paragraf kedua disebutkan: '...while businesses must invest in sustainable, biodegradable packaging alternatives.'"
-            },
-            {
-                id: 20,
-                topic: "Exposition Text",
-                passageTitle: "The Urgent Need to Reduce Plastic Waste",
-                passage: "Plastic pollution has become one of the most pressing environmental crises of our time. Every single day, millions of tons of single-use plastics—ranging from grocery bags to beverage bottles—are discarded carelessly into landfills and oceans. Unlike organic materials, plastics take hundreds or even thousands of years to decompose, gradually breaking down into microplastics that infiltrate marine ecosystems and contaminate the global food chain.\n\nTo combat this escalating catastrophe, governments, corporations, and individuals must take immediate collective action. Governments should enforce strict regulations and bans on single-use plastics, while businesses must invest in sustainable, biodegradable packaging alternatives. On an individual level, we can significantly reduce our carbon footprint by adopting reusable shopping bags, stainless steel water bottles, and avoiding unnecessary plastic packaging. Protecting our planet is not an option; it is an absolute necessity for future generations.",
-                question: "Which of the following is suggested for individuals to reduce plastic waste?",
-                options: [
-                    "Using single-use plastic grocery bags daily",
-                    "Adopting reusable shopping bags and stainless steel water bottles",
-                    "Burning plastic waste in backyard incinerators",
-                    "Ordering food wrapped in plastic containers",
-                    "Throwing plastic bottles in rivers"
-                ],
-                answer: 1,
-                explanation: "Teks menyarankan: '...adopting reusable shopping bags, stainless steel water bottles, and avoiding unnecessary plastic packaging.'"
-            },
-            {
-                id: 21,
-                topic: "Exposition Text",
-                passageTitle: "The Importance of Lifelong Learning",
-                passage: "In today's rapidly evolving digital economy, graduating from university or completing formal education is no longer sufficient to secure lifelong career stability. Technological advancements, artificial intelligence, and shifting global markets mean that professional skills can become obsolete in just a few years. Therefore, embracing lifelong learning is an absolute necessity for anyone wanting to remain competitive in the workforce.\n\nLifelong learning involves continuous, voluntary, and self-motivated pursuit of knowledge for personal and professional development. By actively acquiring new competencies—such as digital literacy, data analysis, or cross-cultural communication—individuals not only enhance their job performance but also boost cognitive agility and adaptability. Ultimately, those who view learning as a continuous journey rather than a finite destination will thrive amidst uncertainty.",
-                question: "Why is formal education alone no longer sufficient in today's economy?",
-                options: [
-                    "Because universities are closing down globally",
-                    "Because technological advancements make professional skills obsolete quickly",
-                    "Because artificial intelligence has replaced all human workers",
-                    "Because formal education is too expensive for everyone",
-                    "Because people no longer want to attend school"
-                ],
-                answer: 1,
-                explanation: "Paragraf pertama menyatakan: 'Technological advancements... mean that professional skills can become obsolete in just a few years.'"
-            },
-            {
-                id: 22,
-                topic: "Exposition Text",
-                passageTitle: "The Importance of Lifelong Learning",
-                passage: "In today's rapidly evolving digital economy, graduating from university or completing formal education is no longer sufficient to secure lifelong career stability. Technological advancements, artificial intelligence, and shifting global markets mean that professional skills can become obsolete in just a few years. Therefore, embracing lifelong learning is an absolute necessity for anyone wanting to remain competitive in the workforce.\n\nLifelong learning involves continuous, voluntary, and self-motivated pursuit of knowledge for personal and professional development. By actively acquiring new competencies—such as digital literacy, data analysis, or cross-cultural communication—individuals not only enhance their job performance but also boost cognitive agility and adaptability. Ultimately, those who view learning as a continuous journey rather than a finite destination will thrive amidst uncertainty.",
-                question: "What does lifelong learning primarily involve?",
-                options: [
-                    "Studying only for passing mandatory school exams",
-                    "Continuous, voluntary, and self-motivated pursuit of knowledge",
-                    "Waiting for employers to provide compulsory training",
-                    "Attending university degrees repeatedly",
-                    "Reading fictional novels during weekends"
-                ],
-                answer: 1,
-                explanation: "Paragraf kedua menjelaskan: 'Lifelong learning involves continuous, voluntary, and self-motivated pursuit of knowledge...'"
-            },
-            {
-                id: 23,
-                topic: "Exposition Text",
-                passageTitle: "The Importance of Lifelong Learning",
-                passage: "In today's rapidly evolving digital economy, graduating from university or completing formal education is no longer sufficient to secure lifelong career stability. Technological advancements, artificial intelligence, and shifting global markets mean that professional skills can become obsolete in just a few years. Therefore, embracing lifelong learning is an absolute necessity for anyone wanting to remain competitive in the workforce.\n\nLifelong learning involves continuous, voluntary, and self-motivated pursuit of knowledge for personal and professional development. By actively acquiring new competencies—such as digital literacy, data analysis, or cross-cultural communication—individuals not only enhance their job performance but also boost cognitive agility and adaptability. Ultimately, those who view learning as a continuous journey rather than a finite destination will thrive amidst uncertainty.",
-                question: "Which skill examples are mentioned in the text as new competencies to acquire?",
-                options: [
-                    "Cooking, tailoring, and gardening",
-                    "Digital literacy, data analysis, and cross-cultural communication",
-                    "Carpentry, plumbing, and electrical wiring",
-                    "Painting, sculpting, and pottery",
-                    "Singing, dancing, and acting"
-                ],
-                answer: 1,
-                explanation: "Teks menyebutkan: '...such as digital literacy, data analysis, or cross-cultural communication...'"
-            },
-            {
-                id: 24,
-                topic: "Exposition Text",
-                passageTitle: "The Importance of Lifelong Learning",
-                passage: "In today's rapidly evolving digital economy, graduating from university or completing formal education is no longer sufficient to secure lifelong career stability. Technological advancements, artificial intelligence, and shifting global markets mean that professional skills can become obsolete in just a few years. Therefore, embracing lifelong learning is an absolute necessity for anyone wanting to remain competitive in the workforce.\n\nLifelong learning involves continuous, voluntary, and self-motivated pursuit of knowledge for personal and professional development. By actively acquiring new competencies—such as digital literacy, data analysis, or cross-cultural communication—individuals not only enhance their job performance but also boost cognitive agility and adaptability. Ultimately, those who view learning as a continuous journey rather than a finite destination will thrive amidst uncertainty.",
-                question: "What is the ultimate benefit for individuals who embrace lifelong learning?",
-                options: [
-                    "They will never experience stress at work",
-                    "They will thrive amidst uncertainty and remain competitive",
-                    "They will immediately retire at a young age",
-                    "They will avoid paying income taxes",
-                    "They will work fewer hours every week"
-                ],
-                answer: 1,
-                explanation: "Kalimat penutup menyatakan: '...those who view learning as a continuous journey rather than a finite destination will thrive amidst uncertainty.'"
-            },
+    <!-- PART II: MONOLOGUES -->
+    <!-- Soal 6 (Descriptive) -->
+    <div class="card" id="q6">
+        <span class="text-type-badge">Descriptive Text</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(6, 'Monas, or the National Monument, is a 132-meter tower in the center of Merdeka Square, Central Jakarta. It symbolizes the struggle for Indonesia. The monument is crowned by a flame covered with gold foil. Visitors can enjoy the panoramic view of Jakarta from the top observation deck. Narrator: What is special about the top of the National Monument?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(6)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-6">
+            "Monas, or the National Monument, is a 132-meter tower in the center of Merdeka Square, Central Jakarta. It symbolizes the struggle for Indonesia. The monument is crowned by a flame covered with gold foil. Visitors can enjoy the panoramic view of Jakarta from the top observation deck."
+        </div>
+        <br>
+        <div class="question-title">6. What is special about the top of the National Monument?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 6, false)">A. It has a giant clock</button>
+            <button class="option-btn" onclick="checkAnswer(this, 6, true)">B. It has a flame covered with gold foil</button>
+            <button class="option-btn" onclick="checkAnswer(this, 6, false)">C. It is surrounded by a large park</button>
+            <button class="option-btn" onclick="checkAnswer(this, 6, false)">D. It is 200 meters high</button>
+        </div>
+    </div>
 
-            // Kategori 4: Narrative Text (Soal 25-32)
-            {
-                id: 25,
-                topic: "Narrative Text",
-                passageTitle: "The Legend of the Whispering Wind",
-                passage: "In a distant mountain kingdom ruled by a wise monarch, there lived a humble shepherd boy named Kian who possessed a magical flute carved from silver bamboo. Whenever Kian played his flute, the soothing melody would calm fierce beasts, make withered flowers bloom instantly, and bring peace to troubled hearts throughout the valley.\n\nOne fateful winter, an arrogant warlord invaded the kingdom, seeking to steal the magical flute to control nature for his tyrannical ambitions. When the warlord's soldiers cornered Kian at the edge of a sheer cliff, the boy did not fight with weapons. Instead, he closed his eyes and played his final, enchanting tune. As the music echoed across the peaks, a powerful gust of wind swept the warlord and his soldiers away into the mist, transforming them into harmless stone statues. Kian vanished into the breeze, but mountain villagers still claim that on quiet evenings, the whispering wind carries the gentle melody of his flute.",
-                question: "What special quality did Kian's silver bamboo flute possess?",
-                options: [
-                    "It could turn enemies into gold coins",
-                    "It produced melodies that calmed beasts, bloomed flowers, and brought peace",
-                    "It could summon thunderstorms and lightning",
-                    "It could unlock any secret door in the palace",
-                    "It could heal any physical injury instantly"
-                ],
-                answer: 1,
-                explanation: "Paragraf pertama menyatakan: '...soothing melody would calm fierce beasts, make withered flowers bloom instantly, and bring peace...'"
-            },
-            {
-                id: 26,
-                topic: "Narrative Text",
-                passageTitle: "The Legend of the Whispering Wind",
-                passage: "In a distant mountain kingdom ruled by a wise monarch, there lived a humble shepherd boy named Kian who possessed a magical flute carved from silver bamboo. Whenever Kian played his flute, the soothing melody would calm fierce beasts, make withered flowers bloom instantly, and bring peace to troubled hearts throughout the valley.\n\nOne fateful winter, an arrogant warlord invaded the kingdom, seeking to steal the magical flute to control nature for his tyrannical ambitions. When the warlord's soldiers cornered Kian at the edge of a sheer cliff, the boy did not fight with weapons. Instead, he closed his eyes and played his final, enchanting tune. As the music echoed across the peaks, a powerful gust of wind swept the warlord and his soldiers away into the mist, transforming them into harmless stone statues. Kian vanished into the breeze, but mountain villagers still claim that on quiet evenings, the whispering wind carries the gentle melody of his flute.",
-                question: "Why did the arrogant warlord invade the kingdom?",
-                options: [
-                    "To rescue the wise monarch from exile",
-                    "To steal the magical flute to control nature",
-                    "To find a new place to build a castle",
-                    "To trade silver bamboo with villagers",
-                    "To learn how to play shepherd music"
-                ],
-                answer: 1,
-                explanation: "Disebutkan di paragraf kedua: '...seeking to steal the magical flute to control nature for his tyrannical ambitions.'"
-            },
-            {
-                id: 27,
-                topic: "Narrative Text",
-                passageTitle: "The Legend of the Whispering Wind",
-                passage: "In a distant mountain kingdom ruled by a wise monarch, there lived a humble shepherd boy named Kian who possessed a magical flute carved from silver bamboo. Whenever Kian played his flute, the soothing melody would calm fierce beasts, make withered flowers bloom instantly, and bring peace to troubled hearts throughout the valley.\n\nOne fateful winter, an arrogant warlord invaded the kingdom, seeking to steal the magical flute to control nature for his tyrannical ambitions. When the warlord's soldiers cornered Kian at the edge of a sheer cliff, the boy did not fight with weapons. Instead, he closed his eyes and played his final, enchanting tune. As the music echoed across the peaks, a powerful gust of wind swept the warlord and his soldiers away into the mist, transforming them into harmless stone statues. Kian vanished into the breeze, but mountain villagers still claim that on quiet evenings, the whispering wind carries the gentle melody of his flute.",
-                question: "What happened to the warlord and his soldiers at the end of the story?",
-                options: [
-                    "They captured Kian and took the silver flute",
-                    "They were transformed into harmless stone statues by the wind",
-                    "They apologized to Kian and became shepherds",
-                    "They retreated back to their own territory in fear",
-                    "They fell off the cliff into the deep river"
-                ],
-                answer: 1,
-                explanation: "Teks menyatakan: '...swept the warlord and his soldiers away into the mist, transforming them into harmless stone statues.'"
-            },
-            {
-                id: 28,
-                topic: "Narrative Text",
-                passageTitle: "The Legend of the Whispering Wind",
-                passage: "In a distant mountain kingdom ruled by a wise monarch, there lived a humble shepherd boy named Kian who possessed a magical flute carved from silver bamboo. Whenever Kian played his flute, the soothing melody would calm fierce beasts, make withered flowers bloom instantly, and bring peace to troubled hearts throughout the valley.\n\nOne fateful winter, an arrogant warlord invaded the kingdom, seeking to steal the magical flute to control nature for his tyrannical ambitions. When the warlord's soldiers cornered Kian at the edge of a sheer cliff, the boy did not fight with weapons. Instead, he closed his eyes and played his final, enchanting tune. As the music echoed across the peaks, a powerful gust of wind swept the warlord and his soldiers away into the mist, transforming them into harmless stone statues. Kian vanished into the breeze, but mountain villagers still claim that on quiet evenings, the whispering wind carries the gentle melody of his flute.",
-                question: "What is the moral lesson or characteristic of narrative text shown here?",
-                options: [
-                    "Physical weapons are always superior to music",
-                    "Greed and tyranny will ultimately be defeated by purity and harmony",
-                    "Shepherds should never wander near mountain cliffs",
-                    "Winter is the best season to play musical instruments",
-                    "Monarchs must never trust ordinary shepherds"
-                ],
-                answer: 1,
-                explanation: "Cerita rakyat (narrative) ini mengajarkan bahwa niat jahat dan keserakahan (warlord) dikalahkan oleh kebaikan dan keharmonisan."
-            },
-            {
-                id: 29,
-                topic: "Narrative Text",
-                passageTitle: "The Clockmaker of Verona",
-                passage: "In the heart of Verona lived Master Geppetto, an elderly clockmaker renowned for crafting clocks that did not merely tell time, but seemed to capture human emotions. One autumn, a wealthy nobleman offered a chest of gold for a clock that could turn back time. Geppetto calmly refused, explaining that time was a precious gift meant to move forward, teaching lessons through both joy and sorrow.\n\nAngered by the refusal, the nobleman plotted to ruin the clockmaker's workshop. That night, as the city slept, a mysterious thief sneaked into the shop. However, instead of finding valuables, the thief activated Geppetto's masterpiece—the Emotion Clock. The clock chimed softly, projecting the thief's forgotten childhood memories of warmth and honesty. Overcome with deep remorse, the thief wept tears of regret, abandoned his wicked plan, and begged the clockmaker for forgiveness. Geppetto welcomed him with open arms, proving that true clocks measure the beating of a repentant heart.",
-                question: "Why did Master Geppetto refuse the nobleman's offer of gold?",
-                options: [
-                    "Because the chest of gold contained counterfeit coins",
-                    "Because time is a precious gift meant to move forward, not backward",
-                    "Because he was already wealthier than the nobleman",
-                    "Because he did not know how to craft clocks anymore",
-                    "Because he disliked noblemen visiting his workshop"
-                ],
-                answer: 1,
-                explanation: "Geppetto menolak karena waktu adalah anugerah berharga yang harus berjalan maju, mengajarkan pelajaran hidup."
-            },
-            {
-                id: 30,
-                topic: "Narrative Text",
-                passageTitle: "The Clockmaker of Verona",
-                passage: "In the heart of Verona lived Master Geppetto, an elderly clockmaker renowned for crafting clocks that did not merely tell time, but seemed to capture human emotions. One autumn, a wealthy nobleman offered a chest of gold for a clock that could turn back time. Geppetto calmly refused, explaining that time was a precious gift meant to move forward, teaching lessons through both joy and sorrow.\n\nAngered by the refusal, the nobleman plotted to ruin the clockmaker's workshop. That night, as the city slept, a mysterious thief sneaked into the shop. However, instead of finding valuables, the thief activated Geppetto's masterpiece—the Emotion Clock. The clock chimed softly, projecting the thief's forgotten childhood memories of warmth and honesty. Overcome with deep remorse, the thief wept tears of regret, abandoned his wicked plan, and begged the clockmaker for forgiveness. Geppetto welcomed him with open arms, proving that true clocks measure the beating of a repentant heart.",
-                question: "What happened when the thief sneaked into Geppetto's workshop?",
-                options: [
-                    "He stole the chest of gold offered by the nobleman",
-                    "He accidentally activated the Emotion Clock which projected his childhood memories",
-                    "He destroyed all the clocks in the workshop in anger",
-                    "He was caught by city guards and sent to prison",
-                    "He locked himself inside and could not escape"
-                ],
-                answer: 1,
-                explanation: "Teks menyebutkan: '...the thief activated Geppetto's masterpiece—the Emotion Clock. The clock chimed softly, projecting the thief's forgotten childhood memories...'"
-            },
-            {
-                id: 31,
-                topic: "Narrative Text",
-                passageTitle: "The Clockmaker of Verona",
-                passage: "In the heart of Verona lived Master Geppetto, an elderly clockmaker renowned for crafting clocks that did not merely tell time, but seemed to capture human emotions. One autumn, a wealthy nobleman offered a chest of gold for a clock that could turn back time. Geppetto calmly refused, explaining that time was a precious gift meant to move forward, teaching lessons through both joy and sorrow.\n\nAngered by the refusal, the nobleman plotted to ruin the clockmaker's workshop. That night, as the city slept, a mysterious thief sneaked into the shop. However, instead of finding valuables, the thief activated Geppetto's masterpiece—the Emotion Clock. The clock chimed softly, projecting the thief's forgotten childhood memories of warmth and honesty. Overcome with deep remorse, the thief wept tears of regret, abandoned his wicked plan, and begged the clockmaker for forgiveness. Geppetto welcomed him with open arms, proving that true clocks measure the beating of a repentant heart.",
-                question: "How did the thief react after experiencing the Emotion Clock?",
-                options: [
-                    "He became furious and stole the clock",
-                    "He felt deep remorse, wept tears of regret, and begged for forgiveness",
-                    "He laughed mockingly and escaped through the window",
-                    "He forgot who he was and ran into the street",
-                    "He threatened to return with the nobleman"
-                ],
-                answer: 1,
-                explanation: "Di paragraf kedua: 'Overcome with deep remorse, the thief wept tears of regret, abandoned his wicked plan, and begged the clockmaker for forgiveness.'"
-            },
-            {
-                id: 32,
-                topic: "Narrative Text",
-                passageTitle: "The Clockmaker of Verona",
-                passage: "In the heart of Verona lived Master Geppetto, an elderly clockmaker renowned for crafting clocks that did not merely tell time, but seemed to capture human emotions. One autumn, a wealthy nobleman offered a chest of gold for a clock that could turn back time. Geppetto calmly refused, explaining that time was a precious gift meant to move forward, teaching lessons through both joy and sorrow.\n\nAngered by the refusal, the nobleman plotted to ruin the clockmaker's workshop. That night, as the city slept, a mysterious thief sneaked into the shop. However, instead of finding valuables, the thief activated Geppetto's masterpiece—the Emotion Clock. The clock chimed softly, projecting the thief's forgotten childhood memories of warmth and honesty. Overcome with deep remorse, the thief wept tears of regret, abandoned his wicked plan, and begged the clockmaker for forgiveness. Geppetto welcomed him with open arms, proving that true clocks measure the beating of a repentant heart.",
-                question: "What kind of clocks did Master Geppetto craft?",
-                options: [
-                    "Clocks that only told military time accurately",
-                    "Clocks that captured human emotions and taught life lessons",
-                    "Digital clocks powered by electricity",
-                    "Pocket watches made exclusively of gold and diamonds",
-                    "Alarm clocks that rang loudly at midnight"
-                ],
-                answer: 1,
-                explanation: "Di awal teks disebutkan: '...renowned for crafting clocks that did not merely tell time, but seemed to capture human emotions.'"
-            },
+    <!-- Soal 7 (Report) -->
+    <div class="card" id="q7">
+        <span class="text-type-badge">Report Text</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(7, 'Komodo dragons are the largest living species of lizard in the world. They can grow up to 3 meters in length and weigh up to 70 kilograms. They have long, yellow, deeply forked tongues and heavy, muscular bodies. Komodo dragons are carnivores and primarily feed on deer, pigs, and smaller dragons. Narrator: What is the main food of Komodo dragons according to the text?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(7)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-7">
+            "Komodo dragons are the largest living species of lizard in the world. They can grow up to 3 meters in length and weigh up to 70 kilograms. They have long, yellow, deeply forked tongues and heavy, muscular bodies. Komodo dragons are carnivores and primarily feed on deer, pigs, and smaller dragons."
+        </div>
+        <br>
+        <div class="question-title">7. What is the main food of Komodo dragons according to the text?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 7, false)">A. Plants and leaves</button>
+            <button class="option-btn" onclick="checkAnswer(this, 7, false)">B. Insects and small birds</button>
+            <button class="option-btn" onclick="checkAnswer(this, 7, true)">C. Deer, pigs, and smaller dragons</button>
+            <button class="option-btn" onclick="checkAnswer(this, 7, false)">D. Fish and aquatic animals</button>
+        </div>
+    </div>
 
-            // Kategori 5: Procedure Text (Soal 33-38)
-            {
-                id: 33,
-                topic: "Procedure Text",
-                passageTitle: "How to Brew Authentic Balinese Kopi Tubruk",
-                passage: "Making traditional Balinese coffee (Kopi Tubruk) is an art that requires patience and precise steps to extract rich aromatic flavors. Follow these simple steps:\n\n1. Prepare two tablespoons of freshly roasted medium-ground coffee beans.\n2. Boil filtered water in a kettle until it reaches a rolling boil (approx. 95°C).\n3. Place the coffee grounds directly into a warm glass or ceramic mug.\n4. Add sugar or condensed milk according to your personal preference.\n5. Pour the boiling water directly over the coffee grounds in a circular motion.\n6. Stir vigorously for ten seconds to ensure all grounds are fully saturated.\n7. Cover the glass with a small saucer and let it steep undisturbed for 3 to 4 minutes.\n8. Remove the cover and let the heavy grounds settle to the bottom before sipping carefully.",
-                question: "What temperature should the water reach before pouring it into the mug?",
-                options: [
-                    "Freezing cold (0°C)",
-                    "Lukewarm (40°C)",
-                    "Rolling boil (approx. 95°C)",
-                    "Ice melting (10°C)",
-                    "Steam evaporation (200°C)"
-                ],
-                answer: 2,
-                explanation: "Langkah nomor 2 menyatakan: '...until it reaches a rolling boil (approx. 95°C).'"
-            },
-            {
-                id: 34,
-                topic: "Procedure Text",
-                passageTitle: "How to Brew Authentic Balinese Kopi Tubruk",
-                passage: "Making traditional Balinese coffee (Kopi Tubruk) is an art that requires patience and precise steps to extract rich aromatic flavors. Follow these simple steps:\n\n1. Prepare two tablespoons of freshly roasted medium-ground coffee beans.\n2. Boil filtered water in a kettle until it reaches a rolling boil (approx. 95°C).\n3. Place the coffee grounds directly into a warm glass or ceramic mug.\n4. Add sugar or condensed milk according to your personal preference.\n5. Pour the boiling water directly over the coffee grounds in a circular motion.\n6. Stir vigorously for ten seconds to ensure all grounds are fully saturated.\n7. Cover the glass with a small saucer and let it steep undisturbed for 3 to 4 minutes.\n8. Remove the cover and let the heavy grounds settle to the bottom before sipping carefully.",
-                question: "Why should you cover the glass with a small saucer during the brewing process?",
-                options: [
-                    "To prevent insects from falling into the glass",
-                    "To let the coffee steep undisturbed for 3 to 4 minutes",
-                    "To cool down the coffee instantly",
-                    "To make the glass look more aesthetic",
-                    "To dissolve sugar faster"
-                ],
-                answer: 1,
-                explanation: "Langkah nomor 7 menyebutkan: 'Cover the glass with a small saucer and let it steep undisturbed for 3 to 4 minutes.'"
-            },
-            {
-                id: 35,
-                topic: "Procedure Text",
-                passageTitle: "How to Brew Authentic Balinese Kopi Tubruk",
-                passage: "Making traditional Balinese coffee (Kopi Tubruk) is an art that requires patience and precise steps to extract rich aromatic flavors. Follow these simple steps:\n\n1. Prepare two tablespoons of freshly roasted medium-ground coffee beans.\n2. Boil filtered water in a kettle until it reaches a rolling boil (approx. 95°C).\n3. Place the coffee grounds directly into a warm glass or ceramic mug.\n4. Add sugar or condensed milk according to your personal preference.\n5. Pour the boiling water directly over the coffee grounds in a circular motion.\n6. Stir vigorously for ten seconds to ensure all grounds are fully saturated.\n7. Cover the glass with a small saucer and let it steep undisturbed for 3 to 4 minutes.\n8. Remove the cover and let the heavy grounds settle to the bottom before sipping carefully.",
-                question: "What should you do immediately after pouring the boiling water over the coffee grounds?",
-                options: [
-                    "Drink the coffee right away while it is boiling hot",
-                    "Stir vigorously for ten seconds to ensure all grounds are fully saturated",
-                    "Put the glass into a refrigerator for cooling",
-                    "Add ice cubes and lemon juice",
-                    "Filter the coffee using a paper filter"
-                ],
-                answer: 1,
-                explanation: "Langkah nomor 6 menyatakan: 'Stir vigorously for ten seconds to ensure all grounds are fully saturated.'"
-            },
-            {
-                id: 36,
-                topic: "Procedure Text",
-                passageTitle: "How to Make Homemade Compost Fertilizer",
-                passage: "Creating organic compost fertilizer at home is a sustainable way to enrich garden soil and reduce household waste. Here is how to do it:\n\n1. Select a shaded, well-drained spot in your yard or use a covered compost bin.\n2. Collect a balanced mix of 'green materials' (nitrogen-rich items like vegetable scraps and grass clippings) and 'brown materials' (carbon-rich items like dried leaves, twigs, and shredded cardboard).\n3. Layer the materials alternately in the bin, starting with coarse twigs at the bottom for aeration.\n4. Sprinkle water lightly over each layer to keep the pile moist like a wrung-out sponge.\n5. Turn the pile every two weeks using a garden fork to provide oxygen for decomposition.\n6. After two to three months, your dark, crumbly, and earthy-smelling compost will be ready to nourish your garden plants.",
-                question: "What are 'green materials' considered in the composting process?",
-                options: [
-                    "Carbon-rich items like dried leaves and twigs",
-                    "Nitrogen-rich items like vegetable scraps and grass clippings",
-                    "Plastic and synthetic packaging waste",
-                    "Coarse stones used for bottom drainage",
-                    "Chemical fertilizers bought from stores"
-                ],
-                answer: 1,
-                explanation: "Langkah nomor 2 menyatakan: '...\"green materials\" (nitrogen-rich items like vegetable scraps and grass clippings)...'"
-            },
-            {
-                id: 37,
-                topic: "Procedure Text",
-                passageTitle: "How to Make Homemade Compost Fertilizer",
-                passage: "Creating organic compost fertilizer at home is a sustainable way to enrich garden soil and reduce household waste. Here is how to do it:\n\n1. Select a shaded, well-drained spot in your yard or use a covered compost bin.\n2. Collect a balanced mix of 'green materials' (nitrogen-rich items like vegetable scraps and grass clippings) and 'brown materials' (carbon-rich items like dried leaves, twigs, and shredded cardboard).\n3. Layer the materials alternately in the bin, starting with coarse twigs at the bottom for aeration.\n4. Sprinkle water lightly over each layer to keep the pile moist like a wrung-out sponge.\n5. Turn the pile every two weeks using a garden fork to provide oxygen for decomposition.\n6. After two to three months, your dark, crumbly, and earthy-smelling compost will be ready to nourish your garden plants.",
-                question: "Why do you need to turn the compost pile every two weeks?",
-                options: [
-                    "To cool down the compost temperature",
-                    "To provide oxygen for decomposition",
-                    "To add more nitrogen-rich vegetable scraps",
-                    "To remove earthworms from the bin",
-                    "To test the moisture level of the soil"
-                ],
-                answer: 1,
-                explanation: "Langkah nomor 5 menyatakan: 'Turn the pile every two weeks using a garden fork to provide oxygen for decomposition.'"
-            },
-            {
-                id: 38,
-                topic: "Procedure Text",
-                passageTitle: "How to Make Homemade Compost Fertilizer",
-                passage: "Creating organic compost fertilizer at home is a sustainable way to enrich garden soil and reduce household waste. Here is how to do it:\n\n1. Select a shaded, well-drained spot in your yard or use a covered compost bin.\n2. Collect a balanced mix of 'green materials' (nitrogen-rich items like vegetable scraps and grass clippings) and 'brown materials' (carbon-rich items like dried leaves, twigs, and shredded cardboard).\n3. Layer the materials alternately in the bin, starting with coarse twigs at the bottom for aeration.\n4. Sprinkle water lightly over each layer to keep the pile moist like a wrung-out sponge.\n5. Turn the pile every two weeks using a garden fork to provide oxygen for decomposition.\n6. After two to three months, your dark, crumbly, and earthy-smelling compost will be ready to nourish your garden plants.",
-                question: "How long does it typically take for the compost to become ready for garden plants?",
-                options: [
-                    "One week",
-                    "Two to three months",
-                    "Two years",
-                    "Ten days",
-                    "Twenty-four hours"
-                ],
-                answer: 1,
-                explanation: "Langkah nomor 6 menyebutkan: 'After two to three months, your dark, crumbly, and earthy-smelling compost will be ready...'"
-            },
+    <!-- Soal 8 (Recount) -->
+    <div class="card" id="q8">
+        <span class="text-type-badge">Recount Text</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(8, 'Last month, my school held a trip to Bali. We visited many famous places such as Kuta Beach and Tanah Lot. On the second day, we went to Ubud to see traditional paintings and handicrafts. Although I was very exhausted, I felt extremely happy because I learned a lot about Balinese culture. Narrator: How did the speaker feel after the trip to Bali?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(8)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-8">
+            "Last month, my school held a trip to Bali. We visited many famous places such as Kuta Beach and Tanah Lot. On the second day, we went to Ubud to see traditional paintings and handicrafts. Although I was very exhausted, I felt extremely happy because I learned a lot about Balinese culture."
+        </div>
+        <br>
+        <div class="question-title">8. How did the speaker feel after the trip to Bali?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 8, false)">A. Disappointed and bored</button>
+            <button class="option-btn" onclick="checkAnswer(this, 8, false)">B. Sick and sleepy</button>
+            <button class="option-btn" onclick="checkAnswer(this, 8, true)">C. Exhausted but happy</button>
+            <button class="option-btn" onclick="checkAnswer(this, 8, false)">D. Angry and annoyed</button>
+        </div>
+    </div>
 
-            // Kategori 6: Grammar & Sentence Structure (Simple Past & Present, Conjunctions) (Soal 39-44)
-            {
-                id: 39,
-                topic: "Grammar: Simple Past vs Present",
-                question: "Choose the correct verb form: 'Mr. David usually _______ to the office by train, but yesterday he _______ by taxi.'",
-                options: [
-                    "goes - goes",
-                    "went - went",
-                    "goes - went",
-                    "went - go",
-                    "is going - go"
-                ],
-                answer: 2,
-                explanation: "Kata 'usually' menunjukkan kebiasaan (Simple Present -> goes), sedangkan 'yesterday' menunjukkan masa lampau (Simple Past -> went)."
-            },
-            {
-                id: 40,
-                topic: "Grammar: Simple Past vs Present",
-                question: "Complete the sentence correctly: 'Listen! The choir _______ a beautiful traditional song in the auditorium.'",
-                options: [
-                    "sing",
-                    "sings",
-                    "is singing",
-                    "sang",
-                    "has sung"
-                ],
-                answer: 2,
-                explanation: "Kata seru 'Listen!' menunjukkan kejadian yang sedang berlangsung saat pembicara berbicara, sehingga menggunakan Present Continuous Tense (is singing)."
-            },
-            {
-                id: 41,
-                topic: "Grammar: Conjunctions",
-                question: "Fill in the blank with the appropriate conjunction: 'Sinta studied extremely hard for the final exam; _________, she achieved the highest score in her class.'",
-                options: [
-                    "however",
-                    "consequently",
-                    "although",
-                    "unless",
-                    "meanwhile"
-                ],
-                answer: 1,
-                explanation: "Hubungan sebab akibat yang positif ('belajar sangat giat' berakibat 'meraih nilai tertinggi') memerlukan kata penghubung akibat (consequently / oleh karena itu)."
-            },
-            {
-                id: 42,
-                topic: "Grammar: Conjunctions",
-                question: "Choose the best conjunction: '_________ it was raining heavily outside, the football match continued until the final whistle.'",
-                options: [
-                    "Because",
-                    "Although",
-                    "Therefore",
-                    "Moreover",
-                    "Unless"
-                ],
-                answer: 1,
-                explanation: "Menunjukkan pertentangan (hujan lebat tapi pertandingan tetap dilanjutkan), sehingga menggunakan kata penghubung konsesi 'Although'."
-            },
-            {
-                id: 43,
-                topic: "Grammar: Conjunctions",
-                question: "Complete the sentence: 'You will not pass the driving test _________ you practice parallel parking regularly.'",
-                options: [
-                    "if",
-                    "unless",
-                    "because",
-                    "although",
-                    "while"
-                ],
-                answer: 1,
-                explanation: "'Unless' bermakna 'if not' (kecuali jika / jika kamu tidak berlatih), sangat pas untuk melengkapi kalimat kondisi negatif tersebut."
-            },
-            {
-                id: 44,
-                topic: "Grammar: Simple Present",
-                question: "Select the grammatically correct sentence:",
-                options: [
-                    "She don't like eating spicy food for breakfast.",
-                    "Do your brother work at the national hospital?",
-                    "The Earth revolves around the Sun every 365 days.",
-                    "Water boiling at 100 degrees Celsius under standard pressure.",
-                    "They is studying English grammar in the library."
-                ],
-                answer: 2,
-                explanation: "'The Earth revolves around the Sun every 365 days' adalah fakta ilmiah yang benar menggunakan Simple Present Tense (subjek tunggal Earth + verb-s)."
-            },
+    <!-- Soal 9 (Procedure) -->
+    <div class="card" id="q9">
+        <span class="text-type-badge">Procedure Text</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(9, 'Here is how to make a cup of hot tea. First, boil some water in a kettle. Next, place a tea bag into your favorite mug. Then, pour the boiling water into the mug and let it steep for about three minutes. Finally, remove the tea bag, add sugar if desired, and stir well before serving. Narrator: What should you do right after pouring boiling water into the mug?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(9)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-9">
+            "Here is how to make a cup of hot tea. First, boil some water in a kettle. Next, place a tea bag into your favorite mug. Then, pour the boiling water into the mug and let it steep for about three minutes. Finally, remove the tea bag, add sugar if desired, and stir well before serving."
+        </div>
+        <br>
+        <div class="question-title">9. What should you do right after pouring boiling water into the mug?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 9, false)">A. Add sugar immediately</button>
+            <button class="option-btn" onclick="checkAnswer(this, 9, true)">B. Let it steep for about 3 minutes</button>
+            <button class="option-btn" onclick="checkAnswer(this, 9, false)">C. Remove the tea bag right away</button>
+            <button class="option-btn" onclick="checkAnswer(this, 9, false)">D. Boil the water again</button>
+        </div>
+    </div>
 
-            // Kategori 7: Advanced Grammar (Reported Speech, Passive Voice, Conditional Sentences) (Soal 45-50)
-            {
-                id: 45,
-                topic: "Grammar: Reported Speech",
-                question: "Convert direct speech into indirect speech: \nDirect: Maya said, 'I will submit my thesis report tomorrow.'",
-                options: [
-                    "Maya said that she will submit her thesis report tomorrow.",
-                    "Maya said that she would submit her thesis report the following day.",
-                    "Maya says that she submitted her thesis report yesterday.",
-                    "Maya told me that I would submit my thesis report tomorrow.",
-                    "Maya asked if she would submit her thesis report the next day."
-                ],
-                answer: 1,
-                explanation: "Perubahan tenses dari 'will' menjadi 'would', dan 'tomorrow' menjadi 'the following day' (atau the next day) adalah aturan baku reported speech."
-            },
-            {
-                id: 46,
-                topic: "Grammar: Reported Speech",
-                question: "Choose the correct indirect form of: \nDirect: The teacher asked Andi, 'Why did you come late to class today?'",
-                options: [
-                    "The teacher asked Andi why he came late to class that day.",
-                    "The teacher asked Andi why did he come late to class today.",
-                    "The teacher asked Andi why he had come late to class that day.",
-                    "The teacher asked Andi if he comes late to class today.",
-                    "The teacher asked Andi why had he come late to class that day."
-                ],
-                answer: 2,
-                explanation: "Wh- question dalam reported speech menggunakan pola conjunction (why) + subject (he) + past perfect (had come) karena kalimat langsungnya simple past (did come)."
-            },
-            {
-                id: 47,
-                topic: "Grammar: Passive Voice",
-                question: "Change into passive voice: \n'The architectural committee is reviewing the historical building proposal this morning.'",
-                options: [
-                    "The historical building proposal is reviewed by the committee this morning.",
-                    "The historical building proposal is being reviewed by the architectural committee this morning.",
-                    "The historical building proposal was reviewed by the committee this morning.",
-                    "The architectural committee is being reviewed by the historical building proposal.",
-                    "The historical building proposal has been reviewed by the committee."
-                ],
-                answer: 1,
-                explanation: "Present continuous active ('is reviewing') diubah menjadi passive voice dengan rumus: object + is/am/are + being + V3 ('is being reviewed')."
-            },
-            {
-                id: 48,
-                topic: "Grammar: Passive Voice",
-                question: "Select the correct passive form for: \n'Shakespeare wrote Romeo and Juliet in the late 16th century.'",
-                options: [
-                    "Romeo and Juliet is written by Shakespeare in the late 16th century.",
-                    "Romeo and Juliet was written by Shakespeare in the late 16th century.",
-                    "Romeo and Juliet has been written by Shakespeare in the late 16th century.",
-                    "Romeo and Juliet were written by Shakespeare in the late 16th century.",
-                    "Romeo and Juliet had written Shakespeare in the late 16th century."
-                ],
-                answer: 1,
-                explanation: "Simple past active ('wrote') diubah menjadi passive voice dengan rumus: object (tunggal: Romeo and Juliet) + was/were + V3 ('was written')."
-            },
-            {
-                id: 49,
-                topic: "Grammar: Conditional Sentences",
-                question: "Complete the third conditional sentence: \n'If I _______ about the heavy traffic jam on the highway, I _______ another route.'",
-                options: [
-                    "know - will take",
-                    "knew - would take",
-                    "had known - would have taken",
-                    "have known - will have taken",
-                    "would know - had taken"
-                ],
-                answer: 2,
-                explanation: "Third conditional menyatakan pengandaian masa lampau yang tidak terjadi, menggunakan pola: If + past perfect (had known) + would have + V3 (would have taken)."
-            },
-            {
-                id: 50,
-                topic: "Grammar: Conditional Sentences",
-                question: "Choose the correct form for this second conditional sentence: \n'If I _______ the lottery jackpot, I _______ a scholarship fund for underprivileged students.'",
-                options: [
-                    "win - will build",
-                    "won - would build",
-                    "had won - would have built",
-                    "win - would build",
-                    "wins - builds"
-                ],
-                answer: 1,
-                explanation: "Second conditional menyatakan pengandaian masa kini yang bertentangan dengan kenyataan, menggunakan pola: If + past tense (won) + would + verb 1 (would build)."
-            }
-        ];
+    <!-- Soal 10 (Narrative) -->
+    <div class="card" id="q10">
+        <span class="text-type-badge">Narrative Text</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(10, 'Once upon a time, a miserable crow found a peacock feather. He stuck it into his feathers and strutted towards the peacocks. However, the peacocks recognized him instantly, mocked him, and flew away. When the crow returned to his old friends, they also rejected him because he had been ungrateful. Narrator: Why did the crow\'s old friends reject him?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(10)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-10">
+            "Once upon a time, a miserable crow found a peacock feather. He stuck it into his feathers and strutted towards the peacocks. However, the peacocks recognized him instantly, mocked him, and flew away. When the crow returned to his old friends, they also rejected him because he had been ungrateful."
+        </div>
+        <br>
+        <div class="question-title">10. Why did the crow's old friends reject him?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 10, false)">A. Because he lost his wings.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 10, true)">B. Because he had been ungrateful and left them earlier.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 10, false)">C. Because he stole their food.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 10, false)">D. Because he turned into a peacock.</button>
+        </div>
+    </div>
 
-        let currentQuestionIndex = 0;
-        let userAnswers = new Array(questions.length).fill(null);
-        let timerInterval = null;
-        let timeLeft = 90 * 60; // 90 menit dalam detik
+    <!-- Soal 11 (Descriptive) -->
+    <div class="card" id="q11">
+        <span class="text-type-badge">Descriptive Text</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(11, 'Raja Ampat is a beautiful archipelago located off the northwest tip of Bird\'s Head Peninsula in Papua. It is widely known as one of the best diving spots in the world. It consists of more than one thousand small islands, surrounding four main islands: Misool, Salawati, Batanta, and Waigeo. Narrator: Where is Raja Ampat located?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(11)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-11">
+            "Raja Ampat is a beautiful archipelago located off the northwest tip of Bird's Head Peninsula in Papua. It is widely known as one of the best diving spots in the world. It consists of more than one thousand small islands, surrounding four main islands: Misool, Salawati, Batanta, and Waigeo."
+        </div>
+        <br>
+        <div class="question-title">11. Where is Raja Ampat located?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 11, false)">A. In Western Sumatra</button>
+            <button class="option-btn" onclick="checkAnswer(this, 11, true)">B. Off the northwest tip of Papua</button>
+            <button class="option-btn" onclick="checkAnswer(this, 11, false)">C. In Central Java</button>
+            <button class="option-btn" onclick="checkAnswer(this, 11, false)">D. Near Bali island</button>
+        </div>
+    </div>
 
-        const welcomeScreen = document.getElementById('welcome-screen');
-        const quizScreen = document.getElementById('quiz-screen');
-        const resultScreen = document.getElementById('result-screen');
-        const timerContainer = document.getElementById('timer-container');
-        const timerDisplay = document.getElementById('timer-display');
-        const studentNameInput = document.getElementById('student-name');
-        
-        function showAlertModal(msg) {
-            document.getElementById('alert-msg').textContent = msg;
-            document.getElementById('alert-modal').classList.remove('hidden');
+    <!-- Soal 12 (Report) -->
+    <div class="card" id="q12">
+        <span class="text-type-badge">Report Text</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(12, 'Earthquakes are powerful vibrations on the Earth\'s surface caused by the sudden release of energy in the Earth\'s lithosphere. They can cause severe damage to buildings, roads, and bridges. Most earthquakes occur along the boundaries of tectonic plates where stress builds up over time. Narrator: What causes earthquakes according to the monologue?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(12)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-12">
+            "Earthquakes are powerful vibrations on the Earth's surface caused by the sudden release of energy in the Earth's lithosphere. They can cause severe damage to buildings, roads, and bridges. Most earthquakes occur along the boundaries of tectonic plates where stress builds up over time."
+        </div>
+        <br>
+        <div class="question-title">12. What causes earthquakes according to the monologue?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 12, false)">A. Extreme weather conditions</button>
+            <button class="option-btn" onclick="checkAnswer(this, 12, true)">B. Sudden release of energy in the lithosphere</button>
+            <button class="option-btn" onclick="checkAnswer(this, 12, false)">C. Volcanic eruptions only</button>
+            <button class="option-btn" onclick="checkAnswer(this, 12, false)">D. Human heavy construction work</button>
+        </div>
+    </div>
+
+    <!-- Soal 13 (Recount) -->
+    <div class="card" id="q13">
+        <span class="text-type-badge">Recount Text</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(13, 'Yesterday, my sister and I woke up late. We rushed to the train station without having breakfast. Unfortunately, just as we arrived at the platform, the train had already left. We had to wait for another hour for the next train, making us late for our cousin\'s wedding. Narrator: Why did the speaker miss the train?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(13)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-13">
+            "Yesterday, my sister and I woke up late. We rushed to the train station without having breakfast. Unfortunately, just as we arrived at the platform, the train had already left. We had to wait for another hour for the next train, making us late for our cousin's wedding."
+        </div>
+        <br>
+        <div class="question-title">13. Why did the speaker miss the train?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 13, true)">A. Because they woke up late.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 13, false)">B. Because the station was closed.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 13, false)">C. Because it was raining heavily.</button>
+            <button class="option-btn" onclick="checkAnswer(this, 13, false)">D. Because they went to the wrong platform.</button>
+        </div>
+    </div>
+
+    <!-- Soal 14 (Procedure) -->
+    <div class="card" id="q14">
+        <span class="text-type-badge">Procedure Text</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(14, 'To insert a SIM card into your phone, follow these steps. First, turn off your mobile phone. Second, locate the SIM tray on the side of the device. Third, insert the ejector tool into the small hole to open the tray. Finally, place the SIM card carefully, push the tray back in, and turn on the phone. Narrator: What tool do you need to pop open the SIM tray?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(14)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-14">
+            "To insert a SIM card into your phone, follow these steps. First, turn off your mobile phone. Second, locate the SIM tray on the side of the device. Third, insert the ejector tool into the small hole to open the tray. Finally, place the SIM card carefully, push the tray back in, and turn on the phone."
+        </div>
+        <br>
+        <div class="question-title">14. What tool do you need to pop open the SIM tray?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 14, false)">A. A small screwdriver</button>
+            <button class="option-btn" onclick="checkAnswer(this, 14, false)">B. A piece of cloth</button>
+            <button class="option-btn" onclick="checkAnswer(this, 14, true)">C. An ejector tool</button>
+            <button class="option-btn" onclick="checkAnswer(this, 14, false)">D. A glue stick</button>
+        </div>
+    </div>
+
+    <!-- Soal 15 (Narrative) -->
+    <div class="card" id="q15">
+        <span class="text-type-badge">Narrative Text</span>
+        <div class="audio-player-box">
+            <span>🔊 Dengarkan Audio</span>
+            <button class="play-btn" onclick="playAudio(15, 'A long time ago, an old lady lived alone in the forest. She desperately wanted a child, so she asked a powerful giant for help. The giant gave her a magical cucumber seed. He told her that a beautiful baby girl would grow inside the cucumber, but he would return to take the child when she turned seventeen. Narrator: What did the giant give to the old lady?')">▶ Putar</button>
+        </div>
+        <button class="script-toggle" onclick="toggleScript(15)">[Lihat Transcript / Script]</button>
+        <div class="audio-script" id="script-15">
+            "A long time ago, an old lady lived alone in the forest. She desperately wanted a child, so she asked a powerful giant for help. The giant gave her a magical cucumber seed. He told her that a beautiful baby girl would grow inside the cucumber, but he would return to take the child when she turned seventeen."
+        </div>
+        <br>
+        <div class="question-title">15. What did the giant give to the old lady?</div>
+        <div class="options">
+            <button class="option-btn" onclick="checkAnswer(this, 15, false)">A. A bag of gold coins</button>
+            <button class="option-btn" onclick="checkAnswer(this, 15, true)">B. A magical cucumber seed</button>
+            <button class="option-btn" onclick="checkAnswer(this, 15, false)">C. An old wooden house</button>
+            <button class="option-btn" onclick="checkAnswer(this, 15, false)">D. A magical mirror</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function playAudio(qNum, text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.85;
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("Fitur suara tidak didukung di browser ini. Gunakan Chrome/Safari terbaru.");
         }
+    }
 
-        function closeAlertModal() {
-            document.getElementById('alert-modal').classList.add('hidden');
+    function toggleScript(qNum) {
+        const scriptBox = document.getElementById(`script-${qNum}`);
+        scriptBox.style.display = scriptBox.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function checkAnswer(button, qNum, isCorrect) {
+        const parent = button.parentElement;
+        const buttons = parent.querySelectorAll('.option-btn');
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
+        });
+        button.style.opacity = '1';
+        if (isCorrect) {
+            button.classList.add('correct');
+        } else {
+            button.classList.add('wrong');
         }
+    }
+</script>
 
-        function startExam() {
-            const name = studentNameInput.value.trim();
-            if (!name) {
-                showAlertModal('Silakan masukkan nama lengkap Anda terlebih dahulu!');
-                return;
-            }
-            welcomeScreen.classList.add('hidden');
-            quizScreen.classList.remove('hidden');
-            timerContainer.classList.remove('hidden');
-            timerContainer.classList.add('flex');
-
-            buildPalette();
-            loadQuestion(0);
-            startTimer();
-        }
-
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    showAlertModal('Waktu ujian telah habis! Jawaban Anda akan dikumpulkan secara otomatis.');
-                    setTimeout(submitExam, 1500);
-                    return;
-                }
-                timeLeft--;
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            }, 1000);
-        }
-
-        function buildPalette() {
-            const palette = document.getElementById('question-palette');
-            palette.innerHTML = '';
-            questions.forEach((q, index) => {
-                const btn = document.createElement('button');
-                btn.id = `palette-btn-${index}`;
-                btn.textContent = index + 1;
-                btn.className = `w-10 h-10 rounded-xl font-medium text-xs flex items-center justify-center transition border ${
-                    userAnswers[index] !== null 
-                    ? 'bg-indigo-600 border-indigo-500 text-white' 
-                    : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-700'
-                }`;
-                btn.onclick = () => jumpToQuestion(index);
-                palette.appendChild(btn);
-            });
-        }
-
-        function updatePaletteStatus() {
-            questions.forEach((q, index) => {
-                const btn = document.getElementById(`palette-btn-${index}`);
-                if (!btn) return;
-                if (index === currentQuestionIndex) {
-                    btn.className = `w-10 h-10 rounded-xl font-medium text-xs flex items-center justify-center transition border ring-2 ring-amber-400 ${
-                        userAnswers[index] !== null ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-slate-900 border-slate-700 text-slate-300'
-                    }`;
-                } else {
-                    btn.className = `w-10 h-10 rounded-xl font-medium text-xs flex items-center justify-center transition border ${
-                        userAnswers[index] !== null 
-                        ? 'bg-indigo-600 border-indigo-500 text-white' 
-                        : 'bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-700'
-                    }`;
-                }
-            });
-
-            const answeredCount = userAnswers.filter(a => a !== null).length;
-            document.getElementById('answered-count').textContent = `${answeredCount}/50 terjawab`;
-        }
-
-        function loadQuestion(index) {
-            currentQuestionIndex = index;
-            const q = questions[index];
-
-            // Update Badge & Topic
-            document.getElementById('question-badge').textContent = `Soal ${index + 1} dari ${questions.length}`;
-            document.getElementById('question-topic').textContent = q.topic;
-            document.getElementById('question-text').textContent = q.question;
-
-            // Passage handling
-            const passageBox = document.getElementById('passage-box');
-            if (q.passage) {
-                passageBox.classList.remove('hidden');
-                document.getElementById('passage-title').textContent = q.passageTitle;
-                document.getElementById('passage-content').textContent = q.passage;
-            } else {
-                passageBox.classList.add('hidden');
-            }
-
-            // Options handling
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
-            q.options.forEach((opt, optIndex) => {
-                const isSelected = userAnswers[index] === optIndex;
-                const optDiv = document.createElement('label');
-                optDiv.className = `flex items-start p-4 rounded-xl border cursor-pointer transition duration-200 ${
-                    isSelected 
-                    ? 'bg-indigo-950/60 border-indigo-500 text-white' 
-                    : 'bg-slate-900/60 border-slate-700 text-slate-300 hover:bg-slate-700/50 hover:border-slate-600'
-                }`;
-                optDiv.innerHTML = `
-                    <input type="radio" name="question-${index}" value="${optIndex}" ${isSelected ? 'checked' : ''} onchange="selectAnswer(${index}, ${optIndex})" class="mt-1 mr-3 text-indigo-600 focus:ring-indigo-500 bg-slate-900 border-slate-700">
-                    <span class="text-sm sm:text-base leading-relaxed">${String.fromCharCode(65 + optIndex)}. ${opt}</span>
-                `;
-                optionsContainer.appendChild(optDiv);
-            });
-
-            // Button controls
-            document.getElementById('prev-btn').disabled = index === 0;
-            const nextBtn = document.getElementById('next-btn');
-            if (index === questions.length - 1) {
-                nextBtn.textContent = 'Selesai';
-                nextBtn.onclick = confirmSubmit;
-            } else {
-                nextBtn.textContent = 'Selanjutnya';
-                nextBtn.onclick = nextQuestion;
-            }
-
-            updatePaletteStatus();
-        }
-
-        function selectAnswer(qIndex, optIndex) {
-            userAnswers[qIndex] = optIndex;
-            updatePaletteStatus();
-        }
-
-        function nextQuestion() {
-            if (currentQuestionIndex < questions.length - 1) {
-                loadQuestion(currentQuestionIndex + 1);
-            }
-        }
-
-        function prevQuestion() {
-            if (currentQuestionIndex > 0) {
-                loadQuestion(currentQuestionIndex - 1);
-            }
-        }
-
-        function jumpToQuestion(index) {
-            loadQuestion(index);
-        }
-
-        function confirmSubmit() {
-            const unanswered = userAnswers.filter(a => a === null).length;
-            const warningText = document.getElementById('modal-warning-text');
-            if (unanswered > 0) {
-                warningText.textContent = `Masih ada ${unanswered} soal yang belum terjawab. Apakah Anda tetap yakin ingin mengumpulkan ujian?`;
-            } else {
-                warningText.textContent = 'Semua soal telah terjawab. Apakah Anda yakin ingin menyelesaikan ujian ini?';
-            }
-            document.getElementById('submit-modal').classList.remove('hidden');
-        }
-
-        function closeSubmitModal() {
-            document.getElementById('submit-modal').classList.add('hidden');
-        }
-
-        function submitExam() {
-            clearInterval(timerInterval);
-            document.getElementById('submit-modal').classList.add('hidden');
-            quizScreen.classList.add('hidden');
-            timerContainer.classList.add('hidden');
-            resultScreen.classList.remove('hidden');
-
-            let correctCount = 0;
-            let wrongCount = 0;
-
-            questions.forEach((q, index) => {
-                if (userAnswers[index] === q.answer) {
-                    correctCount++;
-                } else {
-                    wrongCount++;
-                }
-            });
-
-            const finalScore = Math.round((correctCount / questions.length) * 100);
-            const studentName = studentNameInput.value.trim() || 'Peserta Ujian';
-
-            document.getElementById('result-student-name').textContent = `Nama: ${studentName}`;
-            document.getElementById('final-score').textContent = finalScore;
-            document.getElementById('final-correct').textContent = correctCount;
-            document.getElementById('final-wrong').textContent = wrongCount;
-
-            // Build Review List
-            const reviewContainer = document.getElementById('review-container');
-            reviewContainer.innerHTML = '';
-
-            questions.forEach((q, index) => {
-                const userAns = userAnswers[index];
-                const isCorrect = userAns === q.answer;
-                const card = document.createElement('div');
-                card.className = `p-4 rounded-xl border ${isCorrect ? 'bg-emerald-950/20 border-emerald-800/60' : 'bg-rose-950/20 border-rose-800/60'}`;
-                
-                let optionsHtml = '';
-                q.options.forEach((opt, optIdx) => {
-                    let badgeColor = 'text-slate-300';
-                    if (optIdx === q.answer) badgeColor = 'text-emerald-400 font-bold';
-                    else if (optIdx === userAns && !isCorrect) badgeColor = 'text-rose-400 line-through';
-                    
-                    optionsHtml += `<div class="text-xs sm:text-sm ${badgeColor}">${String.fromCharCode(65 + optIdx)}. ${opt}</div>`;
-                });
-
-                card.innerHTML = `
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-semibold px-2.5 py-1 rounded bg-slate-800 text-indigo-300 border border-slate-700">Soal ${index + 1} (${q.topic})</span>
-                        <span class="text-xs font-bold px-2.5 py-1 rounded ${isCorrect ? 'bg-emerald-900 text-emerald-300' : 'bg-rose-900 text-rose-300'}">
-                            ${isCorrect ? 'Benar' : 'Salah'}
-                        </span>
-                    </div>
-                    <p class="font-medium text-white text-sm sm:text-base mb-3">${q.question}</p>
-                    <div class="space-y-1 mb-3 pl-2">${optionsHtml}</div>
-                    <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-700 text-xs sm:text-sm text-slate-300">
-                        <strong class="text-indigo-400 block mb-1">Pembahasan:</strong>
-                        ${q.explanation}
-                    </div>
-                `;
-                reviewContainer.appendChild(card);
-            });
-        }
-    </script>
 </body>
 </html>
